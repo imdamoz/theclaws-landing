@@ -1,0 +1,827 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout>
+
+<!-- ════════════════════════════════════════════
+     VARIATION 7: MOSAIC — Built from scratch
+     Bold bento SaaS with dark base + vibrant accents
+     ════════════════════════════════════════════ -->
+
+<!-- NAV -->
+<nav class="mosaic-nav" id="mosaic-nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" aria-label="TheClaws Home">
+      <img src="/images/the-claws-logo.svg" alt="TheClaws" height="28" />
+    </a>
+    <div class="nav-links">
+      <a href="#agents">Agents</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#features">Features</a>
+      <a href="#cta">Pricing</a>
+    </div>
+    <a href="#cta" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<!-- HERO: Bento Grid -->
+<section class="hero">
+  <div class="hero-grid">
+    <!-- Main title card -->
+    <div class="hero-card hero-main">
+      <span class="badge">THE WORLD'S ONLY HUMAN-LEVEL AI AGENTS</span>
+      <h1>Super<br/>Agents<span class="tm">™</span></h1>
+      <p class="hero-sub">A new era of humans, with AI Super Agents™. Maximize productivity with agentic teammates.</p>
+      <div class="hero-actions">
+        <a href="#cta" class="btn-primary">Try Super Agents</a>
+        <button class="btn-secondary">Watch Intro</button>
+      </div>
+    </div>
+
+    <!-- Character card -->
+    <div class="hero-card hero-character">
+      <img src="/images/orange_guy_compressed.webp" alt="Super Agent" class="hero-img" />
+      <div class="hero-character-glow"></div>
+    </div>
+
+    <!-- Stats card -->
+    <div class="hero-card hero-stats">
+      <div class="stat-number" id="stat-counter">10,239,432</div>
+      <div class="stat-label">Tasks completed by Super Agents</div>
+      <div class="stat-bar">
+        <div class="stat-bar-fill"></div>
+      </div>
+    </div>
+
+    <!-- Powers card -->
+    <div class="hero-card hero-powers">
+      <div class="power-pill">24/7</div>
+      <div class="power-pill">Ambient</div>
+      <div class="power-pill">Automated</div>
+      <div class="power-pill">Self-learning</div>
+      <div class="power-pill accent">Infinite Memory</div>
+      <div class="power-pill accent">Infinite Knowledge</div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENTS: 3-Column Showcase -->
+<section class="agents" id="agents">
+  <div class="section-header">
+    <span class="eyebrow">[ CAPABILITIES ]</span>
+    <h2>Agents for everything</h2>
+    <p class="section-desc">The world's only infinite agent catalog where anyone can create and customize agents for any type of work imaginable.</p>
+  </div>
+
+  <div class="agent-grid">
+    <div class="agent-card" style="--accent: #ff6b35; --bg: #1a1210;">
+      <div class="agent-card-header">
+        <img src="/images/pm_icon.svg" alt="" class="agent-icon" />
+        <span class="agent-type">PM Agents</span>
+      </div>
+      <img src="/images/orange_guy.webp" alt="PM Agent" class="agent-img" />
+      <p class="agent-desc">Manage projects, track progress, coordinate teams, and keep everything on schedule — 24/7.</p>
+    </div>
+
+    <div class="agent-card" style="--accent: #3b82f6; --bg: #101418;">
+      <div class="agent-card-header">
+        <img src="/images/sales_icon.svg" alt="" class="agent-icon" />
+        <span class="agent-type">Sales Agents</span>
+      </div>
+      <img src="/images/blue_girl_orb.webp" alt="Sales Agent" class="agent-img" />
+      <p class="agent-desc">Generate leads, follow up, close deals, and manage your pipeline without missing a beat.</p>
+    </div>
+
+    <div class="agent-card" style="--accent: #22c55e; --bg: #101810;">
+      <div class="agent-card-header">
+        <img src="/images/dev_icon.svg" alt="" class="agent-icon" />
+        <span class="agent-type">Coding Agents</span>
+      </div>
+      <div class="agent-code-bg">
+        <pre><code>async function deploy(config) &#123;
+  const agent = await Agent.create(&#123;
+    name: config.name,
+    tools: config.tools,
+    memory: new VectorMemory()
+  &#125;);
+  return agent.deploy();
+&#125;</code></pre>
+      </div>
+      <p class="agent-desc">Write code, review PRs, fix bugs, deploy features — your tireless dev teammate.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES: Horizontal scroll cards -->
+<section class="capabilities" id="capabilities">
+  <div class="section-header">
+    <span class="eyebrow">[ PLATFORM ]</span>
+    <h2>7 superpowers, one platform</h2>
+  </div>
+
+  <div class="cap-scroll">
+    <div class="cap-card">
+      <img src="/images/Memory.webp" alt="Memory" class="cap-img" />
+      <h3>Memory</h3>
+      <p>Recent, working, and long-term memory — automatically stored and recalled.</p>
+    </div>
+    <div class="cap-card">
+      <img src="/images/Knowledge.webp" alt="Knowledge" class="cap-img" />
+      <h3>Knowledge</h3>
+      <p>Share your workspace and connect tools for real-time knowledge syncing.</p>
+    </div>
+    <div class="cap-card">
+      <img src="/images/Collaboration.webp" alt="Collaboration" class="cap-img" />
+      <h3>Collaboration</h3>
+      <p>@mention, assign tasks, and message agents like human teammates.</p>
+    </div>
+    <div class="cap-card">
+      <img src="/images/Skills.webp" alt="Skills" class="cap-img" />
+      <h3>Skills</h3>
+      <p>500+ human skills — emails, scheduling, research, and so much more.</p>
+    </div>
+    <div class="cap-card">
+      <img src="/images/Autonomous.webp" alt="Autonomous" class="cap-img" />
+      <h3>Autonomous</h3>
+      <p>Set it and forget it. Agents handle repetitive tasks automatically.</p>
+    </div>
+    <div class="cap-card">
+      <img src="/images/Ambient.webp" alt="Ambient" class="cap-img" />
+      <h3>Ambient</h3>
+      <p>Work silently in the background, anticipating needs before you ask.</p>
+    </div>
+    <div class="cap-card">
+      <img src="/images/Feedback.webp" alt="Feedback" class="cap-img" />
+      <h3>Feedback</h3>
+      <p>Every interaction improves your agents through continuous learning.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES: Bento grid -->
+<section class="features" id="features">
+  <div class="section-header">
+    <span class="eyebrow">[ FEATURES ]</span>
+    <h2>They're just like humans</h2>
+    <p class="section-desc">Maximize human productivity with agentic teammates — @mention, assign tasks, & message directly.</p>
+  </div>
+
+  <div class="feature-bento">
+    <div class="bento-card bento-wide">
+      <div class="bento-icon">
+        <img src="/images/add-circle.svg" alt="" />
+      </div>
+      <h3>Assign</h3>
+      <p>Delegate tasks to your AI agents just like you would to a human teammate. They understand context and get to work immediately.</p>
+    </div>
+
+    <div class="bento-card">
+      <div class="bento-icon">
+        <img src="/images/chat-bubble.svg" alt="" />
+      </div>
+      <h3>Message</h3>
+      <p>Chat naturally with your agents. Ask questions, give feedback, or request updates — they respond in real-time.</p>
+    </div>
+
+    <div class="bento-card">
+      <div class="bento-icon">
+        <img src="/images/user-mention.svg" alt="" />
+      </div>
+      <h3>Mention</h3>
+      <p>Tag your agents anywhere in your workflow. They'll jump in, understand the context, and take action.</p>
+    </div>
+
+    <div class="bento-card bento-wide bento-dark">
+      <h3>500+ Human Skills</h3>
+      <div class="skills-flow">
+        <span>Schedule</span><span>Research</span><span>Draft emails</span><span>Code review</span>
+        <span>Bug fixes</span><span>Customer support</span><span>Lead gen</span><span>SEO</span>
+        <span>Invoices</span><span>Payroll</span><span>Deploy</span><span>Translate</span>
+        <span>Analyze data</span><span>Brainstorm</span><span>Contracts</span><span>Newsletters</span>
+      </div>
+    </div>
+
+    <div class="bento-card bento-accent">
+      <h3>Infinite Memory</h3>
+      <p>Recent memory, working memory, and long-term memory are automatically stored and recalled.</p>
+    </div>
+
+    <div class="bento-card bento-accent">
+      <h3>Infinite Knowledge</h3>
+      <p>Share your entire workspace and connect tools for real-time, permissions-aware knowledge syncing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS MARQUEE -->
+<section class="marquee-section">
+  <div class="marquee-track" id="marquee-1">
+    <span>Schedule</span><span>Research</span><span>Draft emails</span><span>Summarize</span>
+    <span>Analyze data</span><span>Generate reports</span><span>Translate</span><span>Brainstorm</span>
+    <span>Code review</span><span>Bug fixes</span><span>Write docs</span><span>API calls</span>
+    <span>Schedule</span><span>Research</span><span>Draft emails</span><span>Summarize</span>
+    <span>Analyze data</span><span>Generate reports</span><span>Translate</span><span>Brainstorm</span>
+    <span>Code review</span><span>Bug fixes</span><span>Write docs</span><span>API calls</span>
+  </div>
+  <div class="marquee-track marquee-reverse" id="marquee-2">
+    <span>Customer support</span><span>Lead gen</span><span>Follow-ups</span><span>Onboarding</span>
+    <span>Social posts</span><span>SEO</span><span>Ad copy</span><span>Newsletters</span>
+    <span>Invoices</span><span>Expenses</span><span>Payroll</span><span>Contracts</span>
+    <span>Customer support</span><span>Lead gen</span><span>Follow-ups</span><span>Onboarding</span>
+    <span>Social posts</span><span>SEO</span><span>Ad copy</span><span>Newsletters</span>
+    <span>Invoices</span><span>Expenses</span><span>Payroll</span><span>Contracts</span>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <div class="cta-card">
+    <span class="eyebrow">[ GET STARTED ]</span>
+    <h2>Ready to build your<br/>Super Agent team?</h2>
+    <p>Join thousands of teams using AI agents to 10x their productivity.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-primary btn-lg">Try Super Agents Free</a>
+      <a href="#" class="btn-secondary">Contact Sales</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="mosaic-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="/images/the-claws-logo.svg" alt="TheClaws" height="24" />
+    </div>
+    <div class="footer-links">
+      <a href="#">Agents</a>
+      <a href="#">Features</a>
+      <a href="#">Platform</a>
+      <a href="#">Pricing</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 TheClaws. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Nav scroll effect
+  const nav = document.getElementById('mosaic-nav');
+  if (nav) {
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+  }
+
+  // Hero grid reveal
+  gsap.from('.hero-card', {
+    y: 30, duration: 0.8, stagger: 0.12,
+    ease: 'power3.out', delay: 0.2, clearProps: 'all'
+  });
+
+  // Agent cards reveal
+  gsap.from('.agent-card', {
+    y: 40, duration: 0.7, stagger: 0.15,
+    ease: 'power2.out', clearProps: 'all',
+    scrollTrigger: { trigger: '.agent-grid', start: 'top 85%' }
+  });
+
+  // Capability cards reveal
+  gsap.from('.cap-card', {
+    x: 30, duration: 0.6, stagger: 0.1,
+    ease: 'power2.out', clearProps: 'all',
+    scrollTrigger: { trigger: '.cap-scroll', start: 'top 85%' }
+  });
+
+  // Bento cards reveal
+  gsap.from('.bento-card', {
+    y: 30, duration: 0.6, stagger: 0.1,
+    ease: 'power2.out', clearProps: 'all',
+    scrollTrigger: { trigger: '.feature-bento', start: 'top 85%' }
+  });
+
+  // Counter animation
+  const counterEl = document.getElementById('stat-counter');
+  if (counterEl) {
+    let val = 10239432;
+    setInterval(() => {
+      val += Math.floor(Math.random() * 5 + 1);
+      counterEl.textContent = val.toLocaleString();
+    }, 300);
+  }
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href') || '');
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+<style is:global>
+  /* ═══════════════════════════════════════════
+     MOSAIC: Built from scratch
+     ═══════════════════════════════════════════ */
+
+  :root {
+    --bg: #ffffff;
+    --surface: #f7f5ff;
+    --surface-2: #efe9ff;
+    --border: #e4dff5;
+    --text: #0f0a2a;
+    --text-dim: #5a5080;
+    --text-muted: #8880a8;
+    --accent: #7c3aed;
+    --accent-2: #3b82f6;
+    --accent-glow: rgba(124, 58, 237, 0.2);
+    --radius: 16px;
+    --radius-lg: 24px;
+    --font: 'Plus Jakarta Sans', sans-serif;
+    --mono: 'Sometype Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  /* Ensure nothing stays hidden from GSAP */
+  .hero-card, .agent-card, .cap-card, .bento-card {
+    opacity: 1 !important;
+    transform: none;
+  }
+
+  /* ── NAV ── */
+  .mosaic-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 16px 24px;
+    transition: all 0.4s ease;
+  }
+  .mosaic-nav.scrolled {
+    padding: 8px 24px;
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 12px 24px;
+    transition: all 0.4s ease;
+  }
+  .mosaic-nav.scrolled .nav-inner {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: var(--border);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  }
+  .nav-logo img { display: block; display: block; }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-links a {
+    color: var(--text-dim); font-size: 13px; font-weight: 500;
+    text-decoration: none; padding: 6px 14px; border-radius: 999px;
+    transition: all 0.2s ease;
+  }
+  .nav-links a:hover { color: var(--text); background: rgba(168, 85, 247, 0.08); }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; font-size: 13px; font-weight: 600;
+    text-decoration: none; padding: 8px 20px; border-radius: 999px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px var(--accent-glow);
+  }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 24px var(--accent-glow); }
+
+  /* ── HERO BENTO ── */
+  .hero {
+    padding: 120px 24px 80px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 16px;
+  }
+  .hero-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Main title card */
+  .hero-main {
+    padding: 48px 40px;
+    grid-row: 1 / 2;
+  }
+  .hero-main .badge {
+    display: inline-block;
+    font-family: var(--mono); font-size: 10px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 24px;
+    padding: 6px 14px;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 999px;
+  }
+  .hero-main h1 {
+    font-size: clamp(56px, 7vw, 96px);
+    font-weight: 800; line-height: 0.9;
+    letter-spacing: -0.04em; margin: 0 0 24px;
+    background: linear-gradient(135deg, #0f0a2a 0%, #7c3aed 50%, #3b82f6 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-main .tm {
+    font-size: 0.3em; vertical-align: super;
+    -webkit-text-fill-color: var(--accent);
+  }
+  .hero-sub {
+    color: var(--text-dim); font-size: 17px; line-height: 1.5;
+    max-width: 480px; margin: 0 0 32px;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* Character card */
+  .hero-character {
+    grid-row: 1 / 3;
+    background: radial-gradient(ellipse at 50% 80%, rgba(124, 58, 237, 0.1), var(--surface) 70%);
+    display: flex; align-items: flex-end; justify-content: center;
+    min-height: 400px; position: relative;
+  }
+  .hero-img {
+    width: 85%; max-width: 360px; display: block; position: relative; z-index: 1;
+    filter: drop-shadow(0 -10px 40px rgba(124, 58, 237, 0.15));
+  }
+  .hero-character-glow {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 300px; height: 200px;
+    background: radial-gradient(ellipse, rgba(124, 58, 237, 0.12), transparent 70%);
+    filter: blur(40px);
+  }
+
+  /* Stats card */
+  .hero-stats {
+    padding: 28px 32px;
+    background: linear-gradient(135deg, var(--surface), rgba(168, 85, 247, 0.06));
+  }
+  .stat-number {
+    font-size: 36px; font-weight: 800; letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+  }
+  .stat-label { color: var(--text-dim); font-size: 13px; margin-bottom: 16px; }
+  .stat-bar {
+    height: 4px; background: var(--border); border-radius: 2px; overflow: hidden;
+  }
+  .stat-bar-fill {
+    height: 100%; width: 73%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    animation: barPulse 3s ease-in-out infinite;
+  }
+  @keyframes barPulse {
+    0%, 100% { opacity: 0.8; } 50% { opacity: 1; }
+  }
+
+  /* Powers card */
+  .hero-powers {
+    padding: 24px 28px;
+    display: flex; flex-wrap: wrap; gap: 8px; align-content: center;
+  }
+  .power-pill {
+    padding: 8px 16px; font-size: 13px; font-weight: 600;
+    border: 1px solid var(--border); border-radius: 999px;
+    color: var(--text-dim); transition: all 0.2s ease;
+    cursor: default;
+  }
+  .power-pill:hover { border-color: var(--accent); color: var(--text); }
+  .power-pill.accent {
+    border-color: rgba(168, 85, 247, 0.3);
+    background: rgba(168, 85, 247, 0.06);
+    color: var(--accent);
+  }
+
+  /* ── BUTTONS ── */
+  .btn-primary {
+    display: inline-flex; align-items: center;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff; font-size: 15px; font-weight: 600;
+    padding: 14px 28px; border-radius: 999px; border: none;
+    text-decoration: none; cursor: pointer;
+    box-shadow: 0 4px 20px var(--accent-glow);
+    transition: all 0.3s ease;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px var(--accent-glow);
+  }
+  .btn-primary.btn-lg { font-size: 17px; padding: 18px 36px; }
+  .btn-secondary {
+    display: inline-flex; align-items: center;
+    background: transparent; color: var(--text-dim);
+    font-size: 15px; font-weight: 500;
+    padding: 14px 28px; border-radius: 999px;
+    border: 1px solid var(--border); cursor: pointer;
+    text-decoration: none; transition: all 0.3s ease;
+    font-family: var(--font);
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--text); }
+
+  /* ── SECTION HEADERS ── */
+  .section-header {
+    max-width: 1200px; margin: 0 auto;
+    padding: 0 24px; margin-bottom: 48px;
+  }
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  .section-header h2 {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 700; letter-spacing: -0.03em;
+    line-height: 1.05; margin: 0 0 16px;
+    color: var(--text);
+  }
+  .section-desc {
+    color: var(--text-dim); font-size: 17px; line-height: 1.5;
+    max-width: 560px;
+  }
+
+  /* ── AGENTS ── */
+  .agents {
+    padding: 100px 24px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .agent-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  }
+  .agent-card {
+    background: var(--bg, #14112a);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden; position: relative;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    padding-bottom: 20px;
+  }
+  .agent-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(124, 58, 237, 0.2);
+    box-shadow: 0 16px 48px rgba(124, 58, 237, 0.08),
+                0 0 0 1px rgba(124, 58, 237, 0.1);
+  }
+  .agent-card-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 20px 24px 0;
+  }
+  .agent-icon { width: 28px; height: 28px; }
+  .agent-type {
+    font-weight: 700; font-size: 16px; color: var(--text);
+  }
+  .agent-img {
+    width: 100%; height: 280px; object-fit: cover; object-position: center top;
+    display: block;
+  }
+  .agent-code-bg {
+    height: 280px; overflow: hidden; padding: 20px;
+    background: var(--bg);
+    position: relative;
+  }
+  .agent-code-bg pre {
+    margin: 0; font-family: var(--mono); font-size: 11px;
+    color: var(--text-muted); line-height: 1.6;
+    white-space: pre-wrap;
+  }
+  .agent-code-bg code { color: var(--text-muted); }
+  .agent-desc {
+    padding: 16px 24px 0; color: var(--text-dim);
+    font-size: 14px; line-height: 1.5;
+  }
+
+  /* ── CAPABILITIES: Horizontal scroll ── */
+  .capabilities {
+    padding: 100px 0;
+  }
+  .cap-scroll {
+    display: flex; gap: 16px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    padding: 0 24px 20px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .cap-scroll::-webkit-scrollbar { display: none; }
+  .cap-card {
+    flex-shrink: 0; width: 280px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 0; overflow: hidden;
+    scroll-snap-align: start;
+    transition: all 0.3s ease;
+  }
+  .cap-card:first-child { margin-left: max(24px, calc((100vw - 1200px) / 2)); }
+  .cap-card:last-child { margin-right: 24px; }
+  .cap-card:hover {
+    border-color: rgba(168, 85, 247, 0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  }
+  .cap-img {
+    width: 100%; height: 180px; object-fit: cover; display: block;
+    border-bottom: 1px solid var(--border);
+  }
+  .cap-card h3 {
+    padding: 20px 20px 8px; margin: 0;
+    font-size: 18px; font-weight: 700; color: var(--text);
+  }
+  .cap-card p {
+    padding: 0 20px 20px; margin: 0;
+    font-size: 14px; color: var(--text-dim); line-height: 1.5;
+  }
+
+  /* ── FEATURES BENTO ── */
+  .features {
+    padding: 100px 24px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .feature-bento {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .bento-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    transition: all 0.3s ease;
+  }
+  .bento-card:hover {
+    border-color: rgba(168, 85, 247, 0.15);
+    background: var(--surface-2);
+  }
+  .bento-card h3 {
+    font-size: 20px; font-weight: 700; margin: 0 0 12px;
+    color: var(--text);
+  }
+  .bento-card p {
+    font-size: 14px; color: var(--text-dim); line-height: 1.6; margin: 0;
+  }
+  .bento-wide { grid-column: span 2; }
+  .bento-icon {
+    width: 40px; height: 40px; border-radius: 12px;
+    background: rgba(168, 85, 247, 0.1);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+  }
+  .bento-icon img { width: 20px; height: 20px; opacity: 0.7; }
+  .bento-dark {
+    background: linear-gradient(135deg, var(--surface), rgba(168, 85, 247, 0.05));
+  }
+  .bento-accent {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(59, 130, 246, 0.06));
+    border-color: rgba(168, 85, 247, 0.15);
+  }
+  .bento-accent h3 {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .skills-flow {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px;
+  }
+  .skills-flow span {
+    padding: 6px 14px; font-size: 12px; font-weight: 500;
+    border: 1px solid var(--border); border-radius: 999px;
+    color: var(--text-dim); transition: all 0.2s ease;
+  }
+  .skills-flow span:hover {
+    border-color: var(--accent); color: var(--text);
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-section {
+    padding: 40px 0; overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .marquee-track {
+    display: flex; gap: 16px; white-space: nowrap;
+    animation: marquee 30s linear infinite;
+  }
+  .marquee-reverse { animation-direction: reverse; margin-top: 12px; }
+  .marquee-track span {
+    flex-shrink: 0;
+    padding: 8px 20px; font-size: 13px; font-weight: 500;
+    color: var(--text-muted); border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── CTA ── */
+  .cta {
+    padding: 100px 24px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .cta-card {
+    background: linear-gradient(135deg, var(--surface), rgba(168, 85, 247, 0.06));
+    border: 1px solid rgba(168, 85, 247, 0.15);
+    border-radius: 32px;
+    padding: clamp(48px, 8vw, 80px);
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-card::before {
+    content: '';
+    position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(124, 58, 237, 0.08), transparent 70%);
+    filter: blur(60px); pointer-events: none;
+  }
+  .cta-card .eyebrow { display: block; text-align: center; margin-bottom: 20px; }
+  .cta-card h2 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700; letter-spacing: -0.03em;
+    margin: 0 0 16px; line-height: 1.1;
+    position: relative;
+  }
+  .cta-card p {
+    color: var(--text-dim); font-size: 17px; margin: 0 0 32px;
+    position: relative;
+  }
+  .cta-actions {
+    display: flex; gap: 12px; justify-content: center;
+    flex-wrap: wrap; position: relative;
+  }
+
+  /* ── FOOTER ── */
+  .mosaic-footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 24px;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-logo img { display: block; opacity: 0.5; display: block; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a {
+    color: var(--text-muted); font-size: 13px; text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--text); }
+  .footer-copy { color: var(--text-muted); font-size: 12px; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #fff; }
+  ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+    }
+    .hero-character { grid-row: auto; min-height: 300px; }
+    .hero-main { padding: 32px 24px; }
+    .hero-main h1 { font-size: clamp(44px, 10vw, 72px); }
+    .agent-grid { grid-template-columns: 1fr; }
+    .feature-bento { grid-template-columns: 1fr; }
+    .bento-wide { grid-column: span 1; }
+    .nav-links { display: none; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+
+  @media (max-width: 640px) {
+    .hero { padding: 100px 16px 60px; }
+    .agents, .features, .cta { padding: 60px 16px; }
+    .cta-card { padding: 32px 20px; }
+  }
+</style>
+
+</Layout>
