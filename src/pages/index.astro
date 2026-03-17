@@ -79,6 +79,9 @@ import Layout from '../layouts/Layout.astro';
       { left: 0.164, top: 0.457 },  // bl
       { left: 0.719, top: 0.458 },  // br
     ];
+    // Skip JS positioning on mobile — CSS handles it
+    if (window.innerWidth <= 480) return;
+
     const bubbleSize = ar.width * 0.139;
 
     bubbles.forEach((bubble, i) => {
@@ -1021,6 +1024,16 @@ import Layout from '../layouts/Layout.astro';
     .CuNavigation_container__rChM8 {
       padding: 10px 16px;
     }
+    /* Bubbles: exact Figma mobile positions (440x956 frame) */
+    .bubble {
+      width: 21.35% !important;
+    }
+    .bubble-tl { left: 4.55% !important; top: 22.38% !important; }
+    .bubble-ml { left: 4.55% !important; top: 33.68% !important; }
+    .bubble-bl { left: 4.55% !important; top: 44.98% !important; }
+    .bubble-tr { left: 74.09% !important; top: 22.38% !important; }
+    .bubble-mr { left: 74.09% !important; top: 33.68% !important; }
+    .bubble-br { left: 74.09% !important; top: 44.98% !important; }
   }
   /* Features section: cover the hero character overflow */
   .AgentHeroPin_agentFeatures__jxcjg {
