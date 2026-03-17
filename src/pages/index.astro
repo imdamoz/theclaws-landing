@@ -60,7 +60,38 @@ import Layout from '../layouts/Layout.astro';
     });
   });
 
-  // === HERO SCROLL-PIN — removed, will redo ===
+  // === HERO: Sync bubbles to character position ===
+  function syncBubbles() {
+    const actor = document.querySelector('.AgentHeroPin_actor__YseDE');
+    const stage = document.querySelector('.CanvaStage_canvaStage__ACZ2c');
+    const bubbles = document.querySelectorAll('.bubble');
+    if (!actor || !stage || bubbles.length === 0) return;
+
+    const ar = actor.getBoundingClientRect();
+    const sr = stage.getBoundingClientRect();
+
+    // Exact ratios captured from current working positions
+    const positions = [
+      { left: 0.188, top: 0.072 },  // tl
+      { left: 0.694, top: 0.072 },  // tr
+      { left: 0.094, top: 0.267 },  // ml
+      { left: 0.779, top: 0.267 },  // mr
+      { left: 0.164, top: 0.457 },  // bl
+      { left: 0.719, top: 0.458 },  // br
+    ];
+    const bubbleSize = ar.width * 0.139;
+
+    bubbles.forEach((bubble, i) => {
+      if (!positions[i]) return;
+      const p = positions[i];
+      bubble.style.left = (ar.left - sr.left + ar.width * p.left) + 'px';
+      bubble.style.top = (ar.top - sr.top + ar.height * p.top) + 'px';
+      bubble.style.width = bubbleSize + 'px';
+    });
+  }
+  syncBubbles();
+  window.addEventListener('resize', syncBubbles);
+  window.addEventListener('load', syncBubbles);
 
   // === EXPANDABLE TAGS ===
   document.querySelectorAll('[data-expandable-tag]').forEach(tag => {
@@ -909,17 +940,10 @@ import Layout from '../layouts/Layout.astro';
   }
   .bubble {
     position: absolute;
-    width: 11.02%;
     height: auto;
     border-radius: 9999px;
+    /* left, top, width set by JS syncBubbles() */
   }
-  /* Same frame-relative positions as before */
-  .bubble-tl { left: 24.84%; top: 21.05%; }
-  .bubble-tr { left: 64.83%; top: 21.05%; }
-  .bubble-ml { left: 17.40%; top: 45.05%; }
-  .bubble-mr { left: 71.57%; top: 45.06%; }
-  .bubble-bl { left: 22.92%; top: 68.45%; }
-  .bubble-br { left: 66.82%; top: 68.57%; }
   /* CTA — inside hero, Figma position: 71.86% from top, centered */
   .AgentHeroPin_ctaWrapper__Hzo48 {
     position: absolute !important;
