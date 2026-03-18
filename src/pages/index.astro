@@ -79,9 +79,6 @@ import Layout from '../layouts/Layout.astro';
       { left: -0.05, top: 0.55 },   // bl
       { left: 0.88,  top: 0.55 },   // br
     ];
-    // Skip JS positioning on mobile — CSS handles it
-    if (window.innerWidth <= 800) return;
-
     // Account for max-height cap: visible image may be smaller than element
     const imgRatio = 1.14; // image natural width/height ratio
     const visibleH = Math.min(ar.height, ar.height);
@@ -1037,15 +1034,7 @@ import Layout from '../layouts/Layout.astro';
     .CuNavigation_container__rChM8 {
       padding: 10px 16px;
     }
-    .bubble {
-      width: 14% !important;
-    }
-    .bubble-tl { left: 5% !important; top: 22% !important; }
-    .bubble-ml { left: 3% !important; top: 36% !important; }
-    .bubble-bl { left: 5% !important; top: 50% !important; }
-    .bubble-tr { left: 76% !important; top: 22% !important; }
-    .bubble-mr { left: 78% !important; top: 36% !important; }
-    .bubble-br { left: 76% !important; top: 50% !important; }
+    /* Bubbles: JS syncBubbles() handles all sizes now */
   }
   /* Features section: cover the hero character overflow */
   .AgentHeroPin_agentFeatures__jxcjg {
