@@ -82,13 +82,18 @@ import Layout from '../layouts/Layout.astro';
     // Skip JS positioning on mobile — CSS handles it
     if (window.innerWidth <= 800) return;
 
-    const bubbleSize = ar.width * 0.139;
+    // Account for max-height cap: visible image may be smaller than element
+    const imgRatio = 1.14; // image natural width/height ratio
+    const visibleH = Math.min(ar.height, ar.height);
+    const visibleW = Math.min(ar.width, visibleH * imgRatio);
+    const offsetX = (ar.width - visibleW) / 2; // center offset if image is narrower
+    const bubbleSize = visibleW * 0.139;
 
     bubbles.forEach((bubble, i) => {
       if (!positions[i]) return;
       const p = positions[i];
-      bubble.style.left = (ar.left - sr.left + ar.width * p.left) + 'px';
-      bubble.style.top = (ar.top - sr.top + ar.height * p.top) + 'px';
+      bubble.style.left = (ar.left - sr.left + offsetX + visibleW * p.left) + 'px';
+      bubble.style.top = (ar.top - sr.top + visibleH * p.top) + 'px';
       bubble.style.width = bubbleSize + 'px';
     });
   }
