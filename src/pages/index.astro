@@ -92,9 +92,25 @@ import Layout from '../layouts/Layout.astro';
       bubble.style.width = bubbleSize + 'px';
     });
   }
+  // === HERO: Sync CTA to character position ===
+  function syncCTA() {
+    const actor = document.querySelector('.AgentHeroPin_actor__YseDE');
+    const stage = document.querySelector('.CanvaStage_canvaStage__ACZ2c');
+    const cta = document.querySelector('.AgentHeroPin_ctaWrapper__Hzo48');
+    if (!actor || !stage || !cta) return;
+
+    const ar = actor.getBoundingClientRect();
+    const sr = stage.getBoundingClientRect();
+
+    // Position CTA at 75% down the character (waist/lower body)
+    const ctaY = ar.top - sr.top + ar.height * 0.75;
+    cta.style.top = ctaY + 'px';
+  }
+
   syncBubbles();
-  window.addEventListener('resize', syncBubbles);
-  window.addEventListener('load', syncBubbles);
+  syncCTA();
+  window.addEventListener('resize', () => { syncBubbles(); syncCTA(); });
+  window.addEventListener('load', () => { syncBubbles(); syncCTA(); });
 
   // === EXPANDABLE TAGS ===
   document.querySelectorAll('[data-expandable-tag]').forEach(tag => {
@@ -947,14 +963,14 @@ import Layout from '../layouts/Layout.astro';
     border-radius: 9999px;
     /* left, top, width set by JS syncBubbles() */
   }
-  /* CTA — inside hero, Figma position: 71.86% from top, centered */
+  /* CTA — JS syncCTA() sets top position relative to character */
   .AgentHeroPin_ctaWrapper__Hzo48 {
     position: absolute !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    top: 65% !important;
     z-index: 5;
     text-align: center;
+    width: auto !important;
   }
   .AgentHeroPin_ctaText__PF_SK {
     color: #000 !important;
@@ -964,6 +980,8 @@ import Layout from '../layouts/Layout.astro';
     line-height: 1.45 !important;
     letter-spacing: 0 !important;
     text-align: center;
+    max-width: 380px;
+    margin: 0 auto;
   }
   .AgentHeroPin_actions__aJSR7 {
     justify-content: center;
@@ -1004,15 +1022,17 @@ import Layout from '../layouts/Layout.astro';
       top: 6% !important;
       height: 70% !important;
     }
-    /* CTA below the character, not overlapping */
+    /* CTA — full width on mobile so text wraps to 2 lines */
     .AgentHeroPin_ctaWrapper__Hzo48 {
-      top: 65% !important;
-      bottom: auto !important;
+      width: 100% !important;
+      padding: 0 16px !important;
+      box-sizing: border-box !important;
     }
     .AgentHeroPin_ctaText__PF_SK {
       font-size: clamp(24px, 7vw, 33px) !important;
       line-height: 1.4 !important;
       margin-bottom: -10px !important;
+      max-width: none !important;
     }
     .AgentHeroPin_actions__aJSR7 {
       margin-top: -10px !important;
