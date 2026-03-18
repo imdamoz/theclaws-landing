@@ -83,14 +83,14 @@ import Layout from '../layouts/Layout.astro';
     if (window.innerWidth <= 480) {
       const stageW = sr.width;
       const stageH = sr.height;
-      const bSize = stageW * 0.14;
+      const bSize = stageW * 0.16;
       const gridPositions = [
-        { left: 0.04, top: 0.12 },  // tl
-        { left: 0.78, top: 0.12 },  // tr
-        { left: 0.02, top: 0.28 },  // ml
-        { left: 0.80, top: 0.28 },  // mr
-        { left: 0.04, top: 0.44 },  // bl
-        { left: 0.78, top: 0.44 },  // br
+        { left: 0.08, top: 0.16 },  // tl
+        { left: 0.74, top: 0.16 },  // tr
+        { left: 0.06, top: 0.29 },  // ml
+        { left: 0.76, top: 0.29 },  // mr
+        { left: 0.08, top: 0.42 },  // bl
+        { left: 0.74, top: 0.42 },  // br
       ];
       bubbles.forEach((bubble, i) => {
         if (!gridPositions[i]) return;
@@ -952,9 +952,9 @@ import Layout from '../layouts/Layout.astro';
   .AgentHeroPin_pinnedActor__8OP5G {
     position: absolute !important;
     left: 22.5% !important;
-    top: 8% !important;
+    top: max(12%, 100px) !important;
     width: 55% !important;
-    height: 90% !important;
+    height: 85% !important;
     z-index: 2;
     margin-top: 0 !important;
   }
