@@ -968,32 +968,34 @@ import Layout from '../layouts/Layout.astro';
   .AgentHeroPin_actions__aJSR7 {
     justify-content: center;
     gap: 14px;
+    flex-wrap: nowrap !important;
+    flex-direction: row !important;
   }
-  /* Tablet portrait (iPad Pro, iPad Air) */
-  @media (max-width: 1024px) {
+  /* All tablets (481-1024px width) */
+  @media (max-width: 1024px) and (min-width: 481px) {
     .CanvaStage_canvaStage__ACZ2c {
-      aspect-ratio: auto;
-      min-height: 55vh !important;
+      aspect-ratio: 3 / 4 !important;
+      min-height: auto !important;
     }
     .AgentHeroPin_pinnedActor__8OP5G {
-      top: 0% !important;
-      width: 60% !important;
-      left: 20% !important;
+      top: 2% !important;
+      width: 55% !important;
+      left: 22.5% !important;
+      height: 75% !important;
     }
     .AgentHeroPin_ctaWrapper__Hzo48 {
-      top: 58% !important;
+      top: 62% !important;
     }
   }
-  /* Small tablet / large phone */
-  @media (max-width: 820px) {
-    .CanvaStage_canvaStage__ACZ2c {
-      min-height: 50vh !important;
-    }
+  /* Narrower tablets (≤820px) */
+  @media (max-width: 820px) and (min-width: 481px) {
     .AgentHeroPin_pinnedActor__8OP5G {
-      width: 70% !important;
-      left: 15% !important;
+      width: 65% !important;
+      left: 17.5% !important;
     }
-    /* Hide nav links, keep only logo + CTA */
+  }
+  /* Hide nav links on anything narrower than desktop */
+  @media (max-width: 768px) {
     .CuNavigation_navLinks__JseP1 {
       display: none !important;
     }
@@ -1009,31 +1011,42 @@ import Layout from '../layouts/Layout.astro';
     .AgentHeroPin_pinnedActor__8OP5G {
       width: 90% !important;
       left: 5% !important;
-      top: 2% !important;
+      top: 6% !important;
       height: 70% !important;
     }
     /* CTA below the character, not overlapping */
     .AgentHeroPin_ctaWrapper__Hzo48 {
-      top: 74% !important;
+      top: 65% !important;
       bottom: auto !important;
     }
     .AgentHeroPin_ctaText__PF_SK {
       font-size: clamp(24px, 7vw, 33px) !important;
       line-height: 1.4 !important;
+      margin-bottom: -10px !important;
+    }
+    .AgentHeroPin_actions__aJSR7 {
+      margin-top: -10px !important;
+    }
+    /* Smaller button padding so text fits one line */
+    .AgentHeroPin_actions__aJSR7 .Btn_btn-primary__FF6_S,
+    .AgentHeroPin_actions__aJSR7 .CuButtonV5_button__SDlee {
+      padding: 12px 20px !important;
+      font-size: 14px !important;
+      white-space: nowrap !important;
     }
     .CuNavigation_container__rChM8 {
       padding: 10px 16px;
     }
-    /* Bubbles: exact Figma mobile positions (440x956 frame) */
+    /* Bubbles: Figma positions with more vertical gap for small screens */
     .bubble {
-      width: 21.35% !important;
+      width: 19% !important;
     }
-    .bubble-tl { left: 4.55% !important; top: 22.38% !important; }
-    .bubble-ml { left: 4.55% !important; top: 33.68% !important; }
-    .bubble-bl { left: 4.55% !important; top: 44.98% !important; }
-    .bubble-tr { left: 74.09% !important; top: 22.38% !important; }
-    .bubble-mr { left: 74.09% !important; top: 33.68% !important; }
-    .bubble-br { left: 74.09% !important; top: 44.98% !important; }
+    .bubble-tl { left: 5% !important; top: 22% !important; }
+    .bubble-ml { left: 3% !important; top: 36% !important; }
+    .bubble-bl { left: 5% !important; top: 50% !important; }
+    .bubble-tr { left: 76% !important; top: 22% !important; }
+    .bubble-mr { left: 78% !important; top: 36% !important; }
+    .bubble-br { left: 76% !important; top: 50% !important; }
   }
   /* Features section: cover the hero character overflow */
   .AgentHeroPin_agentFeatures__jxcjg {
