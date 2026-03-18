@@ -72,12 +72,12 @@ import Layout from '../layouts/Layout.astro';
 
     // Exact ratios captured from current working positions
     const positions = [
-      { left: 0.188, top: 0.072 },  // tl
-      { left: 0.694, top: 0.072 },  // tr
-      { left: 0.094, top: 0.267 },  // ml
-      { left: 0.779, top: 0.267 },  // mr
-      { left: 0.164, top: 0.457 },  // bl
-      { left: 0.719, top: 0.458 },  // br
+      { left: 0.02,  top: 0.01 },   // tl — upper left, away from head
+      { left: 0.85,  top: 0.01 },   // tr — upper right, away from head
+      { left: -0.15, top: 0.25 },   // ml — far left, at shoulder level
+      { left: 0.98,  top: 0.25 },   // mr — far right, at shoulder level
+      { left: -0.05, top: 0.48 },   // bl — lower left, near hand
+      { left: 0.88,  top: 0.48 },   // br — lower right, near hand
     ];
     // Skip JS positioning on mobile — CSS handles it
     if (window.innerWidth <= 800) return;
