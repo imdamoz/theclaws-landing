@@ -79,6 +79,29 @@ import Layout from '../layouts/Layout.astro';
       { left: -0.05, top: 0.55 },   // bl
       { left: 0.88,  top: 0.55 },   // br
     ];
+    // On small screens, use straight-line grid positions instead of arc
+    if (window.innerWidth <= 480) {
+      const stageW = sr.width;
+      const stageH = sr.height;
+      const bSize = stageW * 0.14;
+      const gridPositions = [
+        { left: 0.04, top: 0.12 },  // tl
+        { left: 0.78, top: 0.12 },  // tr
+        { left: 0.02, top: 0.28 },  // ml
+        { left: 0.80, top: 0.28 },  // mr
+        { left: 0.04, top: 0.44 },  // bl
+        { left: 0.78, top: 0.44 },  // br
+      ];
+      bubbles.forEach((bubble, i) => {
+        if (!gridPositions[i]) return;
+        const p = gridPositions[i];
+        bubble.style.left = (stageW * p.left) + 'px';
+        bubble.style.top = (stageH * p.top) + 'px';
+        bubble.style.width = bSize + 'px';
+      });
+      return;
+    }
+
     // Account for max-height cap: visible image may be smaller than element
     const imgRatio = 1.14; // image natural width/height ratio
     const visibleH = Math.min(ar.height, ar.height);
