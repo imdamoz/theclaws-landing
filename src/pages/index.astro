@@ -72,12 +72,12 @@ import Layout from '../layouts/Layout.astro';
 
     // Exact ratios captured from current working positions
     const positions = [
-      { left: 0.02,  top: 0.01 },   // tl — upper left, away from head
-      { left: 0.85,  top: 0.01 },   // tr — upper right, away from head
-      { left: -0.15, top: 0.25 },   // ml — far left, at shoulder level
-      { left: 0.98,  top: 0.25 },   // mr — far right, at shoulder level
-      { left: -0.05, top: 0.48 },   // bl — lower left, near hand
-      { left: 0.88,  top: 0.48 },   // br — lower right, near hand
+      { left: 0.02,  top: 0.08 },   // tl
+      { left: 0.85,  top: 0.08 },   // tr
+      { left: -0.15, top: 0.32 },   // ml
+      { left: 0.98,  top: 0.32 },   // mr
+      { left: -0.05, top: 0.55 },   // bl
+      { left: 0.88,  top: 0.55 },   // br
     ];
     // Skip JS positioning on mobile — CSS handles it
     if (window.innerWidth <= 800) return;
@@ -87,7 +87,7 @@ import Layout from '../layouts/Layout.astro';
     const visibleH = Math.min(ar.height, ar.height);
     const visibleW = Math.min(ar.width, visibleH * imgRatio);
     const offsetX = (ar.width - visibleW) / 2; // center offset if image is narrower
-    const bubbleSize = visibleW * 0.139;
+    const bubbleSize = visibleW * 0.18;
 
     bubbles.forEach((bubble, i) => {
       if (!positions[i]) return;
@@ -1023,7 +1023,7 @@ import Layout from '../layouts/Layout.astro';
     }
     .AgentHeroPin_ctaText__PF_SK {
       margin-bottom: -10px !important;
-      max-width: none !important;
+      max-width: 380px !important;
     }
     .AgentHeroPin_actions__aJSR7 {
       margin-top: -10px !important;
@@ -1038,7 +1038,7 @@ import Layout from '../layouts/Layout.astro';
       padding: 10px 16px;
     }
     .bubble {
-      width: 19% !important;
+      width: 14% !important;
     }
     .bubble-tl { left: 5% !important; top: 22% !important; }
     .bubble-ml { left: 3% !important; top: 36% !important; }
