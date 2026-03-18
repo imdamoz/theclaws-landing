@@ -989,6 +989,11 @@ import Layout from '../layouts/Layout.astro';
     flex-wrap: nowrap !important;
     flex-direction: row !important;
   }
+  .AgentHeroPin_actions__aJSR7 button,
+  .AgentHeroPin_actions__aJSR7 .Btn_btn-primary__FF6_S,
+  .AgentHeroPin_actions__aJSR7 .CuButtonV5_button__SDlee {
+    white-space: nowrap !important;
+  }
   /* Tablets — only character sizing, no CTA overrides */
   @media (max-width: 1024px) and (min-width: 481px) {
     .AgentHeroPin_pinnedActor__8OP5G {
@@ -1002,14 +1007,22 @@ import Layout from '../layouts/Layout.astro';
       left: 20% !important;
     }
   }
-  /* Hide nav links on anything narrower than desktop */
+  /* Hide nav links + full-width CTA on anything narrower than desktop */
   @media (max-width: 768px) {
     .CuNavigation_navLinks__JseP1 {
       display: none !important;
     }
+    .AgentHeroPin_ctaWrapper__Hzo48 {
+      width: 100% !important;
+      padding: 0 16px !important;
+      box-sizing: border-box !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+    }
   }
   /* Mobile — match Figma mobile design */
-  @media (max-width: 480px) {
+  @media (max-width: 640px) {
     .CanvaStage_canvaStage__ACZ2c {
       aspect-ratio: auto !important;
       min-height: 90vh !important;
