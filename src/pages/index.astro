@@ -923,8 +923,8 @@ import Layout from '../layouts/Layout.astro';
   }
   .CanvaStage_canvaStage__ACZ2c {
     background: #ffffff !important;
-    min-height: auto !important;
     aspect-ratio: 852.38 / 456;
+    min-height: min(90vh, 600px) !important;
     max-width: 100%;
     position: relative !important;
     overflow: visible !important;
@@ -951,10 +951,10 @@ import Layout from '../layouts/Layout.astro';
   /* Woman + bubbles container — exact Figma position */
   .AgentHeroPin_pinnedActor__8OP5G {
     position: absolute !important;
-    left: 22.5% !important;
-    top: max(12%, 100px) !important;
-    width: 55% !important;
-    height: 85% !important;
+    left: clamp(7.5%, -10% + 4vw, 22.5%) !important;
+    top: clamp(20px, 12%, 100px) !important;
+    width: clamp(55%, 120% - 8vw, 85%) !important;
+    height: clamp(65%, 100% - 4vw, 85%) !important;
     z-index: 2;
     margin-top: 0 !important;
   }
@@ -1019,20 +1019,9 @@ import Layout from '../layouts/Layout.astro';
   .AgentHeroPin_actions__aJSR7 .CuButtonV5_button__SDlee {
     white-space: nowrap !important;
   }
-  /* === ONE BREAKPOINT: Mobile ≤800px === */
+  /* === ≤800px: Nav + CTA layout only (character scales via clamp) === */
   @media (max-width: 800px) {
     .CuNavigation_navLinks__JseP1 { display: none !important; }
-    .CanvaStage_canvaStage__ACZ2c {
-      aspect-ratio: auto !important;
-      min-height: 90vh !important;
-      overflow: visible !important;
-    }
-    .AgentHeroPin_pinnedActor__8OP5G {
-      width: 85% !important;
-      left: 7.5% !important;
-      top: 5% !important;
-      height: 70% !important;
-    }
     .AgentHeroPin_ctaWrapper__Hzo48 {
       width: 100% !important;
       padding: 0 16px !important;
