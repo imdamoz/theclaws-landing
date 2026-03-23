@@ -1710,14 +1710,17 @@ import Layout from '../layouts/Layout.astro';
 
   /* === ROI IMPACT SECTION === */
   .roi-section {
-    padding: 80px 0 60px;
-    background: #fafafa;
-    
+    padding: 20px 0 80px;
+    background: #ffffff;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 100%;
   }
   .roi-container {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 0 32px;
+    padding: 0 24px;
+    box-sizing: border-box;
   }
   .roi-header {
     display: flex;
@@ -1727,7 +1730,7 @@ import Layout from '../layouts/Layout.astro';
     margin-bottom: 56px;
   }
   .roi-header-left {
-    flex: 1.2;
+    flex: 1;
   }
   .roi-eyebrow {
     display: inline-block;
@@ -1755,6 +1758,7 @@ import Layout from '../layouts/Layout.astro';
   .roi-header-right {
     flex: 0.8;
     padding-top: 32px;
+    text-align: right;
   }
   .roi-subtitle {
     font-size: 16px;
@@ -1908,25 +1912,12 @@ import Layout from '../layouts/Layout.astro';
   }
 
   /* Scale lobster to overflow frame */
-  .cap-media img {
-    object-fit: contain !important;
-    transform: scale(1.2);
-  }
+
 
   .capabilities-showcase {
     overflow: hidden;
   }
 
-  .capabilities-showcase {
-    overflow: hidden;
-  }
-
-  /* Zoom lobster to fill frame */
-  .cap-media img {
-    object-fit: cover !important;
-    object-position: center 40% !important;
-    transform: scale(1.3);
-  }
 </style>
 
 <div id="videoLightbox" onclick="if(event.target===this){this.style.display='none';document.getElementById('lightboxVideo').pause()}" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.9);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;cursor:pointer;"><div style="position:relative;width:90%;max-width:1200px;"><video id="lightboxVideo" controls autoplay style="width:100%;height:auto;border-radius:16px;"></video><button onclick="document.getElementById('videoLightbox').style.display='none';document.getElementById('lightboxVideo').pause()" style="position:absolute;top:-40px;right:0;width:36px;height:36px;border:0;border-radius:50%;background:rgba(255,255,255,0.15);cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div></div>
