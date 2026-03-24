@@ -2447,7 +2447,7 @@ import Layout from '../layouts/Layout.astro';
       <p style="text-align:center;color:#7b7b7b;font-size:13px;font-family:Poppins,sans-serif;margin:0">Start using Super Agents in minutes</p>
       <form id="loopsForm" style="width:100%;display:flex;flex-direction:column;gap:12px">
 <input id="loopsEmail" type="email" placeholder="Enter your work email" required style="width:100%;padding:12px 14px;border-radius:12px;border:1px solid #d9d9d9;font-size:13.5px;font-family:Poppins,sans-serif;outline:none;box-sizing:border-box" />
-<button id="loopsBtn" type="submit" style="width:100%;padding:11px;background:#000;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;font-family:Poppins,sans-serif;text-transform:capitalize;cursor:pointer">Activate</button>
+<button id="loopsBtn" type="button" onclick="submitToLoops()" style="width:100%;padding:11px;background:#000;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;font-family:Poppins,sans-serif;text-transform:capitalize;cursor:pointer">Activate</button>
 <p id="loopsMsg" style="text-align:center;font-size:13px;font-family:Poppins,sans-serif;margin:0;display:none"></p>
 </form>
     </div>
@@ -2588,48 +2588,57 @@ document.addEventListener('keydown',function(e){
 })();
 </script>
 
+
+
 <script is:inline>
-(function(){
-  function initLoops(){
-    var form=document.getElementById('loopsForm');
-    if(!form){setTimeout(initLoops,300);return}
-    form.addEventListener('submit',function(e){
-      e.preventDefault();
-      var email=document.getElementById('loopsEmail').value.trim();
-      var btn=document.getElementById('loopsBtn');
-      var msg=document.getElementById('loopsMsg');
-      if(!email){return}
-      btn.disabled=true;
-      btn.textContent='Sending...';
-      msg.style.display='none';
-      fetch('https://app.loops.so/api/newsletter-form/cmd5dsm0e055sut0jqsc3jq90',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({email:email})
-      }).then(function(r){return r.json()}).then(function(data){
-        if(data.success||data.id){
-          msg.style.color='#22c55e';
-          msg.textContent='Welcome! You are on the list.';
-          msg.style.display='block';
-          document.getElementById('loopsEmail').value='';
-        }else{
-          msg.style.color='#ef4444';
-          msg.textContent=data.message||'Something went wrong. Try again.';
-          msg.style.display='block';
-        }
-        btn.disabled=false;
-        btn.textContent='Activate';
-      }).catch(function(){
-        msg.style.color='#ef4444';
-        msg.textContent='Something went wrong. Try again.';
-        msg.style.display='block';
-        btn.disabled=false;
-        btn.textContent='Activate';
-      });
-    });
+function submitToLoops(){
+  var email=document.getElementById('loopsEmail').value.trim();
+  var btn=document.getElementById('loopsBtn');
+  var msg=document.getElementById('loopsMsg');
+  if(!email||email.indexOf('@')===-1){
+    msg.style.display='block';
+    msg.style.color='#ef4444';
+    msg.textContent='Please enter a valid email.';
+    return;
   }
-  initLoops();
-})();
+  btn.disabled=true;
+  btn.textContent='Sending...';
+  btn.style.opacity='0.6';
+  msg.style.display='none';
+  fetch('https://app.loops.so/api/newsletter-form/cmd5dsm0e055sut0jqsc3jq90',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email:email})
+  }).then(function(r){return r.json()}).then(function(data){
+    btn.disabled=false;
+    btn.style.opacity='1';
+    if(data.success||data.id||data.message==='Email is already on the list.'){
+      btn.textContent='Welcome!';
+      btn.style.background='#22c55e';
+      msg.style.display='block';
+      msg.style.color='#22c55e';
+      msg.textContent='You are on the list!';
+      document.getElementById('loopsEmail').value='';
+      setTimeout(function(){
+        btn.textContent='Activate';
+        btn.style.background='#000';
+        msg.style.display='none';
+      },4000);
+    }else{
+      btn.textContent='Activate';
+      msg.style.display='block';
+      msg.style.color='#ef4444';
+      msg.textContent=data.message||'Something went wrong. Try again.';
+    }
+  }).catch(function(){
+    btn.disabled=false;
+    btn.style.opacity='1';
+    btn.textContent='Activate';
+    msg.style.display='block';
+    msg.style.color='#ef4444';
+    msg.textContent='Something went wrong. Try again.';
+  });
+}
 </script>
 </Layout>
 
