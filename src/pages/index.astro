@@ -2445,8 +2445,11 @@ import Layout from '../layouts/Layout.astro';
       <svg viewBox="0 0 435 265" style="height:45px;width:auto" fill="black"><path d="M429.39 65.14C424.51 60.12 380.98 15.81 355.62 6.87C337.04 0.33 237.25 0 217.44 0C197.63 0 97.84 0.33 79.26 6.87C48.27 19.55 10.37 60.65 0 70.79C40.65 133.17 112.44 203.37 212.42 261.99L217.44 264.9L222.46 261.99C322.24 203.52 394.52 133.04 434.88 70.79L429.39 65.14ZM70.1 72.89C64.91 91.43 65.26 109.97 70.08 126.09C47.82 102.98 32.13 82.55 25.6 73.3C41.03 58.09 70.41 31.2 85.91 25.74C88.19 24.93 93.84 24.12 102.53 23.36C87.78 34.79 75.94 52.02 70.1 72.89ZM133.05 43.15C108.57 70.1 103.02 102.32 107.84 137.74C81.83 102.85 98.28 47.69 140.36 34.64C137.94 37.62 135.43 40.24 133.05 43.15ZM365.57 125.29C336.32 155.86 287.1 200.57 217.44 241.75C199.96 231.41 183.76 220.86 168.85 210.36C246.11 230.78 264.38 166.57 264.38 166.57C164.02 220.44 119.94 66.52 221.96 43.02C323.99 19.52 351.4 117.03 351.4 117.03C367.4 72.84 355.3 42.85 330.31 23.19C340.16 24 346.53 24.88 348.97 25.74C364.47 31.2 393.85 58.09 409.29 73.3C402.55 82.74 388.15 101.69 365.57 125.29Z"/></svg>
       <h3 style="text-align:center;color:#000;font-size:20px;font-weight:700;font-family:Poppins,sans-serif;line-height:1.1;margin:0">Your agents are waiting</h3>
       <p style="text-align:center;color:#7b7b7b;font-size:13px;font-family:Poppins,sans-serif;margin:0">Start using Super Agents in minutes</p>
-      <input type="email" placeholder="Enter your work email" style="width:100%;padding:12px 14px;border-radius:12px;border:1px solid #d9d9d9;font-size:13.5px;font-family:Poppins,sans-serif;outline:none;box-sizing:border-box" />
-      <button style="width:100%;padding:11px;background:#000;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;font-family:Poppins,sans-serif;text-transform:capitalize;cursor:pointer">Activate</button>
+      <form id="loopsForm" style="width:100%;display:flex;flex-direction:column;gap:12px">
+<input id="loopsEmail" type="email" placeholder="Enter your work email" required style="width:100%;padding:12px 14px;border-radius:12px;border:1px solid #d9d9d9;font-size:13.5px;font-family:Poppins,sans-serif;outline:none;box-sizing:border-box" />
+<button id="loopsBtn" type="submit" style="width:100%;padding:11px;background:#000;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;font-family:Poppins,sans-serif;text-transform:capitalize;cursor:pointer">Activate</button>
+<p id="loopsMsg" style="text-align:center;font-size:13px;font-family:Poppins,sans-serif;margin:0;display:none"></p>
+</form>
     </div>
     
   </div>
@@ -2582,6 +2585,50 @@ document.addEventListener('keydown',function(e){
     });
   }
   initPlayer();
+})();
+</script>
+
+<script is:inline>
+(function(){
+  function initLoops(){
+    var form=document.getElementById('loopsForm');
+    if(!form){setTimeout(initLoops,300);return}
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      var email=document.getElementById('loopsEmail').value.trim();
+      var btn=document.getElementById('loopsBtn');
+      var msg=document.getElementById('loopsMsg');
+      if(!email){return}
+      btn.disabled=true;
+      btn.textContent='Sending...';
+      msg.style.display='none';
+      fetch('https://app.loops.so/api/newsletter-form/cmd5dsm0e055sut0jqsc3jq90',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({email:email})
+      }).then(function(r){return r.json()}).then(function(data){
+        if(data.success||data.id){
+          msg.style.color='#22c55e';
+          msg.textContent='Welcome! You are on the list.';
+          msg.style.display='block';
+          document.getElementById('loopsEmail').value='';
+        }else{
+          msg.style.color='#ef4444';
+          msg.textContent=data.message||'Something went wrong. Try again.';
+          msg.style.display='block';
+        }
+        btn.disabled=false;
+        btn.textContent='Activate';
+      }).catch(function(){
+        msg.style.color='#ef4444';
+        msg.textContent='Something went wrong. Try again.';
+        msg.style.display='block';
+        btn.disabled=false;
+        btn.textContent='Activate';
+      });
+    });
+  }
+  initLoops();
 })();
 </script>
 </Layout>
