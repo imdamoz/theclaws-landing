@@ -2608,7 +2608,7 @@ function submitToLoops(){
   fetch('https://app.loops.so/api/newsletter-form/cmd5dsm0e055sut0jqsc3jq90',{
     method:'POST',
     headers:{'Content-Type':'application/x-www-form-urlencoded'},
-    body:'email='+encodeURIComponent(email)
+    body:'email='+encodeURIComponent(email)+'&mailingLists='+encodeURIComponent('{"cmn4itjwm6x1i0i0c7bkr92q1":true}')
   }).then(function(r){return r.json()}).then(function(data){
     btn.disabled=false;
     btn.style.opacity='1';
