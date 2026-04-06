@@ -10,5 +10,8 @@
   "dependencies": {
     "astro": "^5.7.10",
     "gsap": "^3.12.7"
+  },
+  "devDependencies": {
+    "playwright": "^1.59.1"
   }
 }
