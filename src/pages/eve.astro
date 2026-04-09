@@ -1,0 +1,551 @@
+---
+import Testimonials from '../components/Testimonials.astro';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Eve — AI Executive Assistant | TheClaws</title>
+  <meta name="description" content="Eve handles your inbox, calendar, and follow-ups — 24/7, inside your existing tools. Deploy in 5 minutes." />
+
+  <!-- OG -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Eve — AI Executive Assistant | TheClaws" />
+  <meta property="og:description" content="Eve handles your inbox, calendar, and follow-ups — 24/7, inside your existing tools." />
+  <meta property="og:image" content="https://theclaws.ai/assets/featured-img.png" />
+
+  <!-- Meta Pixel -->
+  <script is:inline>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1398538578060948');
+    fbq('track', 'PageView');
+  </script>
+
+  <!-- Inspiration3 CSS (for testimonial cards) -->
+  <link rel="stylesheet" href="/inspiration3/css/sintraweb.shared.61297f412.min.css" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Inspiration CSS (for Brain AI / folder sections) -->
+  <link rel="stylesheet" href="/inspiration/css/sintraweb.shared.61297f412.min.css" />
+
+  <style is:global>
+    /* === BASE === */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    /* === GRADIENT FIX === */
+    .helper-lp_sharpness-image { display: none !important; }
+    .section_helper-lp-blue-gradient-container { overflow: visible !important; }
+    .helper-lp_blue-bg-gradient { height: 200% !important; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #1a1a1a;
+      background: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* === STICKY HEADER (no nav) === */
+    .eve-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .eve-header .logo {
+      font-weight: 800;
+      font-size: 20px;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .eve-header .header-cta {
+      background: #fff;
+      color: #000;
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: transform 0.15s;
+    }
+    .eve-header .header-cta:hover { transform: translateY(-1px); }
+
+    /* === NUMBERS / STATS SECTION === */
+    .eve-numbers {
+      position: relative;
+      padding: 100px 60px;
+      overflow: hidden;
+      background: #fafafa;
+    }
+    .eve-numbers-wrap {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .eve-numbers-left h2 {
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      color: #1a1a1a;
+      max-width: 520px;
+    }
+    .eve-numbers-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 48px;
+    }
+    .eve-number-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .eve-number-item .label-top {
+      font-size: 16px;
+      opacity: 0.6;
+    }
+    .eve-number-item .big-num {
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .eve-number-item .label-bottom {
+      font-size: 14px;
+      opacity: 0.5;
+    }
+    .eve-numbers-image {
+      width: 100%;
+      max-width: 550px;
+      height: auto;
+      object-fit: contain;
+      justify-self: end;
+    }
+
+    /* === COMPARISON TABLE === */
+    .eve-compare {
+      padding: 80px 60px;
+      background: #fff;
+    }
+    .eve-compare-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .eve-compare-sub {
+      text-align: center;
+      font-size: 16px;
+      opacity: 0.6;
+      margin-bottom: 48px;
+    }
+    .eve-compare-logos {
+      display: grid;
+      grid-template-columns: 200px repeat(4, 1fr);
+      gap: 0;
+      margin-bottom: 8px;
+      align-items: end;
+      padding-bottom: 16px;
+    }
+    .eve-compare-logos span {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .eve-compare-logos span:first-child { text-align: left; }
+    .eve-compare-logos .logo-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #f0f0f0;
+      margin: 0 auto 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .eve-compare-logos .logo-icon.eve-icon {
+      background: none;
+      border: 2px solid #1a1a1a;
+    }
+    .eve-compare-row {
+      display: grid;
+      grid-template-columns: 200px repeat(4, 1fr);
+      gap: 0;
+      padding: 16px 0;
+      border-top: 1px solid #f0f0f0;
+      align-items: center;
+    }
+    .eve-compare-row .feature-name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .eve-compare-row .cell {
+      text-align: center;
+    }
+    .eve-compare-row .cell span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .eve-compare-row .cell.yes span {
+      background: #22c55e;
+      color: #fff;
+    }
+    .eve-compare-row .cell.no span {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .eve-compare { padding: 60px 20px; }
+      .eve-compare-logos,
+      .eve-compare-row { grid-template-columns: 120px repeat(4, 1fr); }
+      .eve-compare-row .feature-name { font-size: 12px; }
+    }
+
+    /* === CAPABILITY LOOP CARDS === */
+    .eve-loop {
+      background: #fafafa;
+      padding: 80px 0;
+      margin-top: 80px;
+      border-top: 1px solid #eee;
+      overflow: hidden;
+    }
+    .eve-loop-header {
+      text-align: center;
+      padding: 0 24px;
+      margin-bottom: 48px;
+    }
+    .eve-loop-header h2 {
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #1a1a1a;
+    }
+    .eve-loop-header p {
+      font-size: 16px;
+      opacity: 0.6;
+      margin-top: 12px;
+    }
+    .eve-loop-rows {
+      overflow: hidden;
+      width: 100%;
+    }
+    .eve-loop-row {
+      display: flex;
+      padding: 8px 0;
+      width: max-content;
+    }
+    .eve-loop-row.loop-ready .eve-loop-group.normal {
+      animation: eveScrollLeft 40s linear infinite;
+    }
+    .eve-loop-row.loop-ready .eve-loop-group.reverse {
+      animation: eveScrollRight 40s linear infinite;
+    }
+    @keyframes eveScrollLeft {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+    @keyframes eveScrollRight {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(0); }
+    }
+    .eve-loop-group {
+      display: flex;
+      flex-shrink: 0;
+    }
+    .eve-loop-group > * {
+      margin-right: 16px;
+    }
+    .eve-loop-card {
+      background: #f5f5f5;
+      border: none;
+      border-radius: 16px;
+      padding: 28px;
+      width: 280px;
+      flex-shrink: 0;
+    }
+    .eve-loop-card .card-icon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 14px;
+      font-size: 24px;
+    }
+    .eve-loop-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #1a1a1a;
+    }
+    .eve-loop-card p {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .eve-header { padding: 14px 20px; }
+      .eve-numbers { padding: 60px 20px; }
+      .eve-numbers-wrap { grid-template-columns: 1fr; gap: 40px; }
+      .eve-numbers-image { max-width: 300px; justify-self: center; }
+      .eve-numbers-grid { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="eve-header">
+  <a href="/eve" class="logo">TheClaws</a>
+  <a href="#" class="header-cta">Get Eve Now</a>
+</header>
+
+
+<!-- STATS / NUMBERS SECTION -->
+<section class="eve-numbers">
+  <div class="eve-numbers-wrap">
+    <div class="eve-numbers-left">
+      <h2>Scale creates experience. Experience creates intelligence.</h2>
+      <div class="eve-numbers-grid">
+        <div class="eve-number-item">
+          <span class="label-top">More than</span>
+          <span class="big-num">40,000+</span>
+          <span class="label-bottom">business owners using TheClaws</span>
+        </div>
+        <div class="eve-number-item">
+          <span class="label-top">Available</span>
+          <span class="big-num">24/7</span>
+          <span class="label-bottom">on web and mobile</span>
+        </div>
+        <div class="eve-number-item">
+          <span class="label-top">More than</span>
+          <span class="big-num">10+ hrs</span>
+          <span class="label-bottom">saved per week on admin</span>
+        </div>
+        <div class="eve-number-item">
+          <span class="label-top">Up to</span>
+          <span class="big-num">70%</span>
+          <span class="label-bottom">faster lead response</span>
+        </div>
+      </div>
+    </div>
+    <img src="/images/executive-assistant.webp" alt="Eve — AI Executive Assistant" class="eve-numbers-image" />
+  </div>
+</section>
+
+
+
+<div class="section_helper-lp-blue-gradient-container"><div class="helper-lp_blue-bg"><div class="helper-lp_blue-bg-styles w-embed"><style>
+.helper-lp_blue-bg-gradient {
+background: radial-gradient(103.53% 39.16% at 50.03% 47.99%, #7B3EA4 0%, #7B3EA4 13.46%, #9F7FFF 35.1%, #AAB7E7 57.21%, rgba(255, 255, 255, 0.00) 96.15%);
+}
+</style></div><div class="helper-lp_sharpness-image"></div><div class="helper-lp_blue-bg-gradient"></div></div>
+<section class="section_helper-lp-folder"><div class="helper-lp-folder_style w-embed"><style>
+
+</style></div><div class="padding-global padding-section-large"><div class="w-layout-blockcontainer container-large w-container"><div class="helper-lp-folder_wrap"><div class="helper-lp-folder_heading text-color-alternate"><h2 class="text-size-5xl text-size-3xl--tablet text-size-2xl--mobile text-align-center">Eve is powered by Brain AI</h2></div><div class="helper-lp-folder_content"><div class="helper-lp-folder_folder-wrap"><img src="/inspiration/images/6980606a9e70d793c0ec0e63_brain-ai_photo-pack-1.avif" loading="lazy" sizes="100vw" srcset="/inspiration/images/6980606a9e70d793c0ec0e63_brain-ai_photo-pack-1-p-500.avif 500w, /inspiration/images/6980606a9e70d793c0ec0e63_brain-ai_photo-pack-1-p-800.avif 800w, /inspiration/images/6980606a9e70d793c0ec0e63_brain-ai_photo-pack-1.avif 1674w" alt="" class="helper-lp-images_image"><img src="/inspiration/images/691d6303264a7df642c98618_sintra-brain.avif" loading="lazy" sizes="100vw" srcset="/inspiration/images/691d6303264a7df642c98618_sintra-brain-p-500.avif 500w, /inspiration/images/691d6303264a7df642c98618_sintra-brain.avif 1420w" alt="" class="helper-lp-folder_folder-visual"></div><div class="helper-lp-folder_card-wrap hide-tablet"><div class="helper-lp-folder_card _1"><img src="/inspiration/images/69125a44ee547a53ae4c3914__ButtonItem.Leading.svg" loading="lazy" alt="" class="helper-lp-folder_card-icon"><div class="helper-lp-folder_card-content"><h3 class="helper-lp-folder_card-heading">Companies values (Memory item)</h3><p class="helper-lp-folder_card-paragraph">Safety, Velocity, Speed, Quality.</p></div></div><div class="helper-lp-folder_card _5"><img src="/inspiration/images/69125a44ee547a53ae4c3914__ButtonItem.Leading.svg" loading="lazy" alt="" class="helper-lp-folder_card-icon"><div class="helper-lp-folder_card-content"><h3 class="helper-lp-folder_card-heading">Brand tone (Memory item)</h3><p class="helper-lp-folder_card-paragraph">Simple, Friendly and Approachable</p></div></div><div class="helper-lp-folder_card _4"><img src="/inspiration/images/69125dd5f7ca61cf0d5874b6_FeaturedIcon2.svg" loading="lazy" alt="" class="helper-lp-folder_card-icon"><div class="helper-lp-folder_card-content"><h3 class="helper-lp-folder_card-heading">walker_service.docx (file item)</h3><p class="helper-lp-folder_card-paragraph">Walker sells regular trucking services.</p></div></div><div class="helper-lp-folder_card _3"><img src="/inspiration/images/69125dd5f7ca61cf0d5874b6_FeaturedIcon2.svg" loading="lazy" alt="" class="helper-lp-folder_card-icon"><div class="helper-lp-folder_card-content"><h3 class="helper-lp-folder_card-heading">company_pricing.pdf (file item)</h3><p class="helper-lp-folder_card-paragraph">To revolutionize the travel experience.</p></div></div><div class="helper-lp-folder_card _2"><img src="/inspiration/images/69125dd5964332aa097abfef_FeaturedIcon.svg" loading="lazy" alt="" class="helper-lp-folder_card-icon"><div class="helper-lp-folder_card-content"><h3 class="helper-lp-folder_card-heading">walkers.com (Webpage item)</h3><p class="helper-lp-folder_card-paragraph">Walkers website home page.</p></div></div></div><div class="helper-lp-folder_cards-mobile hide-desktop"><img src="/inspiration/images/69142e3816dfd75bd089c388_card-group_mobile.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 100vw" srcset="/inspiration/images/69142e3816dfd75bd089c388_card-group_mobile-p-500.avif 500w, /inspiration/images/69142e3816dfd75bd089c388_card-group_mobile.avif 994w" alt="" class="helper-lp-folder_cards-mobile-visual"></div></div></div></div></div></section>
+
+<section class="section_helper-lp-knowledge text-color-alternate"><div class="helper-lp-knowledge_styles w-embed"><style>
+
+.helper-lp-knowledge_card p {
+
+font-weight: 500;
+opacity: 100%;
+
+}
+
+.helper-lp-knowledge_card p span {
+
+font-weight: 400;
+opacity: 50%;
+
+}
+
+</style></div><div class="padding-global"><div class="w-layout-blockcontainer container-large w-container"><div class="helper-lp-knowledge_wrap"><div class="helper-lp-knowledge_heading"><p class="text-size-5xl text-size-3xl--tablet text-size-3xl--mobile text-weight-medium">All your business context in one workspace - a centralized library that brings together your brand details, preferences, and materials to Eve - so nothing gets lost in translation.</p></div><div class="helper-lp-knowledge_content"><div class="helper-lp-knowledge_list"><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa3b3-17d9de49" class="helper-lp-knowledge_card _1"><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa3b4-17d9de49" class="helper-lp-knowledge_card-content _1"><h3 class="text-size-3xl opacity-30 hide-tablet">1. Always up to date</h3><p class="text-size-lg text-size-base--tablet">Brain AI stores your brand context, preferences, and materials, <span>so Soshie doesn’t “forget” how your business works as things evolve.</span></p></div><div class="helper-lp-knowledge_card-visual"><img src="/inspiration/images/691d5c5f0bd1e17fb87495d7_illustrations-mobile-1.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 973px) 95vw, (max-width: 991px) 925px, 100vw" srcset="/inspiration/images/691d5c5f0bd1e17fb87495d7_illustrations-mobile-1-p-500.png 500w, /inspiration/images/691d5c5f0bd1e17fb87495d7_illustrations-mobile-1.avif 925w" alt="" class="helper-lp-knowledge_card-image hide-desktop"><img src="/inspiration/images/691190b52519d79d5f521867_bdc05d463999fc5ec0fcf562bacefdd4_knowledge-card1.avif" loading="lazy" sizes="(max-width: 767px) 100vw, 940px, 100vw" srcset="/inspiration/images/691190b52519d79d5f521867_bdc05d463999fc5ec0fcf562bacefdd4_knowledge-card1-p-500.png 500w, /inspiration/images/691190b52519d79d5f521867_bdc05d463999fc5ec0fcf562bacefdd4_knowledge-card1.avif 1068w" alt="" class="helper-lp-knowledge_card-image hide-tablet"></div></div><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa3c9-17d9de49" class="helper-lp-knowledge_card _2"><div class="helper-lp-knowledge_card-content _2"><h3 class="text-size-3xl opacity-30 hide-tablet">2. Context that compounds</h3><p class="text-size-lg text-size-base--tablet">As you refine strategy, approve content, and ship updates, <span>Brain AI keeps everything connected - no re-explaining, no resets.</span></p></div><div class="helper-lp-knowledge_card-visual _2"><img src="/inspiration/images/691d5c5fecd5037c19cf012d_illustrations-mobile.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 100vw" srcset="/inspiration/images/691d5c5fecd5037c19cf012d_illustrations-mobile-p-500.png 500w, /inspiration/images/691d5c5fecd5037c19cf012d_illustrations-mobile.avif 1195w" alt="" class="helper-lp-knowledge_card-image _2 hide-desktop"><img src="/inspiration/images/6911918a206f64ecee2416de_knowledge-card-2.avif" loading="lazy" sizes="(max-width: 767px) 100vw, 940px, 100vw" srcset="/inspiration/images/6911918a206f64ecee2416de_knowledge-card-2-p-500.avif 500w, /inspiration/images/6911918a206f64ecee2416de_knowledge-card-2.avif 1361w" alt="" class="helper-lp-knowledge_card-image _2 hide-tablet"></div></div><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa3be-17d9de49" class="helper-lp-knowledge_card"><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa3bf-17d9de49" class="helper-lp-knowledge_card-content _3"><h3 class="text-size-3xl opacity-30 hide-tablet">3. One source of truth</h3><p class="text-size-lg text-size-base--tablet">Your strategy, voice, and references live in one place, <span>ensuring consistency across every post, campaign, and channel.</span></p></div><div class="helper-lp-knowledge_card-visual"><img src="/inspiration/images/691d5c5f6f82c60963ee9e07_illustrations-mobile-2.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 100vw" srcset="/inspiration/images/691d5c5f6f82c60963ee9e07_illustrations-mobile-2-p-500.avif 500w, /inspiration/images/691d5c5f6f82c60963ee9e07_illustrations-mobile-2.avif 1204w" alt="" class="helper-lp-knowledge_card-image _3 hide-desktop"><img src="/inspiration/images/6911921ae2b3f50d86032e4e_64a80dbf885d4584868af19c1893ba83_knowledge-card-3.avif" loading="lazy" sizes="(max-width: 767px) 100vw, 940px, 100vw" srcset="/inspiration/images/6911921ae2b3f50d86032e4e_64a80dbf885d4584868af19c1893ba83_knowledge-card-3-p-500.png 500w, /inspiration/images/6911921ae2b3f50d86032e4e_64a80dbf885d4584868af19c1893ba83_knowledge-card-3.avif 1122w" alt="" class="helper-lp-knowledge_card-image _3 hide-tablet"></div></div></div></div></div></div></div></section>
+</div>
+
+
+
+<!-- COMPARISON TABLE -->
+<section class="eve-compare">
+  <div class="eve-compare-inner">
+    <p class="eve-compare-sub">Save thousands per month. Get Eve.</p>
+
+    <!-- Column headers -->
+    <div class="eve-compare-logos">
+      <span></span>
+      <span><div class="logo-icon eve-icon"><img src="/images/executive-assistant.webp" alt="Eve" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" /></div>Eve</span>
+      <span><div class="logo-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div>ChatGPT</span>
+      <span><div class="logo-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>Human EA</span>
+      <span><div class="logo-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>Virtual VA</span>
+    </div>
+
+    <!-- Rows -->
+    <div class="eve-compare-row">
+      <span class="feature-name">Works 24/7</span>
+      <span class="cell yes"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+      <span class="cell yes"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+    </div>
+    <div class="eve-compare-row">
+      <span class="feature-name">Takes action in your tools</span>
+      <span class="cell yes"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+      <span class="cell yes"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+      <span class="cell yes"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+    </div>
+    <div class="eve-compare-row">
+      <span class="feature-name">Follows up automatically</span>
+      <span class="cell yes"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+    </div>
+    <div class="eve-compare-row">
+      <span class="feature-name">Live in 5 minutes</span>
+      <span class="cell yes"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+      <span class="cell yes"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+    </div>
+    <div class="eve-compare-row">
+      <span class="feature-name">Personalized on your business</span>
+      <span class="cell yes"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+      <span class="cell yes"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+    </div>
+    <div class="eve-compare-row">
+      <span class="feature-name">Built for teams</span>
+      <span class="cell yes"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+    </div>
+    <div class="eve-compare-row">
+      <span class="feature-name">No training needed</span>
+      <span class="cell yes"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+    </div>
+    <div class="eve-compare-row">
+      <span class="feature-name">Never quits</span>
+      <span class="cell yes"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+      <span class="cell yes"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+      <span class="cell no"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span></span>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<!-- TESTIMONIALS (light theme) -->
+<Testimonials theme="light" />
+
+
+<!-- CAPABILITY LOOP CARDS -->
+<section class="eve-loop">
+  <div class="eve-loop-header">
+    <h2>Everything Eve handles for you</h2>
+    <p>This is what you're buying — a list of things you'll never do again.</p>
+  </div>
+
+  <div class="eve-loop-rows">
+  <!-- Row 1: scrolls left -->
+  <div class="eve-loop-row">
+    <div class="eve-loop-group normal">
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg></div><h3>Draft client replies</h3><p>Reads context, writes the response, waits for your approval or sends automatically.</p></div>
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><text x="12" y="18" text-anchor="middle" font-size="8" fill="currentColor" stroke="none" font-weight="700">17</text></svg></div><h3>Schedule meetings</h3><p>Finds open slots, sends invites, confirms attendance. Zero back-and-forth.</p></div>
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg></div><h3>Follow up on proposals</h3><p>Checks status, nudges at the right time, escalates if no response.</p></div>
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 6h6M9 10h6M9 14h4"/></svg></div><h3>Prep meeting briefs</h3><p>Before every call: attendees, last discussion, open action items.</p></div>
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg></div><h3>Chase overdue invoices</h3><p>Sends polite nudges, escalates, tracks until paid.</p></div>
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div><h3>Generate status reports</h3><p>Summarizes open threads, completed tasks, and next priorities weekly.</p></div>
+    </div>
+  </div>
+
+  <!-- Row 2: scrolls right -->
+  <div class="eve-loop-row">
+    <div class="eve-loop-group reverse">
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14"/></svg></div><h3>Filter inbox noise</h3><p>Separates junk from signal. You only see what matters.</p></div>
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><h3>Escalate urgent threads</h3><p>Knows what needs your attention now vs. what can wait.</p></div>
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div><h3>Send daily briefings</h3><p>Every morning: priorities, open items, what Eve handled overnight.</p></div>
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 7h3a5 5 0 010 10h-3M9 17H6a5 5 0 010-10h3M8 12h8"/></svg></div><h3>Coordinate team handoffs</h3><p>Routes tasks to the right person, follows up until complete.</p></div>
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Block calendar spam</h3><p>Protects focus blocks, declines junk meetings, suggests better times.</p></div>
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div><h3>Log client updates</h3><p>Records every touchpoint so nothing gets lost between conversations.</p></div>
+    </div>
+  </div>
+
+  <!-- Row 3: scrolls left -->
+  <div class="eve-loop-row">
+    <div class="eve-loop-group normal">
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><h3>Flag VIP messages</h3><p>High-value clients and urgent contacts always surface first.</p></div>
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></div><h3>Summarize email chains</h3><p>20-email thread? Eve gives you the 3-line version.</p></div>
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div><h3>Manage recurring tasks</h3><p>Weekly check-ins, monthly reports, quarterly reviews — on autopilot.</p></div>
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-6l-2 3H10l-2-3H2"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></div><h3>Route support requests</h3><p>Triage incoming requests and send to the right team member.</p></div>
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><h3>Remind about deadlines</h3><p>Proactive nudges before things are due, not after they're late.</p></div>
+      <div class="eve-loop-card"><div class="card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div><h3>Archive completed threads</h3><p>Keeps your inbox clean by filing resolved conversations.</p></div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- Loop animation script -->
+<script is:inline>
+(function() {
+  var initialized = false;
+  function initEveLoop() {
+    if (initialized) return;
+    initialized = true;
+    document.querySelectorAll('.eve-loop-row').forEach(function(row) {
+      var original = row.querySelector('.eve-loop-group');
+      if (!original) return;
+      for (var i = 0; i < 2; i++) {
+        var clone = original.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        row.appendChild(clone);
+      }
+      row.classList.add('loop-ready');
+    });
+  }
+  document.addEventListener('scroll', initEveLoop, { once: true, passive: true });
+  document.addEventListener('mousemove', initEveLoop, { once: true, passive: true });
+  setTimeout(initEveLoop, 3000);
+})();
+</script>
+
+
+
+</body>
+</html>
