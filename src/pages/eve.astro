@@ -41,14 +41,100 @@ import Testimonials from '../components/Testimonials.astro';
   <!-- Inspiration CSS (for Brain AI / folder sections) -->
   <link rel="stylesheet" href="/inspiration/css/sintraweb.shared.61297f412.min.css" />
 
+  <!-- GSAP for Brain AI scroll animation -->
+  <script is:inline src="/inspiration/js/gsap.min_1.js"></script>
+  <script is:inline src="/inspiration/js/ScrollTrigger.min_1.js"></script>
+
   <style is:global>
     /* === BASE === */
     *, *::before, *::after { box-sizing: border-box; }
 
     /* === GRADIENT FIX === */
     .helper-lp_sharpness-image { display: none !important; }
-    .section_helper-lp-blue-gradient-container { overflow: visible !important; }
-    .helper-lp_blue-bg-gradient { height: 200% !important; }
+    .section_helper-lp-blue-gradient-container { overflow: visible !important; background: transparent !important; }
+    .helper-lp_blue-bg-gradient {
+      height: 240% !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      z-index: 0 !important;
+    }
+
+    /* Brain AI section - spacing between elements */
+    .helper-lp-folder_heading {
+      margin-bottom: 6rem;
+    }
+    .helper-lp-folder_content {
+      height: 48rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .helper-lp-folder_folder-wrap {
+      top: 7.063rem;
+    }
+    .helper-lp-images_image {
+      width: 33rem !important;
+      height: 17rem !important;
+    }
+    .section_helper-lp-knowledge {
+      padding-top: 5rem;
+    }
+    .helper-lp-knowledge_heading {
+      margin-bottom: 5rem;
+    }
+    /* Loved section - full-width horizontal carousel */
+    .helper-lp-loved_content {
+      width: 100vw !important;
+      margin-left: calc(-50vw + 50%) !important;
+      padding-left: 5vw;
+      padding-right: 5vw;
+      overflow: visible !important;
+    }
+    .helper-lp-loved_card-list {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      overflow-x: auto !important;
+      overflow-y: visible !important;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 1rem;
+      padding-bottom: 1rem;
+      scrollbar-width: none;
+    }
+    .helper-lp-loved_card-list::-webkit-scrollbar {
+      display: none;
+    }
+    .helper-lp-loved_card {
+      flex: 0 0 22rem !important;
+      scroll-snap-align: start;
+      min-width: 22rem;
+      border-radius: 1.25rem;
+      overflow: hidden !important;
+      background: #f5f5f5 !important;
+    }
+    .helper-lp-loved_card-top {
+      padding: 1.5rem 1.25rem !important;
+    }
+    .helper-lp-loved_card-top h3 {
+      font-size: 1.35rem !important;
+    }
+    .helper-lp-loved_card-top p {
+      font-size: 0.85rem !important;
+    }
+    .helper-lp-loved_card-visual {
+      height: 20rem !important;
+      overflow: hidden !important;
+    }
+    .helper-lp-loved_card-image {
+      object-fit: cover !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .helper-lp-knowledge_content {
+      margin-top: 3rem;
+    }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       color: #1a1a1a;
@@ -233,11 +319,13 @@ import Testimonials from '../components/Testimonials.astro';
 
     /* === CAPABILITY LOOP CARDS === */
     .eve-loop {
-      background: #fafafa;
+      background: transparent;
       padding: 80px 0;
       margin-top: 80px;
-      border-top: 1px solid #eee;
+      border-top: none;
       overflow: hidden;
+      position: relative;
+      z-index: 1;
     }
     .eve-loop-header {
       text-align: center;
@@ -286,12 +374,16 @@ import Testimonials from '../components/Testimonials.astro';
       margin-right: 16px;
     }
     .eve-loop-card {
-      background: #f5f5f5;
+      background: rgba(245, 245, 245, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border: none;
       border-radius: 16px;
       padding: 28px;
       width: 280px;
       flex-shrink: 0;
+      position: relative;
+      z-index: 2;
     }
     .eve-loop-card .card-icon {
       width: 36px;
@@ -360,36 +452,6 @@ import Testimonials from '../components/Testimonials.astro';
     <img src="/images/executive-assistant.webp" alt="Eve — AI Executive Assistant" class="eve-numbers-image" />
   </div>
 </section>
-
-
-
-<div class="section_helper-lp-blue-gradient-container"><div class="helper-lp_blue-bg"><div class="helper-lp_blue-bg-styles w-embed"><style>
-.helper-lp_blue-bg-gradient {
-background: radial-gradient(103.53% 39.16% at 50.03% 47.99%, #7B3EA4 0%, #7B3EA4 13.46%, #9F7FFF 35.1%, #AAB7E7 57.21%, rgba(255, 255, 255, 0.00) 96.15%);
-}
-</style></div><div class="helper-lp_sharpness-image"></div><div class="helper-lp_blue-bg-gradient"></div></div>
-<section class="section_helper-lp-folder"><div class="helper-lp-folder_style w-embed"><style>
-
-</style></div><div class="padding-global padding-section-large"><div class="w-layout-blockcontainer container-large w-container"><div class="helper-lp-folder_wrap"><div class="helper-lp-folder_heading text-color-alternate"><h2 class="text-size-5xl text-size-3xl--tablet text-size-2xl--mobile text-align-center">Eve is powered by Brain AI</h2></div><div class="helper-lp-folder_content"><div class="helper-lp-folder_folder-wrap"><img src="/inspiration/images/6980606a9e70d793c0ec0e63_brain-ai_photo-pack-1.avif" loading="lazy" sizes="100vw" srcset="/inspiration/images/6980606a9e70d793c0ec0e63_brain-ai_photo-pack-1-p-500.avif 500w, /inspiration/images/6980606a9e70d793c0ec0e63_brain-ai_photo-pack-1-p-800.avif 800w, /inspiration/images/6980606a9e70d793c0ec0e63_brain-ai_photo-pack-1.avif 1674w" alt="" class="helper-lp-images_image"><img src="/inspiration/images/691d6303264a7df642c98618_sintra-brain.avif" loading="lazy" sizes="100vw" srcset="/inspiration/images/691d6303264a7df642c98618_sintra-brain-p-500.avif 500w, /inspiration/images/691d6303264a7df642c98618_sintra-brain.avif 1420w" alt="" class="helper-lp-folder_folder-visual"></div><div class="helper-lp-folder_card-wrap hide-tablet"><div class="helper-lp-folder_card _1"><img src="/inspiration/images/69125a44ee547a53ae4c3914__ButtonItem.Leading.svg" loading="lazy" alt="" class="helper-lp-folder_card-icon"><div class="helper-lp-folder_card-content"><h3 class="helper-lp-folder_card-heading">Companies values (Memory item)</h3><p class="helper-lp-folder_card-paragraph">Safety, Velocity, Speed, Quality.</p></div></div><div class="helper-lp-folder_card _5"><img src="/inspiration/images/69125a44ee547a53ae4c3914__ButtonItem.Leading.svg" loading="lazy" alt="" class="helper-lp-folder_card-icon"><div class="helper-lp-folder_card-content"><h3 class="helper-lp-folder_card-heading">Brand tone (Memory item)</h3><p class="helper-lp-folder_card-paragraph">Simple, Friendly and Approachable</p></div></div><div class="helper-lp-folder_card _4"><img src="/inspiration/images/69125dd5f7ca61cf0d5874b6_FeaturedIcon2.svg" loading="lazy" alt="" class="helper-lp-folder_card-icon"><div class="helper-lp-folder_card-content"><h3 class="helper-lp-folder_card-heading">walker_service.docx (file item)</h3><p class="helper-lp-folder_card-paragraph">Walker sells regular trucking services.</p></div></div><div class="helper-lp-folder_card _3"><img src="/inspiration/images/69125dd5f7ca61cf0d5874b6_FeaturedIcon2.svg" loading="lazy" alt="" class="helper-lp-folder_card-icon"><div class="helper-lp-folder_card-content"><h3 class="helper-lp-folder_card-heading">company_pricing.pdf (file item)</h3><p class="helper-lp-folder_card-paragraph">To revolutionize the travel experience.</p></div></div><div class="helper-lp-folder_card _2"><img src="/inspiration/images/69125dd5964332aa097abfef_FeaturedIcon.svg" loading="lazy" alt="" class="helper-lp-folder_card-icon"><div class="helper-lp-folder_card-content"><h3 class="helper-lp-folder_card-heading">walkers.com (Webpage item)</h3><p class="helper-lp-folder_card-paragraph">Walkers website home page.</p></div></div></div><div class="helper-lp-folder_cards-mobile hide-desktop"><img src="/inspiration/images/69142e3816dfd75bd089c388_card-group_mobile.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 100vw" srcset="/inspiration/images/69142e3816dfd75bd089c388_card-group_mobile-p-500.avif 500w, /inspiration/images/69142e3816dfd75bd089c388_card-group_mobile.avif 994w" alt="" class="helper-lp-folder_cards-mobile-visual"></div></div></div></div></div></section>
-
-<section class="section_helper-lp-knowledge text-color-alternate"><div class="helper-lp-knowledge_styles w-embed"><style>
-
-.helper-lp-knowledge_card p {
-
-font-weight: 500;
-opacity: 100%;
-
-}
-
-.helper-lp-knowledge_card p span {
-
-font-weight: 400;
-opacity: 50%;
-
-}
-
-</style></div><div class="padding-global"><div class="w-layout-blockcontainer container-large w-container"><div class="helper-lp-knowledge_wrap"><div class="helper-lp-knowledge_heading"><p class="text-size-5xl text-size-3xl--tablet text-size-3xl--mobile text-weight-medium">All your business context in one workspace - a centralized library that brings together your brand details, preferences, and materials to Eve - so nothing gets lost in translation.</p></div><div class="helper-lp-knowledge_content"><div class="helper-lp-knowledge_list"><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa3b3-17d9de49" class="helper-lp-knowledge_card _1"><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa3b4-17d9de49" class="helper-lp-knowledge_card-content _1"><h3 class="text-size-3xl opacity-30 hide-tablet">1. Always up to date</h3><p class="text-size-lg text-size-base--tablet">Brain AI stores your brand context, preferences, and materials, <span>so Soshie doesn’t “forget” how your business works as things evolve.</span></p></div><div class="helper-lp-knowledge_card-visual"><img src="/inspiration/images/691d5c5f0bd1e17fb87495d7_illustrations-mobile-1.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 973px) 95vw, (max-width: 991px) 925px, 100vw" srcset="/inspiration/images/691d5c5f0bd1e17fb87495d7_illustrations-mobile-1-p-500.png 500w, /inspiration/images/691d5c5f0bd1e17fb87495d7_illustrations-mobile-1.avif 925w" alt="" class="helper-lp-knowledge_card-image hide-desktop"><img src="/inspiration/images/691190b52519d79d5f521867_bdc05d463999fc5ec0fcf562bacefdd4_knowledge-card1.avif" loading="lazy" sizes="(max-width: 767px) 100vw, 940px, 100vw" srcset="/inspiration/images/691190b52519d79d5f521867_bdc05d463999fc5ec0fcf562bacefdd4_knowledge-card1-p-500.png 500w, /inspiration/images/691190b52519d79d5f521867_bdc05d463999fc5ec0fcf562bacefdd4_knowledge-card1.avif 1068w" alt="" class="helper-lp-knowledge_card-image hide-tablet"></div></div><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa3c9-17d9de49" class="helper-lp-knowledge_card _2"><div class="helper-lp-knowledge_card-content _2"><h3 class="text-size-3xl opacity-30 hide-tablet">2. Context that compounds</h3><p class="text-size-lg text-size-base--tablet">As you refine strategy, approve content, and ship updates, <span>Brain AI keeps everything connected - no re-explaining, no resets.</span></p></div><div class="helper-lp-knowledge_card-visual _2"><img src="/inspiration/images/691d5c5fecd5037c19cf012d_illustrations-mobile.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 100vw" srcset="/inspiration/images/691d5c5fecd5037c19cf012d_illustrations-mobile-p-500.png 500w, /inspiration/images/691d5c5fecd5037c19cf012d_illustrations-mobile.avif 1195w" alt="" class="helper-lp-knowledge_card-image _2 hide-desktop"><img src="/inspiration/images/6911918a206f64ecee2416de_knowledge-card-2.avif" loading="lazy" sizes="(max-width: 767px) 100vw, 940px, 100vw" srcset="/inspiration/images/6911918a206f64ecee2416de_knowledge-card-2-p-500.avif 500w, /inspiration/images/6911918a206f64ecee2416de_knowledge-card-2.avif 1361w" alt="" class="helper-lp-knowledge_card-image _2 hide-tablet"></div></div><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa3be-17d9de49" class="helper-lp-knowledge_card"><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa3bf-17d9de49" class="helper-lp-knowledge_card-content _3"><h3 class="text-size-3xl opacity-30 hide-tablet">3. One source of truth</h3><p class="text-size-lg text-size-base--tablet">Your strategy, voice, and references live in one place, <span>ensuring consistency across every post, campaign, and channel.</span></p></div><div class="helper-lp-knowledge_card-visual"><img src="/inspiration/images/691d5c5f6f82c60963ee9e07_illustrations-mobile-2.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 100vw" srcset="/inspiration/images/691d5c5f6f82c60963ee9e07_illustrations-mobile-2-p-500.avif 500w, /inspiration/images/691d5c5f6f82c60963ee9e07_illustrations-mobile-2.avif 1204w" alt="" class="helper-lp-knowledge_card-image _3 hide-desktop"><img src="/inspiration/images/6911921ae2b3f50d86032e4e_64a80dbf885d4584868af19c1893ba83_knowledge-card-3.avif" loading="lazy" sizes="(max-width: 767px) 100vw, 940px, 100vw" srcset="/inspiration/images/6911921ae2b3f50d86032e4e_64a80dbf885d4584868af19c1893ba83_knowledge-card-3-p-500.png 500w, /inspiration/images/6911921ae2b3f50d86032e4e_64a80dbf885d4584868af19c1893ba83_knowledge-card-3.avif 1122w" alt="" class="helper-lp-knowledge_card-image _3 hide-tablet"></div></div></div></div></div></div></div></section>
-</div>
 
 
 
@@ -521,6 +583,157 @@ opacity: 50%;
   </div>
 </section>
 
+<div class="section_helper-lp-blue-gradient-container"><div class="helper-lp_blue-bg"><div class="helper-lp_blue-bg-styles w-embed"><style>
+.helper-lp_blue-bg-gradient {
+background: radial-gradient(103.53% 39.16% at 50.03% 47.99%, #7B3EA4 0%, #7B3EA4 13.46%, #9F7FFF 35.1%, #AAB7E7 57.21%, rgba(255, 255, 255, 0.00) 96.15%);
+}
+</style></div><div class="helper-lp_sharpness-image"></div><div class="helper-lp_blue-bg-gradient"></div></div>
+<section class="section_helper-lp-folder"><div class="helper-lp-folder_style w-embed"><style>
+
+</style></div><div class="padding-global padding-section-large"><div class="w-layout-blockcontainer container-large w-container"><div class="helper-lp-folder_wrap"><div class="helper-lp-folder_heading text-color-alternate"><h2 class="text-size-5xl text-size-3xl--tablet text-size-2xl--mobile text-align-center">Eve is powered by Brain AI</h2></div><div class="helper-lp-folder_content"><div class="helper-lp-folder_folder-wrap"><img src="/inspiration/images/6980606a9e70d793c0ec0e63_brain-ai_photo-pack-1.avif" loading="lazy" sizes="100vw" srcset="/inspiration/images/6980606a9e70d793c0ec0e63_brain-ai_photo-pack-1-p-500.avif 500w, /inspiration/images/6980606a9e70d793c0ec0e63_brain-ai_photo-pack-1-p-800.avif 800w, /inspiration/images/6980606a9e70d793c0ec0e63_brain-ai_photo-pack-1.avif 1674w" alt="" class="helper-lp-images_image"><img src="/inspiration/images/691d6303264a7df642c98618_sintra-brain.avif" loading="lazy" sizes="100vw" srcset="/inspiration/images/691d6303264a7df642c98618_sintra-brain-p-500.avif 500w, /inspiration/images/691d6303264a7df642c98618_sintra-brain.avif 1420w" alt="" class="helper-lp-folder_folder-visual"></div><div class="helper-lp-folder_card-wrap hide-tablet"><div class="helper-lp-folder_card _1"><img src="/inspiration/images/69125a44ee547a53ae4c3914__ButtonItem.Leading.svg" loading="lazy" alt="" class="helper-lp-folder_card-icon"><div class="helper-lp-folder_card-content"><h3 class="helper-lp-folder_card-heading">Companies values (Memory item)</h3><p class="helper-lp-folder_card-paragraph">Safety, Velocity, Speed, Quality.</p></div></div><div class="helper-lp-folder_card _5"><img src="/inspiration/images/69125a44ee547a53ae4c3914__ButtonItem.Leading.svg" loading="lazy" alt="" class="helper-lp-folder_card-icon"><div class="helper-lp-folder_card-content"><h3 class="helper-lp-folder_card-heading">Brand tone (Memory item)</h3><p class="helper-lp-folder_card-paragraph">Simple, Friendly and Approachable</p></div></div><div class="helper-lp-folder_card _4"><img src="/inspiration/images/69125dd5f7ca61cf0d5874b6_FeaturedIcon2.svg" loading="lazy" alt="" class="helper-lp-folder_card-icon"><div class="helper-lp-folder_card-content"><h3 class="helper-lp-folder_card-heading">walker_service.docx (file item)</h3><p class="helper-lp-folder_card-paragraph">Walker sells regular trucking services.</p></div></div><div class="helper-lp-folder_card _3"><img src="/inspiration/images/69125dd5f7ca61cf0d5874b6_FeaturedIcon2.svg" loading="lazy" alt="" class="helper-lp-folder_card-icon"><div class="helper-lp-folder_card-content"><h3 class="helper-lp-folder_card-heading">company_pricing.pdf (file item)</h3><p class="helper-lp-folder_card-paragraph">To revolutionize the travel experience.</p></div></div><div class="helper-lp-folder_card _2"><img src="/inspiration/images/69125dd5964332aa097abfef_FeaturedIcon.svg" loading="lazy" alt="" class="helper-lp-folder_card-icon"><div class="helper-lp-folder_card-content"><h3 class="helper-lp-folder_card-heading">walkers.com (Webpage item)</h3><p class="helper-lp-folder_card-paragraph">Walkers website home page.</p></div></div></div><div class="helper-lp-folder_cards-mobile hide-desktop"><img src="/inspiration/images/69142e3816dfd75bd089c388_card-group_mobile.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 100vw" srcset="/inspiration/images/69142e3816dfd75bd089c388_card-group_mobile-p-500.avif 500w, /inspiration/images/69142e3816dfd75bd089c388_card-group_mobile.avif 994w" alt="" class="helper-lp-folder_cards-mobile-visual"></div></div></div></div></div></section>
+
+<section class="section_helper-lp-knowledge text-color-alternate"><div class="helper-lp-knowledge_styles w-embed"><style>
+
+.helper-lp-knowledge_card p {
+
+font-weight: 500;
+opacity: 100%;
+
+}
+
+.helper-lp-knowledge_card p span {
+
+font-weight: 400;
+opacity: 50%;
+
+}
+
+</style></div><div class="padding-global"><div class="w-layout-blockcontainer container-large w-container"><div class="helper-lp-knowledge_wrap"><div class="helper-lp-knowledge_heading"><p class="text-size-5xl text-size-3xl--tablet text-size-3xl--mobile text-weight-medium">All your business context in one workspace - a centralized library that brings together your brand details, preferences, and materials to Eve - so nothing gets lost in translation.</p></div><div class="helper-lp-knowledge_content"><div class="helper-lp-knowledge_list"><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa3b3-17d9de49" class="helper-lp-knowledge_card _1"><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa3b4-17d9de49" class="helper-lp-knowledge_card-content _1"><h3 class="text-size-3xl opacity-30 hide-tablet">1. Always up to date</h3><p class="text-size-lg text-size-base--tablet">Brain AI stores your brand context, preferences, and materials, <span>so Soshie doesn't "forget" how your business works as things evolve.</span></p></div><div class="helper-lp-knowledge_card-visual"><img src="/inspiration/images/691d5c5f0bd1e17fb87495d7_illustrations-mobile-1.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 973px) 95vw, (max-width: 991px) 925px, 100vw" srcset="/inspiration/images/691d5c5f0bd1e17fb87495d7_illustrations-mobile-1-p-500.png 500w, /inspiration/images/691d5c5f0bd1e17fb87495d7_illustrations-mobile-1.avif 925w" alt="" class="helper-lp-knowledge_card-image hide-desktop"><img src="/inspiration/images/691190b52519d79d5f521867_bdc05d463999fc5ec0fcf562bacefdd4_knowledge-card1.avif" loading="lazy" sizes="(max-width: 767px) 100vw, 940px, 100vw" srcset="/inspiration/images/691190b52519d79d5f521867_bdc05d463999fc5ec0fcf562bacefdd4_knowledge-card1-p-500.png 500w, /inspiration/images/691190b52519d79d5f521867_bdc05d463999fc5ec0fcf562bacefdd4_knowledge-card1.avif 1068w" alt="" class="helper-lp-knowledge_card-image hide-tablet"></div></div><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa3c9-17d9de49" class="helper-lp-knowledge_card _2"><div class="helper-lp-knowledge_card-content _2"><h3 class="text-size-3xl opacity-30 hide-tablet">2. Context that compounds</h3><p class="text-size-lg text-size-base--tablet">As you refine strategy, approve content, and ship updates, <span>Brain AI keeps everything connected - no re-explaining, no resets.</span></p></div><div class="helper-lp-knowledge_card-visual _2"><img src="/inspiration/images/691d5c5fecd5037c19cf012d_illustrations-mobile.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 100vw" srcset="/inspiration/images/691d5c5fecd5037c19cf012d_illustrations-mobile-p-500.png 500w, /inspiration/images/691d5c5fecd5037c19cf012d_illustrations-mobile.avif 1195w" alt="" class="helper-lp-knowledge_card-image _2 hide-desktop"><img src="/inspiration/images/6911918a206f64ecee2416de_knowledge-card-2.avif" loading="lazy" sizes="(max-width: 767px) 100vw, 940px, 100vw" srcset="/inspiration/images/6911918a206f64ecee2416de_knowledge-card-2-p-500.avif 500w, /inspiration/images/6911918a206f64ecee2416de_knowledge-card-2.avif 1361w" alt="" class="helper-lp-knowledge_card-image _2 hide-tablet"></div></div><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa3be-17d9de49" class="helper-lp-knowledge_card"><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa3bf-17d9de49" class="helper-lp-knowledge_card-content _3"><h3 class="text-size-3xl opacity-30 hide-tablet">3. One source of truth</h3><p class="text-size-lg text-size-base--tablet">Your strategy, voice, and references live in one place, <span>ensuring consistency across every post, campaign, and channel.</span></p></div><div class="helper-lp-knowledge_card-visual"><img src="/inspiration/images/691d5c5f6f82c60963ee9e07_illustrations-mobile-2.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 100vw" srcset="/inspiration/images/691d5c5f6f82c60963ee9e07_illustrations-mobile-2-p-500.avif 500w, /inspiration/images/691d5c5f6f82c60963ee9e07_illustrations-mobile-2.avif 1204w" alt="" class="helper-lp-knowledge_card-image _3 hide-desktop"><img src="/inspiration/images/6911921ae2b3f50d86032e4e_64a80dbf885d4584868af19c1893ba83_knowledge-card-3.avif" loading="lazy" sizes="(max-width: 767px) 100vw, 940px, 100vw" srcset="/inspiration/images/6911921ae2b3f50d86032e4e_64a80dbf885d4584868af19c1893ba83_knowledge-card-3-p-500.png 500w, /inspiration/images/6911921ae2b3f50d86032e4e_64a80dbf885d4584868af19c1893ba83_knowledge-card-3.avif 1122w" alt="" class="helper-lp-knowledge_card-image _3 hide-tablet"></div></div></div></div></div></div></div></section>
+</div>
+
+<section class="section_helper-lp-loved padding-section-large"><div class="helper-lp-loved_styles w-embed"><style>
+
+@media screen and (max-width: 494px) {
+  .helper-lp-loved_card-image._6 {
+    height: auto;
+  }
+}
+
+@media screen and (min-width: 495px) and (max-width: 767px) {
+  .helper-lp-loved_card-image._6 {
+    height: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .helper-lp-loved_heading-wrap h2 {
+    line-height: 120%
+  }
+}
+
+</style></div><div class="padding-global"><div class="w-layout-blockcontainer container-large w-container"><div class="helper-lp-loved_wrap"><div class="helper-lp-loved_heading-wrap"><div class="helper-lp-trustpilot_reviews"><div class="helper-lp-trustpilot_reviews-code w-embed"><div class="trustpilot-widget" data-locale="en-US" data-template-id="5419b6ffb0d04a076446a9af" data-businessunit-id="64d265adc76b8b730c104b17" data-style-height="20px" data-style-width="180px" data-token="1175d5d0-d5cb-434d-8031-907e00f636d0">
+  <a href="https://www.trustpilot.com/review/sintra.ai" target="_blank" rel="noopener">Trustpilot</a>
+</div>
+<!-- End TrustBox widget --></div></div><div class="helper-lp-trustpilot_reviews align-left-mobile hide"><img loading="lazy" src="/inspiration/images/68f737ff38411aee83b6b531_Stars.svg" alt="" class="helper-lp-trustpilot_stars"><div class="sizing-fixed"><span class="text-weight-medium">6,397</span> reviews on</div><img src="/inspiration/images/690b0342bfd69d915d65dc10_trustpilot-mini-lp.svg" loading="lazy" alt="" class="helper-lp-trustpilot_trustpilot-logo"></div><h2 class="text-size-5xl text-size-3xl--mobile"><span class="helper-lp-loved_heading-span" data-icon-injected="1"> <img loading="lazy" src="/inspiration/images/690fb6e3bec5818fa838eec9_navbar_helper-image-soshie.avif" alt="" class="helper-lp-loved_heading-span-icon"></span>Eve is the most ❤️ loved AI agent for social media online</h2><div class="hide"><img loading="lazy" src="/inspiration/images/690fb6e3bec5818fa838eec9_navbar_helper-image-soshie.avif" alt="" class="helper-lp-loved_heading-span-icon"></div></div><div class="helper-lp-loved_content"><div class="helper-lp-loved_card-list"><div class="helper-lp-loved_card"><div class="helper-lp-loved_card-top"><div class="helper-lp-loved_card-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" fill="none">
+  <path d="M4.125 10.725C4.125 8.41478 4.125 7.25967 4.5746 6.37729C4.97008 5.60112 5.60112 4.97008 6.37729 4.5746C7.25968 4.125 8.41478 4.125 10.725 4.125H22.275C24.5852 4.125 25.7403 4.125 26.6227 4.5746C27.3989 4.97008 28.0299 5.60112 28.4254 6.37729C28.875 7.25967 28.875 8.41478 28.875 10.725V18.15C28.875 20.4602 28.875 21.6153 28.4254 22.4977C28.0299 23.2739 27.3989 23.9049 26.6227 24.3004C25.7403 24.75 24.5852 24.75 22.275 24.75H18.8152C17.9571 24.75 17.528 24.75 17.1177 24.8342C16.7536 24.9089 16.4013 25.0325 16.0703 25.2016C15.6972 25.3922 15.3622 25.6602 14.6922 26.1963L11.4122 28.8203C10.84 29.278 10.554 29.5068 10.3132 29.5071C10.1039 29.5073 9.90581 29.4121 9.77519 29.2485C9.625 29.0603 9.625 28.694 9.625 27.9613V24.75C8.34629 24.75 7.70693 24.75 7.18237 24.6094C5.75887 24.228 4.64698 23.1161 4.26556 21.6926C4.125 21.1681 4.125 20.5287 4.125 19.25V10.725Z" stroke="#0077FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M16.4958 10.5865C15.2587 9.15805 13.1957 8.77381 11.6457 10.0818C10.0957 11.3898 9.8775 13.5767 11.0947 15.1237C11.8488 16.0821 13.7416 17.8326 15.0727 19.0258C15.5616 19.4641 15.8061 19.6833 16.0995 19.7716C16.3512 19.8473 16.6403 19.8473 16.892 19.7716C17.1854 19.6833 17.4299 19.4641 17.9188 19.0258C19.2499 17.8326 21.1427 16.0821 21.8968 15.1237C23.114 13.5767 22.9224 11.3761 21.3458 10.0818C19.7692 8.78757 17.7329 9.15805 16.4958 10.5865Z" stroke="#0077FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg></div><h3 class="text-size-5xl text-size-xl--tablet text-align-center">Available always,<br>at your command.</h3><p class="text-size-xl text-size-base--mobile align-center text--949494">Ask and it’s underway - any hour. Soshie drafts, schedules, and reminds without hand-holding.</p></div><div class="helper-lp-loved_card-visual"><img src="/inspiration/images/691175dbfc331a344f963acc_helper-lp-helped_desktop-visual01.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px, 100vw" srcset="/inspiration/images/691175dbfc331a344f963acc_helper-lp-helped_desktop-visual01-p-500.avif 500w, /inspiration/images/691175dbfc331a344f963acc_helper-lp-helped_desktop-visual01.avif 1097w" alt="" class="helper-lp-loved_card-image _1"></div></div><div class="helper-lp-loved_card"><div class="helper-lp-loved_card-top"><div class="helper-lp-loved_card-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" fill="none">
+  <path d="M4.125 10.725C4.125 8.41478 4.125 7.25967 4.5746 6.37729C4.97008 5.60112 5.60112 4.97008 6.37729 4.5746C7.25968 4.125 8.41478 4.125 10.725 4.125H22.275C24.5852 4.125 25.7403 4.125 26.6227 4.5746C27.3989 4.97008 28.0299 5.60112 28.4254 6.37729C28.875 7.25967 28.875 8.41478 28.875 10.725V18.15C28.875 20.4602 28.875 21.6153 28.4254 22.4977C28.0299 23.2739 27.3989 23.9049 26.6227 24.3004C25.7403 24.75 24.5852 24.75 22.275 24.75H18.8152C17.9571 24.75 17.528 24.75 17.1177 24.8342C16.7536 24.9089 16.4013 25.0325 16.0703 25.2016C15.6972 25.3922 15.3622 25.6602 14.6922 26.1963L11.4122 28.8203C10.84 29.278 10.554 29.5068 10.3132 29.5071C10.1039 29.5073 9.90581 29.4121 9.77519 29.2485C9.625 29.0603 9.625 28.694 9.625 27.9613V24.75C8.34629 24.75 7.70693 24.75 7.18237 24.6094C5.75887 24.228 4.64698 23.1161 4.26556 21.6926C4.125 21.1681 4.125 20.5287 4.125 19.25V10.725Z" stroke="#0077FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M16.4958 10.5865C15.2587 9.15805 13.1957 8.77381 11.6457 10.0818C10.0957 11.3898 9.8775 13.5767 11.0947 15.1237C11.8488 16.0821 13.7416 17.8326 15.0727 19.0258C15.5616 19.4641 15.8061 19.6833 16.0995 19.7716C16.3512 19.8473 16.6403 19.8473 16.892 19.7716C17.1854 19.6833 17.4299 19.4641 17.9188 19.0258C19.2499 17.8326 21.1427 16.0821 21.8968 15.1237C23.114 13.5767 22.9224 11.3761 21.3458 10.0818C19.7692 8.78757 17.7329 9.15805 16.4958 10.5865Z" stroke="#0077FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg></div><h3 class="text-size-5xl text-size-xl--tablet text-align-center">Works with just<br>a few clicks.</h3><p class="text-size-xl text-size-base--mobile align-center text--949494">Type what you need, approve, done. Edit in-line and schedule across channels in seconds.</p></div><div class="helper-lp-loved_card-visual"><img src="/inspiration/images/691175db464ab037182f3d32_helper-lp-helped_desktop-visual02.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px, 100vw" srcset="/inspiration/images/691175db464ab037182f3d32_helper-lp-helped_desktop-visual02-p-500.avif 500w, /inspiration/images/691175db464ab037182f3d32_helper-lp-helped_desktop-visual02-p-800.avif 800w, /inspiration/images/691175db464ab037182f3d32_helper-lp-helped_desktop-visual02.avif 1231w" alt="" class="helper-lp-loved_card-image _2"></div></div><div class="helper-lp-loved_card"><div class="helper-lp-loved_card-top"><div class="helper-lp-loved_card-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" fill="none">
+  <path d="M17.8758 19.25L13.7508 15.125M20.64 4.8125V2.75M26.0566 6.95841L27.515 5.5M26.0566 17.875L27.515 19.3334M15.14 6.95841L13.6816 5.5M28.2025 12.375H30.265M8.4314 28.6944L21.1326 15.9931C21.6772 15.4486 21.9494 15.1764 22.0514 14.8624C22.1412 14.5862 22.1412 14.2888 22.0514 14.0126C21.9494 13.6986 21.6772 13.4264 21.1326 12.8819L20.1189 11.8681C19.5744 11.3236 19.3021 11.0514 18.9882 10.9493C18.712 10.8596 18.4145 10.8596 18.1384 10.9493C17.8244 11.0514 17.5522 11.3236 17.0076 11.8681L4.3064 24.5694C3.76188 25.1139 3.48962 25.3861 3.38761 25.7001C3.29788 25.9763 3.29788 26.2737 3.38761 26.5499C3.48962 26.8639 3.76188 27.1361 4.3064 27.6806L5.32013 28.6944C5.86466 29.2389 6.13692 29.5111 6.45087 29.6132C6.72703 29.7029 7.02451 29.7029 7.30067 29.6132C7.61462 29.5111 7.88688 29.2389 8.4314 28.6944Z" stroke="#0077FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg></div><h3 class="text-size-5xl text-size-xl--tablet text-align-center">Adapts to every platform.</h3><p class="text-size-xl text-size-base--mobile align-center text--949494">Posts are shaped for each channel - formats, lengths, and best practices included. No copy-paste, no rework.</p></div><div class="helper-lp-loved_card-visual"><img src="/inspiration/images/691175db80f7c5be5b485498_helper-lp-helped_desktop-visual03.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px, 100vw" srcset="/inspiration/images/691175db80f7c5be5b485498_helper-lp-helped_desktop-visual03-p-500.avif 500w, /inspiration/images/691175db80f7c5be5b485498_helper-lp-helped_desktop-visual03.avif 1179w" alt="" class="helper-lp-loved_card-image _3"></div></div><div class="helper-lp-loved_card"><div class="helper-lp-loved_card-top"><div class="helper-lp-loved_card-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" fill="none">
+  <path d="M5.5 17.875H26.9322C27.5681 17.875 27.886 17.875 28.0676 17.7417C28.226 17.6254 28.327 17.4469 28.3453 17.2513C28.3662 17.027 28.2026 16.7543 27.8754 16.2091L25.0896 11.5659C24.9661 11.3602 24.9044 11.2573 24.8803 11.1475C24.8589 11.0503 24.8589 10.9497 24.8803 10.8525C24.9044 10.7427 24.9661 10.6398 25.0896 10.4341L27.8754 5.79095C28.2026 5.24566 28.3662 4.97302 28.3453 4.74869C28.327 4.55308 28.226 4.37462 28.0676 4.25835C27.886 4.125 27.5681 4.125 26.9322 4.125H5.5L5.5 28.875" stroke="#0077FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg></div><h3 class="text-size-5xl text-size-xl--tablet text-align-center">Speaks fluently in 100+ native languages.</h3><p class="text-size-xl text-size-base--mobile align-center text--949494">Write once - she adapts tone and nuance per market. Local feel, without the “machine” voice.</p></div><div class="helper-lp-loved_card-visual"><img src="/inspiration/images/691175db6d97c08c825601e3_helper-lp-helped_desktop-visual04.avif" loading="lazy" sizes="100vw" srcset="/inspiration/images/691175db6d97c08c825601e3_helper-lp-helped_desktop-visual04-p-500.avif 500w, /inspiration/images/691175db6d97c08c825601e3_helper-lp-helped_desktop-visual04.avif 1192w" alt="" class="helper-lp-loved_card-image _4"></div></div><div class="helper-lp-loved_card"><div class="helper-lp-loved_card-top"><div class="helper-lp-loved_card-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" fill="none">
+  <path d="M13.75 24.2806V27.5C13.75 29.0188 14.9812 30.25 16.5 30.25C18.0188 30.25 19.25 29.0188 19.25 27.5V24.2806M16.5 2.75V4.125M4.125 16.5H2.75M7.5625 7.5625L6.73737 6.73737M25.4375 7.5625L26.2628 6.73737M30.25 16.5H28.875M24.75 16.5C24.75 21.0564 21.0564 24.75 16.5 24.75C11.9437 24.75 8.25 21.0564 8.25 16.5C8.25 11.9437 11.9437 8.25 16.5 8.25C21.0564 8.25 24.75 11.9437 24.75 16.5Z" stroke="#0077FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg></div><h3 class="text-size-5xl text-size-xl--tablet text-align-center">Consistent over time.</h3><p class="text-size-xl text-size-base--mobile align-center text--949494">Your past decisions, approvals, and patterns inform future output - so results stay consistent as things evolve.</p></div><div class="helper-lp-loved_card-visual"><img src="/inspiration/images/691175db7a628126cda4a8bc_helper-lp-helped_desktop-visual05.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px, 100vw" srcset="/inspiration/images/691175db7a628126cda4a8bc_helper-lp-helped_desktop-visual05-p-500.avif 500w, /inspiration/images/691175db7a628126cda4a8bc_helper-lp-helped_desktop-visual05-p-800.avif 800w, /inspiration/images/691175db7a628126cda4a8bc_helper-lp-helped_desktop-visual05.avif 1235w" alt="" class="helper-lp-loved_card-image _5"></div></div><div class="helper-lp-loved_card"><div class="helper-lp-loved_card-top"><div class="helper-lp-loved_card-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" fill="none">
+  <path d="M8.25 27.6205H11.8391C12.3071 27.6205 12.7722 27.6762 13.2259 27.7876L17.0182 28.7092C17.8411 28.9096 18.6983 28.9291 19.5298 28.7676L23.7228 27.9519C24.8305 27.7361 25.8494 27.2057 26.648 26.4289L29.6146 23.5431C30.4618 22.7203 30.4618 21.3853 29.6146 20.5612C28.8518 19.8192 27.644 19.7357 26.7811 20.3649L23.3236 22.8874C22.8284 23.2493 22.2259 23.4442 21.6063 23.4442H18.2676L20.3927 23.4441C21.5905 23.4441 22.5608 22.5003 22.5608 21.3351V20.9133C22.5608 19.9458 21.8839 19.1022 20.9194 18.8683L17.6393 18.0706C17.1055 17.9411 16.5589 17.8757 16.0093 17.8757C14.6827 17.8757 12.2814 18.9741 12.2814 18.9741L8.25 20.6599M2.75 20.0757L2.75 28.0507C2.75 28.8208 2.75 29.2058 2.89987 29.4999C3.03169 29.7587 3.24204 29.969 3.50076 30.1008C3.79489 30.2507 4.17993 30.2507 4.95 30.2507H6.05C6.82007 30.2507 7.20511 30.2507 7.49924 30.1008C7.75796 29.969 7.96831 29.7587 8.10013 29.4999C8.25 29.2058 8.25 28.8208 8.25 28.0507V20.0757C8.25 19.3056 8.25 18.9206 8.10013 18.6265C7.96831 18.3677 7.75796 18.1574 7.49924 18.0256C7.20511 17.8757 6.82007 17.8757 6.05 17.8757H4.95C4.17993 17.8757 3.79489 17.8757 3.50076 18.0256C3.24204 18.1574 3.03169 18.3677 2.89987 18.6265C2.75 18.9206 2.75 19.3056 2.75 20.0757ZM23.6381 4.94006C22.8175 3.22288 20.9256 2.31316 19.0856 3.19122C17.2456 4.06928 16.4618 6.15161 17.2321 7.9796C17.7082 9.10934 19.0723 11.3032 20.0449 12.8144C20.4042 13.3727 20.5839 13.6519 20.8464 13.8152C21.0715 13.9553 21.3533 14.0308 21.6183 14.0221C21.9272 14.0119 22.2224 13.8599 22.8128 13.556C24.4107 12.7336 26.6889 11.5157 27.6661 10.7754C29.2473 9.57747 29.6389 7.37563 28.4552 5.70179C27.2714 4.02795 25.2074 3.86325 23.6381 4.94006Z" stroke="#0077FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg></div><h3 class="text-size-5xl text-size-xl--tablet text-align-center">Delegates the rest to others.</h3><p class="text-size-xl text-size-base--mobile align-center text--949494">When needed, Soshie can loop in other helpers to research, draft, or refine - working together behind the scenes.</p></div><div class="helper-lp-loved_card-visual"><img src="/inspiration/images/691175dc794007e7d9d49ab8_helper-lp-helped_desktop-visual06.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px, 100vw" srcset="/inspiration/images/691175dc794007e7d9d49ab8_helper-lp-helped_desktop-visual06-p-500.avif 500w, /inspiration/images/691175dc794007e7d9d49ab8_helper-lp-helped_desktop-visual06.avif 1238w" alt="" class="helper-lp-loved_card-image _6"></div></div></div></div></div></div></div><div class="helper-lp-loved_scripts w-embed w-script"><script is:inline>
+document.addEventListener('DOMContentLoaded', function () {
+  const template = document.querySelector('.hide .helper-lp-loved_heading-span-icon');
+  if (!template) return;
+
+  document.querySelectorAll('.helper-lp-loved_heading-span').forEach(function (span) {
+    if (span.dataset.iconInjected === '1') return;
+    const clone = template.cloneNode(true);
+    span.appendChild(clone);
+    span.dataset.iconInjected = '1';
+  });
+});
+</script>
+
+<script is:inline>
+(function() {
+  let lovedSwiper = null;
+  const breakpoint = window.matchMedia('(max-width: 991px)');
+
+  function initSwiper() {
+    if (lovedSwiper) return;
+    lovedSwiper = new Swiper('.helper-lp-loved_content', {
+      wrapperClass: 'helper-lp-loved_card-list',
+      slideClass: 'helper-lp-loved_card',
+      direction: 'horizontal',
+      loop: false,
+      slidesPerView: 1.15,
+      spaceBetween: 16,
+      breakpoints: {
+        0: { centeredSlides: false },
+        477: { centeredSlides: false }
+      }
+    });
+  }
+
+  function destroySwiper() {
+    if (!lovedSwiper) return;
+    lovedSwiper.destroy(true, true);
+    lovedSwiper = null;
+  }
+
+  function handleBreakpoint(e) {
+    if (e.matches) {
+      initSwiper();
+    } else {
+      destroySwiper();
+    }
+  }
+
+  breakpoint.addEventListener('change', handleBreakpoint);
+  handleBreakpoint(breakpoint);
+})();
+</script></div></section><section class="section_helper-lp-table"><div class="helper-lp-table_styles w-embed"><style>
+
+.helper-lp-table_row:last-of-type {
+  border-bottom: 0;
+}
+
+
+</style></div><div class="padding-global padding-section-large"><div class="w-layout-blockcontainer container-large w-container"><div class="helper-lp-table_wrap"><div class="helper-lp-table_heading"><div class="text-align-center"><div class="margin-bottom margin-small"><h2 class="text-size-5xl text-size-3xl--mobile">How we compare</h2></div><p class="text-size-2xl text-size-lg--mobile">Save $400/month. Get Soshie</p></div></div><div class="helper-lp-table_content"><div class="helper-lp-table_top-row"><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa468-17d9de49" class="helper-lp-table_top-row-placeholder"></div><div class="helper-lp-table_top-row-column"><img loading="lazy" src="/inspiration/images/69115a7b177bfbd964c0a9fc_comparison_soshie.avif" alt="" class="helper-lp-table_top-row-icon large"></div><div class="helper-lp-table_top-row-column"><img loading="lazy" src="/inspiration/images/69115a7b9640a4d342b14c2b_image%20256.svg" alt="" class="helper-lp-table_top-row-icon"></div><div class="helper-lp-table_top-row-column"><img loading="lazy" src="/inspiration/images/69115a7b4729d4a9fbe075f5_Screenshot%202025-10-15%20at%2022.49.58%201.svg" alt="" class="helper-lp-table_top-row-icon"></div><div class="helper-lp-table_top-row-column"><img loading="lazy" src="/inspiration/images/69115a7b97ff13eea0668da2_Screenshot%202025-10-15%20at%2022.49.12%201.svg" alt="" class="helper-lp-table_top-row-icon"></div></div><div class="helper-lp-table_row-list"><div class="w-layout-grid helper-lp-table_row"><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa473-17d9de49" class="helper-lp-table_row-name"><div class="text-size-lg text-size-sm--mobile">Daily business ideas</div></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a46e60d7dc8af80960b_check-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a467fad8b2d6aeea8d4_x-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a467fad8b2d6aeea8d4_x-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a467fad8b2d6aeea8d4_x-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div></div><div class="w-layout-grid helper-lp-table_row"><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa47f-17d9de49" class="helper-lp-table_row-name"><div class="text-size-lg text-size-sm--mobile">Highly trained on top profiles</div></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a46e60d7dc8af80960b_check-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a46e60d7dc8af80960b_check-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a467fad8b2d6aeea8d4_x-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a467fad8b2d6aeea8d4_x-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div></div><div class="w-layout-grid helper-lp-table_row"><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa48b-17d9de49" class="helper-lp-table_row-name"><div class="text-size-lg text-size-sm--mobile">Auto-posts to platforms</div></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a46e60d7dc8af80960b_check-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a467fad8b2d6aeea8d4_x-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a46e60d7dc8af80960b_check-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a467fad8b2d6aeea8d4_x-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div></div><div class="w-layout-grid helper-lp-table_row"><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa497-17d9de49" class="helper-lp-table_row-name"><div class="text-size-lg text-size-sm--mobile">Personalized on your brand</div></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a46e60d7dc8af80960b_check-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a46e60d7dc8af80960b_check-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a467fad8b2d6aeea8d4_x-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a467fad8b2d6aeea8d4_x-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div></div><div class="w-layout-grid helper-lp-table_row"><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa4a3-17d9de49" class="helper-lp-table_row-name"><div class="text-size-lg text-size-sm--mobile">Built for teams</div></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a46e60d7dc8af80960b_check-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a467fad8b2d6aeea8d4_x-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a467fad8b2d6aeea8d4_x-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div><div class="helper-lp-table_row-column"><img loading="lazy" src="/inspiration/images/69115a46e60d7dc8af80960b_check-circle-solid.svg" alt="" class="helper-lp-table_row-icon"></div></div></div></div></div></div></div></section><section class="section_helper-lp-logos"><div class="padding-global"><div class="w-layout-blockcontainer container-large padding-section-medium w-container"><div class="lp-oct-logos_component"><div class="lp-oct-logos_content"><div class="margin-bottom margin-medium"><div class="text-align-center"><div class="max-width-large align-center"><h2 class="text-size-2xl">Trusted by leading teams worldwide</h2></div></div></div><div class="w-layout-grid lp-oct-logos_list"><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa4b9-17d9de49" class="lp-oct-logos_wrapper"><img loading="lazy" src="/inspiration/images/68f788efbf40b37d2fd54b86_lp-oct-rakuten.avif" alt="" class="lp-oct-logos_logo"></div><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa4bb-17d9de49" class="lp-oct-logos_wrapper"><img loading="lazy" src="/inspiration/images/68f788ef4dfe1a1b4a6c43d8_lp-oct-revolut.avif" alt="" class="lp-oct-logos_logo"></div><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa4bd-17d9de49" class="lp-oct-logos_wrapper"><img loading="lazy" src="/inspiration/images/68f788ef1b9c8e28d7ad71b7_lp-oct-crunchbase.svg.avif" alt="" class="lp-oct-logos_logo"></div><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa4bf-17d9de49" class="lp-oct-logos_wrapper"><img loading="lazy" src="/inspiration/images/68f788ef120ebf01cd7ec8da_lp-oct-business-insider.svg.avif" alt="" class="lp-oct-logos_logo"></div><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa4c1-17d9de49" class="lp-oct-logos_wrapper"><img loading="lazy" src="/inspiration/images/68f788ef972f25dc90a521e7_lp-oct-fortune.png.avif" alt="" class="lp-oct-logos_logo"></div><div id="w-node-_23b47274-98b6-0113-b01e-d89b7ddfa4c3-17d9de49" class="lp-oct-logos_wrapper"><img loading="lazy" src="/inspiration/images/68f788efe97cf1b228384771_lp-oct-cybernews.avif" alt="" class="lp-oct-logos_logo"></div></div></div></div></div></div></section><section class="section_helper-lp-outro"><div class="helper-lp-outro_styles w-embed"><style>
+
+.helper-lp-outro_helper-card-title h3 {
+
+opacity: 0.79;
+background: linear-gradient(180deg, #EDF 0%, #CE9DFF 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 0.3em 0.4em;
+  margin: -0.3em -0.4em;
+}
+
+}
+
+</style></div><div class="padding-global padding-section-large"><div class="w-layout-blockcontainer container-large w-container"><div class="helper-lp-outro_wrap"><div class="helper-lp-outro_headline"><h2 class="text-size-5xl text-size-3xl--tablet">Hire our AI social media specialist for just $1 per day.</h2></div><div class="helper-lp-outro_content"><div class="helper-lp-outro_helper-card"><div class="helper-lp-outro_helper-card-headline"><div class="helper-lp-outro_helper-card-title"><h3 class="helper-lp-outro_helper-card-name">Soshie</h3><p class="text-size-5xl text-size-2xl--mobile text-weight-medium">Your first reliable AI for social media marketing.</p></div><div class="helper-lp-outro_helper-card-control"><a data-wf-native-id-path="23b47274-98b6-0113-b01e-d89b7ddfa4d6" data-wf-ao-click-engagement-tracking="true" data-wf-element-id="23b47274-98b6-0113-b01e-d89b7ddfa4d6" href="/pricing-v3?helper=soshie" class="button is-lp is-small w-inline-block"><div class="text--18">Try Soshie Risk Free</div><div class="arrow-right w-embed"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="arrow-right">
+<path id="Icon" d="M4.16663 10H15.8333M15.8333 10L9.99996 4.16667M15.8333 10L9.99996 15.8333" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</g>
+</svg></div></a><div class="helper-lp_garuantee text-color-accent"><div class="icon-1x1-xsmall w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 16 16" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true" role="img">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.80931 0.72562C7.93577 0.707345 8.06421 0.707345 8.19068 0.72562C8.33644 0.746682 8.47206 0.797918 8.57975 0.838601L8.60861 0.849477L12.2702 2.22249C12.6821 2.37626 13.0438 2.5113 13.3223 2.75678C13.566 2.97152 13.7537 3.24239 13.8692 3.54595C14.0013 3.89296 14.0007 4.27904 14.0001 4.71866L14 7.99991C14 9.88433 12.9751 11.4554 11.8673 12.6095C10.752 13.7714 9.476 14.592 8.80126 14.9857L8.77394 15.0017C8.65081 15.074 8.49099 15.1678 8.27957 15.2132C8.1066 15.2503 7.89339 15.2503 7.72042 15.2132C7.50901 15.1678 7.34918 15.074 7.22606 15.0017L7.19873 14.9857C6.52399 14.592 5.24797 13.7714 4.1327 12.6095C3.02485 11.4554 1.99999 9.88433 1.99999 7.99991L1.9999 4.71867C1.99927 4.27904 1.99871 3.89296 2.13075 3.54595C2.24627 3.24239 2.43398 2.97152 2.67765 2.75678C2.9562 2.5113 3.31789 2.37626 3.72975 2.22249L7.39138 0.849477L7.42024 0.838602C7.52793 0.797918 7.66355 0.746682 7.80931 0.72562ZM10.8047 6.4714C11.0651 6.21105 11.0651 5.78894 10.8047 5.5286C10.5444 5.26825 10.1223 5.26825 9.86191 5.5286L7.33331 8.05719L6.47138 7.19526C6.21103 6.93491 5.78892 6.93491 5.52858 7.19526C5.26823 7.45561 5.26823 7.87772 5.52858 8.13807L6.86191 9.4714C7.12226 9.73175 7.54437 9.73175 7.80472 9.4714L10.8047 6.4714Z" fill="currentColor"></path>
+</svg></div><div class="text-size-tiny text-weight-normal">14-day full money-back guarantee</div></div></div></div><div class="helper-lp-outro_helper-card-visual"><img src="/inspiration/images/69114b5738ec611f7437a0e1_9189bba387c37ef2a6f247ffbd4e9e4c_1-dollar_soshie.avif" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px, 100vw" height="Auto" alt="" srcset="/inspiration/images/69114b5738ec611f7437a0e1_9189bba387c37ef2a6f247ffbd4e9e4c_1-dollar_soshie-p-500.avif 500w, /inspiration/images/69114b5738ec611f7437a0e1_9189bba387c37ef2a6f247ffbd4e9e4c_1-dollar_soshie.avif 1418w" class="helper-lp-outro_helper-card-image"></div></div><div class="helper-lp-outro_garuantee"><div class="helper-lp-outro_garuantee-left"><img src="/inspiration/images/691150ad7819641b6b1672c3_shield-checkmark-svgrepo-com%201.svg" loading="lazy" alt="" class="helper-lp-outro_garuantee-icon"></div><div class="helper-lp-outro_garuantee-content"><div class="helper-lp-outro_garuantee-headings"><h3 class="text-size-5xl text-size-xl--mobile">Try now - risk-free for 14 days</h3><p class="text-size-xl text-size-sm--mobile text--949494">Not sure our AI agent for social media is a good addition to your team? Simply test-proof for 14-days or get a full refund, no questions asked.</p></div><div class="helper-lp-outro_garuantee-button"><a data-wf-native-id-path="23b47274-98b6-0113-b01e-d89b7ddfa4ea" data-wf-ao-click-engagement-tracking="true" data-wf-element-id="23b47274-98b6-0113-b01e-d89b7ddfa4ea" href="/pricing-v3?helper=soshie" class="button is-lp is-small w-inline-block"><div class="text-size-base text-weight-medium">Try Soshie Risk Free</div><div class="button-icon is-sm w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+  <path d="M4.16666 10.0003H15.8333M15.8333 10.0003L9.99999 4.16699M15.8333 10.0003L9.99999 15.8337" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg></div></a><div class="helper-lp_garuantee text-color-accent"><div class="icon-1x1-xsmall w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 16 16" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true" role="img">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.80931 0.72562C7.93577 0.707345 8.06421 0.707345 8.19068 0.72562C8.33644 0.746682 8.47206 0.797918 8.57975 0.838601L8.60861 0.849477L12.2702 2.22249C12.6821 2.37626 13.0438 2.5113 13.3223 2.75678C13.566 2.97152 13.7537 3.24239 13.8692 3.54595C14.0013 3.89296 14.0007 4.27904 14.0001 4.71866L14 7.99991C14 9.88433 12.9751 11.4554 11.8673 12.6095C10.752 13.7714 9.476 14.592 8.80126 14.9857L8.77394 15.0017C8.65081 15.074 8.49099 15.1678 8.27957 15.2132C8.1066 15.2503 7.89339 15.2503 7.72042 15.2132C7.50901 15.1678 7.34918 15.074 7.22606 15.0017L7.19873 14.9857C6.52399 14.592 5.24797 13.7714 4.1327 12.6095C3.02485 11.4554 1.99999 9.88433 1.99999 7.99991L1.9999 4.71867C1.99927 4.27904 1.99871 3.89296 2.13075 3.54595C2.24627 3.24239 2.43398 2.97152 2.67765 2.75678C2.9562 2.5113 3.31789 2.37626 3.72975 2.22249L7.39138 0.849477L7.42024 0.838602C7.52793 0.797918 7.66355 0.746682 7.80931 0.72562ZM10.8047 6.4714C11.0651 6.21105 11.0651 5.78894 10.8047 5.5286C10.5444 5.26825 10.1223 5.26825 9.86191 5.5286L7.33331 8.05719L6.47138 7.19526C6.21103 6.93491 5.78892 6.93491 5.52858 7.19526C5.26823 7.45561 5.26823 7.87772 5.52858 8.13807L6.86191 9.4714C7.12226 9.73175 7.54437 9.73175 7.80472 9.4714L10.8047 6.4714Z" fill="currentColor"></path>
+</svg></div><div class="text-size-tiny">14-day full money-back guarantee</div></div></div></div></div></div></div></div></div></section>
+
 <!-- Loop animation script -->
 <script is:inline>
 (function() {
@@ -545,7 +758,32 @@ opacity: 50%;
 })();
 </script>
 
+<!-- Brain AI photo pack scroll animation -->
+<script is:inline>
+document.addEventListener("DOMContentLoaded", function() {
+  if (!window.gsap || !window.ScrollTrigger) return;
+  gsap.registerPlugin(ScrollTrigger);
 
+  var img = document.querySelector(".helper-lp-images_image");
+  if (!img) return;
+
+  gsap.set(img, { opacity: 0, y: -600, scale: 1.5 });
+
+  gsap.to(img, {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    duration: 1,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: ".helper-lp-folder_content",
+      start: "top 90%",
+      end: "center 50%",
+      scrub: 1
+    }
+  });
+});
+</script>
 
 </body>
 </html>
