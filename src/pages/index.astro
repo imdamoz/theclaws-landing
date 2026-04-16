@@ -1423,11 +1423,16 @@ import Layout from '../layouts/Layout.astro';
     setInterval(() => { pos += 0.5; auditTrack.style.transform = `translateY(-${pos % 400}px)`; }, 50);
   }
   // === CARD IMAGE HOVER SWAP ===
+  const isTouchDevice = window.matchMedia('(hover: none)').matches;
   document.querySelectorAll('[data-hover-src]').forEach(img => {
     const origSrc = img.getAttribute('src');
     const hoverSrc = img.getAttribute('data-hover-src');
     const card = img.closest('.AgentCarousel_carouselCard__kfTd9');
     if (!card) return;
+    if (isTouchDevice) {
+      img.src = hoverSrc;
+      return;
+    }
     card.addEventListener('mouseenter', () => { img.src = hoverSrc; });
     card.addEventListener('mouseleave', () => { img.src = origSrc; });
   });
