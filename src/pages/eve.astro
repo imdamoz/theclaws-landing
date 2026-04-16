@@ -48,6 +48,40 @@ import Testimonials from '../components/Testimonials.astro';
   <style is:global>
     /* === BASE === */
     *, *::before, *::after { box-sizing: border-box; }
+    html, body { overflow-x: hidden; max-width: 100vw; }
+    section, div { max-width: 100%; }
+    .section_helper-lp-blue-gradient-container { overflow-x: clip; }
+    .helper-lp_blue-bg { overflow: hidden; }
+    @media (max-width: 768px) {
+      .helper-lp-loved_content { overflow-x: hidden !important; width: 100% !important; margin: 0 !important; }
+      .helper-lp-loved_card-list { overflow-x: auto !important; }
+      .helper-lp-loved_card { min-width: 280px !important; flex: 0 0 280px !important; }
+
+      /* Brain AI section mobile fixes */
+      .section_helper-lp-folder { overflow: hidden !important; }
+      .helper-lp-folder_wrap { padding: 0 16px !important; }
+      .helper-lp-folder_content { height: auto !important; min-height: 400px !important; }
+      .helper-lp-folder_folder-wrap { top: 0 !important; }
+      .helper-lp-folder_folder-visual { min-width: 220px !important; max-width: 220px !important; }
+      .helper-lp-images_image { width: 200px !important; height: auto !important; }
+      .helper-lp-folder_card-wrap { display: none !important; }
+      .helper-lp-folder_cards-mobile { display: block !important; padding: 0 16px; }
+
+      /* Knowledge section mobile */
+      .section_helper-lp-knowledge { overflow: hidden !important; padding: 40px 16px !important; }
+      .helper-lp-knowledge_heading p { font-size: 24px !important; line-height: 1.3 !important; }
+      .helper-lp-knowledge_card { flex-direction: column !important; width: 100% !important; max-width: 100% !important; margin: 0 0 20px 0 !important; padding: 16px !important; }
+      .helper-lp-knowledge_card-visual,
+      .helper-lp-knowledge_card-visual._2 { width: 100% !important; max-width: 100% !important; left: auto !important; right: auto !important; position: relative !important; }
+      .helper-lp-knowledge_card-image { max-width: 100% !important; width: 100% !important; height: auto !important; object-fit: contain !important; }
+      .helper-lp-knowledge_list { display: flex !important; flex-direction: column !important; gap: 20px !important; }
+
+      /* Photo pack image on mobile - scale down to fit */
+      .helper-lp-images_image { width: 260px !important; height: auto !important; max-width: 90vw !important; left: 50% !important; transform: translateX(-50%) !important; }
+
+      /* Heading mobile */
+      .helper-lp-folder_heading h2 { font-size: 28px !important; line-height: 1.2 !important; padding: 0 16px; }
+    }
 
     /* === GRADIENT FIX === */
     .helper-lp_sharpness-image { display: none !important; }
@@ -57,6 +91,13 @@ import Testimonials from '../components/Testimonials.astro';
       top: 50% !important;
       transform: translateY(-50%) !important;
       z-index: 0 !important;
+    }
+    @media (max-width: 768px) {
+      .helper-lp_blue-bg-gradient {
+        left: 50% !important;
+        right: auto !important;
+        transform: translate(-50%, -50%) !important;
+      }
     }
 
     /* Brain AI section - spacing between elements */
@@ -83,13 +124,54 @@ import Testimonials from '../components/Testimonials.astro';
     .helper-lp-knowledge_heading {
       margin-bottom: 5rem;
     }
+    /* Discover more - pill link styling */
+    .lp-links_link-item,
+    .lp-links_link-item:hover,
+    .lp-links_link-item:visited {
+      color: #111 !important;
+      text-decoration: none !important;
+    }
+    .lp-links_link-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: #f5f5f5;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .lp-links_link-item:hover {
+      background: #e8e8e8;
+    }
+    .lp-links_links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .lp-links_view-more {
+      display: inline-block;
+      margin-top: 20px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .lp-links_view-more:hover {
+      text-decoration: underline;
+    }
+
     /* Loved section - full-width horizontal carousel */
     .helper-lp-loved_content {
       width: 100vw !important;
+      max-width: 100vw !important;
       margin-left: calc(-50vw + 50%) !important;
-      padding-left: 5vw;
-      padding-right: 5vw;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
       overflow: visible !important;
+    }
+    .helper-lp-loved_card-list {
+      max-width: none !important;
     }
     .helper-lp-loved_card-list {
       display: flex !important;
@@ -410,7 +492,255 @@ import Testimonials from '../components/Testimonials.astro';
       .eve-numbers-image { max-width: 300px; justify-self: center; }
       .eve-numbers-grid { gap: 24px; }
     }
-  </style>
+  
+
+    /* Eve Features Section */
+
+.eve-features-section {
+  background: #fafafa;
+  padding: 100px 40px;
+}
+.eve-features-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.eve-features-trustpilot {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #00b67a;
+  font-weight: 600;
+  font-size: 14px;
+}
+.eve-features-heading {
+  text-align: center;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #111;
+  margin-bottom: 16px;
+}
+.eve-features-heading-highlight {
+  display: inline-block;
+}
+.eve-features-sub {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 60px;
+  color: #666;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.eve-features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.eve-feature-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.eve-feature-copy h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.eve-feature-copy p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}
+.eve-feature-visual {
+  margin-top: 24px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Calendar visual */
+.mini-calendar {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  width: 100%;
+  max-width: 260px;
+  position: relative;
+}
+.cal-header {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #111;
+}
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  font-size: 11px;
+  color: #888;
+  text-align: center;
+}
+.cal-grid span {
+  padding: 4px 2px;
+}
+.cal-active {
+  background: #2563eb;
+  color: #fff !important;
+  border-radius: 50%;
+}
+.cal-pill {
+  position: absolute;
+  top: 30px;
+  left: 12px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+/* Channels */
+.channels-icons {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ch-icon {
+  width: 56px;
+  height: 56px;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-right: 20px;
+  z-index: 2;
+}
+.ch-person {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e0e0e0, #bdbdbd);
+}
+
+/* Bar chart */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 140px;
+  padding: 0 20px;
+}
+.bar {
+  flex: 1;
+  background: #e5e5e5;
+  border-radius: 6px 6px 0 0;
+  min-height: 20px;
+}
+
+/* CRM */
+.crm-nodes {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.crm-node {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e0e0e0, #bdbdbd);
+}
+.crm-line {
+  width: 60px;
+  height: 2px;
+  background: #2563eb;
+}
+
+/* Donut */
+.donut-chart {
+  width: 100%;
+  padding: 10px;
+}
+.donut-label {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 12px;
+}
+.donut {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: conic-gradient(#2563eb 0 40%, #60a5fa 40% 70%, #ddd 70% 100%);
+  margin: 0 auto 12px;
+}
+.donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+  color: #666;
+}
+.donut-legend .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+.dot-1 { background: #2563eb; }
+.dot-2 { background: #60a5fa; }
+.dot-3 { background: #ddd; }
+
+/* Delivery hub */
+.delivery-hub {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+.hub-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background: #2563eb;
+  border-radius: 10px;
+}
+.hub-orbit {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e0e0e0, #bdbdbd);
+}
+.hub-o1 { top: 0; left: 30%; }
+.hub-o2 { bottom: 0; right: 20%; }
+.hub-o3 { top: 50%; right: 0; transform: translateY(-50%); }
+
+@media (max-width: 900px) {
+  .eve-features-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .eve-features-grid { grid-template-columns: 1fr; }
+  .eve-features-section { padding: 60px 20px; }
+}
+
+    </style>
 </head>
 <body>
 
@@ -700,7 +1030,235 @@ document.addEventListener('DOMContentLoaded', function () {
   breakpoint.addEventListener('change', handleBreakpoint);
   handleBreakpoint(breakpoint);
 })();
-</script></div></section><section class="section_helper-lp-table"><div class="helper-lp-table_styles w-embed"><style>
+</script></div></section>
+
+<section class="section_helper-lp-faq"><div class="padding-global padding-section-large"><div class="w-layout-blockcontainer container-medium w-container"><div class="helper-lp-faq_wrap"><div class="helper-lp-faq_content-top"><div class="helper-lp-faq_content-left"><div class="helper-lp-faq_left-heading"><img src="/inspiration/images/6911371c6cd3f8244a6bf8a0_lightbulb-02.svg" loading="lazy" alt="" class="helper-lp_section-icon"><h2 class="text-size-5xl text-size-3xl--tablet">Our Executive Assistant AI. Your FAQs</h2></div><p class="helper-lp-faq_left-paragraph">Eve handles inbox, calendar, and follow-ups across your existing tools — so you scale without adding headcount.</p><a id="cta-nav" data-wf-native-id-path="23b47274-98b6-0113-b01e-d89b7ddfa5e3" data-wf-ao-click-engagement-tracking="true" data-wf-element-id="23b47274-98b6-0113-b01e-d89b7ddfa5e3" href="https://app.theclaws.ai/sign-up" class="button is-lp w-inline-block"><div class="text-size-base text-weight-medium">Try Eve risk-free</div><div class="button-icon is-sm hide-tablet w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+  <path d="M4.16666 10.0003H15.8333M15.8333 10.0003L9.99999 4.16699M15.8333 10.0003L9.99999 15.8337" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg></div></a><div class="helper-lp_garuantee text-color-accent hide-desktop"><div class="icon-1x1-xsmall w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 16 16" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true" role="img">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.80931 0.72562C7.93577 0.707345 8.06421 0.707345 8.19068 0.72562C8.33644 0.746682 8.47206 0.797918 8.57975 0.838601L8.60861 0.849477L12.2702 2.22249C12.6821 2.37626 13.0438 2.5113 13.3223 2.75678C13.566 2.97152 13.7537 3.24239 13.8692 3.54595C14.0013 3.89296 14.0007 4.27904 14.0001 4.71866L14 7.99991C14 9.88433 12.9751 11.4554 11.8673 12.6095C10.752 13.7714 9.476 14.592 8.80126 14.9857L8.77394 15.0017C8.65081 15.074 8.49099 15.1678 8.27957 15.2132C8.1066 15.2503 7.89339 15.2503 7.72042 15.2132C7.50901 15.1678 7.34918 15.074 7.22606 15.0017L7.19873 14.9857C6.52399 14.592 5.24797 13.7714 4.1327 12.6095C3.02485 11.4554 1.99999 9.88433 1.99999 7.99991L1.9999 4.71867C1.99927 4.27904 1.99871 3.89296 2.13075 3.54595C2.24627 3.24239 2.43398 2.97152 2.67765 2.75678C2.9562 2.5113 3.31789 2.37626 3.72975 2.22249L7.39138 0.849477L7.42024 0.838602C7.52793 0.797918 7.66355 0.746682 7.80931 0.72562ZM10.8047 6.4714C11.0651 6.21105 11.0651 5.78894 10.8047 5.5286C10.5444 5.26825 10.1223 5.26825 9.86191 5.5286L7.33331 8.05719L6.47138 7.19526C6.21103 6.93491 5.78892 6.93491 5.52858 7.19526C5.26823 7.45561 5.26823 7.87772 5.52858 8.13807L6.86191 9.4714C7.12226 9.73175 7.54437 9.73175 7.80472 9.4714L10.8047 6.4714Z" fill="currentColor"></path>
+</svg></div><div class="text-size-sm">14-day full money-back guarantee</div></div></div><div class="helper-lp-faq_card"><div class="helper-lp-faq_card-left"><div class="helper-lp-faq_card-left-headings"><h3 class="text-size-3xl text-size-2xl--mobile">Support available 24/7</h3><p class="text-size-base text-size-sm--mobile text--737373">Need help? It's always within reach - get support that fits your schedule.</p></div><a id="cta-nav" data-wf-native-id-path="23b47274-98b6-0113-b01e-d89b7ddfa5f2" data-wf-ao-click-engagement-tracking="true" data-wf-element-id="23b47274-98b6-0113-b01e-d89b7ddfa5f2" href="https://app.theclaws.ai/" target="_blank" class="button is-lp is-white w-inline-block"><div class="text-size-base text-weight-medium">Get help</div><div class="button-icon is-sm w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+  <path d="M4.16666 10.0003H15.8333M15.8333 10.0003L9.99999 4.16699M15.8333 10.0003L9.99999 15.8337" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg></div></a></div><img src="/inspiration/images/69113ac07961d251239b6837_image%20475.avif" loading="lazy" alt="" class="helper-lp-faq_card-image"></div></div><div class="helper-lp-faq_content-bottom"><div class="pricing-faq_list"><div data-wf--faq-item--variant="gray-bg-default" class="pricing-faq_item"><div class="pricing-faq_item-styles w-embed"><style>
+
+[data-wf--faq-item--variant="dark-bg-x"] .pricing-faq_item-trigger h3 {
+
+color: white;
+
+}
+
+</style></div><div class="pricing-faq_item-trigger"><h3 class="text-size-base font_w--500">What is an AI executive assistant?</h3><div class="pricing-faq_item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg></div></div><div class="pricing-faq_item-content-wrap"><div class="pricing-faq_item-content"><div class="text-size-base w-richtext"><p>An AI executive assistant is a role-based digital worker that handles repeatable tasks inside your existing tools. Eve manages your inbox, calendar, meeting prep, and follow-ups — so your day doesn't get eaten by admin work.</p></div></div></div></div><div data-wf--faq-item--variant="gray-bg-default" class="pricing-faq_item"><div class="pricing-faq_item-styles w-embed"><style>
+
+[data-wf--faq-item--variant="dark-bg-x"] .pricing-faq_item-trigger h3 {
+
+color: white;
+
+}
+
+</style></div><div class="pricing-faq_item-trigger"><h3 class="text-size-base font_w--500">How does AI help busy founders and teams?</h3><div class="pricing-faq_item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg></div></div><div class="pricing-faq_item-content-wrap"><div class="pricing-faq_item-content"><div class="text-size-base w-richtext"><p>Eve filters inbox noise, drafts replies, schedules meetings, protects focus time, and keeps threads moving across leads, delivery, and payments. You stay in control — Eve handles the repetitive work that usually falls through the cracks.</p></div></div></div></div><div data-wf--faq-item--variant="gray-bg-default" class="pricing-faq_item"><div class="pricing-faq_item-styles w-embed"><style>
+
+[data-wf--faq-item--variant="dark-bg-x"] .pricing-faq_item-trigger h3 {
+
+color: white;
+
+}
+
+</style></div><div class="pricing-faq_item-trigger"><h3 class="text-size-base font_w--500">When do I need an AI assistant like Eve?</h3><div class="pricing-faq_item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg></div></div><div class="pricing-faq_item-content-wrap"><div class="pricing-faq_item-content"><div class="text-size-base w-richtext"><p>When your inbox is eating your mornings, meetings are scheduled through endless back-and-forth, and follow-ups keep slipping. Eve replaces 10+ hours of admin per week so you can focus on strategy, clients, and growth.</p></div></div></div></div><div data-wf--faq-item--variant="gray-bg-default" class="pricing-faq_item"><div class="pricing-faq_item-styles w-embed"><style>
+
+[data-wf--faq-item--variant="dark-bg-x"] .pricing-faq_item-trigger h3 {
+
+color: white;
+
+}
+
+</style></div><div class="pricing-faq_item-trigger"><h3 class="text-size-base font_w--500">Is Eve a replacement for my human assistant?</h3><div class="pricing-faq_item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg></div></div><div class="pricing-faq_item-content-wrap"><div class="pricing-faq_item-content"><div class="text-size-base w-richtext"><p>Eve isn't a replacement for relationships — she's a force multiplier. Teams use Eve to handle the repeatable admin load (triage, scheduling, drafts, reminders) so humans can focus on high-judgment work.</p></div></div></div></div><div data-wf--faq-item--variant="gray-bg-default" class="pricing-faq_item"><div class="pricing-faq_item-styles w-embed"><style>
+
+[data-wf--faq-item--variant="dark-bg-x"] .pricing-faq_item-trigger h3 {
+
+color: white;
+
+}
+
+</style></div><div class="pricing-faq_item-trigger"><h3 class="text-size-base font_w--500">Why do most AI tools still feel like more work?</h3><div class="pricing-faq_item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg></div></div><div class="pricing-faq_item-content-wrap"><div class="pricing-faq_item-content"><div class="text-size-base w-richtext"><p>Because most AI tools are blank chat boxes that require prompting and babysitting. Eve is role-based — she knows her job, takes action inside your tools (Gmail, Calendar, Slack), and only escalates when it matters. No prompt engineering required.</p></div></div></div></div></div></div><div class="pricing-faq_scripts w-embed w-script"><script is:inline>
+document.querySelectorAll('.pricing-faq_item').forEach(faq => {
+
+	const trigger = faq.querySelector('.pricing-faq_item-trigger');
+  const icon = trigger.querySelector('.pricing-faq_item-icon');
+  const content = faq.querySelector('.pricing-faq_item-content-wrap');
+
+	trigger.addEventListener('click', () => {
+  	faq.classList.toggle('open');
+    if(faq.classList.contains('open')){
+			gsap.to(content, {height: 'auto'});
+      gsap.to(icon, {rotate: '180deg'});
+    }else{
+    	gsap.to(content, {height: '0px'});
+      gsap.to(icon, {rotate: '0deg'});
+    }
+  })
+})
+</script></div></div></div></div></section>
+
+<section class="section_helper-lp-compare"><div class="helper-lp-compare_styles w-embed"><style>
+
+@media (max-width: 768px) {
+  .helper-lp-compare_helper-title-wrap h2 {
+    min-height: 4.1875rem;
+  }
+}
+
+
+</style></div><div class="padding-global padding-section-large"><div class="w-layout-blockcontainer container-large w-container"><div class="helper-lp-compare_wrap"><div class="helper-lp-compare_content-top"><div class="helper-lp-compare_content-texts"><div class="helper-lp-compare_content-heading"><img src="/inspiration/images/69113711efd8106efff104e0_Icon-1.svg" loading="lazy" alt="" class="helper-lp_section-icon margin-bottom margin-small"><h3 class="text-size-5xl text-size-3xl--tablet">There’s a full team behind Eve</h3></div><p class="helper-lp-compare_content-paragraph">Beyond Eve, 5 more AI Agents are here to help you scale — each role-based for leads, projects, support, outreach, and finance. Deploy one or build a full team, inside your existing tools.</p></div><a data-wf-native-id-path="23b47274-98b6-0113-b01e-d89b7ddfa634" data-wf-ao-click-engagement-tracking="true" data-wf-element-id="23b47274-98b6-0113-b01e-d89b7ddfa634" href="/x" class="button is-link is-blue w-inline-block"><div class="text-size-base text-weight-medium">Explore all AI Agents</div><div class="button-icon is-sm w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+  <path d="M4.16666 10.0003H15.8333M15.8333 10.0003L9.99999 4.16699M15.8333 10.0003L9.99999 15.8337" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg></div></a></div><div class="helper-lp-compare_helper-wrap"><div class="helper-lp-compare_helper-list"><div href="/milli" class="helper-lp-compare_helper-card padding-large"><div class="helper-lp-compare_helper-headline"><div class="helper-lp-compare_helper-title-wrap"><h3 class="heading-style-h3 font--wonder text-color-vizzy">Max</h3><h3 class="text-size-4xl text-size-2xl--tablet text-size-2xl--mobile">Your AI Reply + Booking Agent</h3></div><a data-wf-native-id-path="cd7948a4-d8e0-efe8-e816-36825014c1e7" data-wf-ao-click-engagement-tracking="true" data-wf-element-id="cd7948a4-d8e0-efe8-e816-36825014c1e7" href="/vizzy" class="button w-button">Meet Max</a></div><div class="sintra-x_explore_item-visual"><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px, 100vw" srcset="/inspiration/images/69146f5421f4fbd4ad82fd20_final1%206-p-500.avif 500w, /inspiration/images/69146f5421f4fbd4ad82fd20_final1%206.avif 1116w" alt="" src="/inspiration/images/69146f5421f4fbd4ad82fd20_final1%206.avif" loading="lazy" class="sintra-x_explore_item-image helper-lp"></div></div><div href="/milli" class="helper-lp-compare_helper-card padding-large"><div class="helper-lp-compare_helper-headline"><div class="helper-lp-compare_helper-title-wrap"><h3 class="heading-style-h3 font--wonder text-color-penn">Mia</h3><h3 class="text-size-4xl text-size-2xl--tablet text-size-2xl--mobile">Your AI Project Manager</h3></div><a data-wf-native-id-path="cd7948a4-d8e0-efe8-e816-36825014c1f2" data-wf-ao-click-engagement-tracking="true" data-wf-element-id="cd7948a4-d8e0-efe8-e816-36825014c1f2" href="/penn" class="button w-button">Meet Mia</a></div><div class="sintra-x_explore_item-visual"><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px, 100vw" srcset="/inspiration/images/69146f5434ac981ce757eadd_final1%205-p-500.avif 500w, /inspiration/images/69146f5434ac981ce757eadd_final1%205.avif 1116w" alt="" src="/inspiration/images/69146f5434ac981ce757eadd_final1%205.avif" loading="lazy" class="sintra-x_explore_item-image helper-lp"></div></div><div href="/milli" class="helper-lp-compare_helper-card padding-large"><div class="helper-lp-compare_helper-headline"><div class="helper-lp-compare_helper-title-wrap"><h3 class="heading-style-h3 font--wonder text-color-scouty">Kai</h3><h3 class="text-size-4xl text-size-2xl--tablet text-size-2xl--mobile">Your AI Finance Agent</h3></div><a data-wf-native-id-path="cd7948a4-d8e0-efe8-e816-36825014c1fd" data-wf-ao-click-engagement-tracking="true" data-wf-element-id="cd7948a4-d8e0-efe8-e816-36825014c1fd" href="/scouty" class="button w-button">Meet Kai</a></div><div class="sintra-x_explore_item-visual"><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px, 100vw" srcset="/inspiration/images/69146f54a2e5f3d06d947773_final1%207-p-500.avif 500w, /inspiration/images/69146f54a2e5f3d06d947773_final1%207.avif 1116w" alt="" src="/inspiration/images/69146f54a2e5f3d06d947773_final1%207.avif" loading="lazy" class="sintra-x_explore_item-image helper-lp"></div></div></div></div></div></div></div><div class="helper-lp-compare_scripts w-embed w-script"><script is:inline>
+if (window.matchMedia('(max-width: 991px)').matches) {
+  const compareSwiper = new Swiper('.helper-lp-compare_helper-wrap', {
+    wrapperClass: 'helper-lp-compare_helper-list',
+    slideClass: 'helper-lp-compare_helper-card',
+    direction: 'horizontal',
+    loop: false,
+    slidesPerView: 1.2,
+    spaceBetween: 16,
+    breakpoints: {
+      0: { centeredSlides: true },
+      477: { centeredSlides: false }
+    }
+  });
+}
+</script></div></section>
+
+<section class="section_lp-links is-helper-lp"><div class="padding-global"><div class="w-layout-blockcontainer container-large padding-section-small w-container"><div class="lp-links_wrap"><div class="max-width-medium margin-bottom margin-medium"><h2 class="text-size-5xl text-size-3xl--tablet text-align-left">Discover more</h2></div><div class="lp-links_links-wrap" style="height: 420px; overflow: hidden;"><div class="lp-links_links-cms-wrap w-dyn-list"><div role="list" class="lp-links_links w-dyn-items"><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/ai-executive-assistant" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">AI Executive Assistant</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/inbox-management-ai" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Inbox Management AI</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/calendar-automation" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Calendar Automation</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/meeting-scheduling-ai" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Meeting Scheduling AI</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/email-triage-automation" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Email Triage Automation</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/follow-up-automation" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Follow-up Automation</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/smart-calendar-blocking" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Smart Calendar Blocking</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/meeting-prep-briefs" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Meeting Prep Briefs</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/client-update-automation" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Client Update Automation</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/team-handoff-coordination" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Team Handoff Coordination</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/ai-for-founders" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">AI for Founders</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/ai-for-agencies" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">AI for Agencies</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/ops-task-automation" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Ops Task Automation</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/admin-work-automation" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Admin Work Automation</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/ai-time-management" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">AI Time Management</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/digital-ea-services" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Digital EA Services</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/virtual-assistant-ai" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Virtual Assistant AI</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/executive-productivity" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Executive Productivity</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/ai-email-drafting" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">AI Email Drafting</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/smart-inbox-filtering" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Smart Inbox Filtering</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/daily-briefing-ai" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Daily Briefing AI</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/recurring-task-manager" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Recurring Task Manager</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/client-communication-ai" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Client Communication AI</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/deadline-tracking-ai" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">Deadline Tracking AI</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div><div role="listitem" class="lp-links_link-item-wrap w-dyn-item"><a href="/topics/ai-scheduling-software" class="lp-links_link-item w-inline-block"><div class="lp-links_link-item-text">AI Scheduling Software</div><div class="lp-links_link-item-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none"><path d="M1 6.83333H12.6667M12.6667 6.83333L6.83333 1M12.6667 6.83333L6.83333 12.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></a></div></div></div></div><a href="#" class="lp-links_view-more w-inline-block" id="view-more-btn"><div>View more</div></a></div></div></div></section>
+
+
+
+
+<!-- Eve Features Grid Section -->
+<section class="eve-features-section">
+  <div class="eve-features-inner">
+    <div class="eve-features-trustpilot">
+      <span>★ Trustpilot</span>
+    </div>
+    <h2 class="eve-features-heading">
+      First AI executive assistant<br>
+      <span class="eve-features-heading-highlight">💫 teams actually want</span>
+    </h2>
+    <p class="eve-features-sub">
+      Most AI tools are easy to buy, hard to keep up with. Eve is different. She's built to operate independently, make smart decisions, and keep things moving without constant input from your team.
+    </p>
+
+    <div class="eve-features-grid">
+      <div class="eve-feature-card">
+        <div class="eve-feature-copy">
+          <h3>Operate at Scale</h3>
+          <p>Not bound by human limitations, Eve operates 24/7.</p>
+        </div>
+        <div class="eve-feature-visual eve-visual-calendar">
+          <div class="mini-calendar">
+            <div class="cal-header">March 2026</div>
+            <div class="cal-grid">
+              <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+              <span>8</span><span>9</span><span>10</span><span class="cal-active">11</span><span>12</span><span>13</span><span>14</span>
+              <span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
+            </div>
+            <div class="cal-pill">📅 Meeting scheduled</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="eve-feature-card">
+        <div class="eve-feature-copy">
+          <h3>Every Channel</h3>
+          <p>Engage across email, calendar, chat, and more with tailored responses.</p>
+        </div>
+        <div class="eve-feature-visual eve-visual-channels">
+          <div class="channels-icons">
+            <div class="ch-icon ch-email">✉</div>
+            <div class="ch-person"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="eve-feature-card">
+        <div class="eve-feature-copy">
+          <h3>Learns What Works</h3>
+          <p>Eve processes every interaction to improve with each task.</p>
+        </div>
+        <div class="eve-feature-visual eve-visual-chart">
+          <div class="bar-chart">
+            <div class="bar" style="height:40%"></div>
+            <div class="bar" style="height:65%"></div>
+            <div class="bar" style="height:50%"></div>
+            <div class="bar" style="height:80%"></div>
+            <div class="bar" style="height:70%"></div>
+            <div class="bar" style="height:90%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="eve-feature-card">
+        <div class="eve-feature-copy">
+          <h3>Smart CRM Sync</h3>
+          <p>Sync with your CRM to enrich every conversation and personalize your follow-ups.</p>
+        </div>
+        <div class="eve-feature-visual eve-visual-crm">
+          <div class="crm-nodes">
+            <div class="crm-node"></div>
+            <div class="crm-line"></div>
+            <div class="crm-node"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="eve-feature-card">
+        <div class="eve-feature-copy">
+          <h3>Leverage Your Data</h3>
+          <p>Understands with your data to convert leads from every source possible.</p>
+        </div>
+        <div class="eve-feature-visual eve-visual-donut">
+          <div class="donut-chart">
+            <div class="donut-label">Top channels</div>
+            <div class="donut"></div>
+            <div class="donut-legend">
+              <div><span class="dot dot-1"></span> Email</div>
+              <div><span class="dot dot-2"></span> Calendar</div>
+              <div><span class="dot dot-3"></span> Slack</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="eve-feature-card">
+        <div class="eve-feature-copy">
+          <h3>Deliverability Engine</h3>
+          <p>Proprietary inbox management and deliverability infrastructure to maximize response rates.</p>
+        </div>
+        <div class="eve-feature-visual eve-visual-delivery">
+          <div class="delivery-hub">
+            <div class="hub-center"></div>
+            <div class="hub-orbit hub-o1"></div>
+            <div class="hub-orbit hub-o2"></div>
+            <div class="hub-orbit hub-o3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section_helper-lp-table"><div class="helper-lp-table_styles w-embed"><style>
 
 .helper-lp-table_row:last-of-type {
   border-bottom: 0;
@@ -718,8 +1276,6 @@ background: linear-gradient(180deg, #EDF 0%, #CE9DFF 100%);
   -webkit-text-fill-color: transparent;
   padding: 0.3em 0.4em;
   margin: -0.3em -0.4em;
-}
-
 }
 
 </style></div><div class="padding-global padding-section-large"><div class="w-layout-blockcontainer container-large w-container"><div class="helper-lp-outro_wrap"><div class="helper-lp-outro_headline"><h2 class="text-size-5xl text-size-3xl--tablet">Hire our AI social media specialist for just $1 per day.</h2></div><div class="helper-lp-outro_content"><div class="helper-lp-outro_helper-card"><div class="helper-lp-outro_helper-card-headline"><div class="helper-lp-outro_helper-card-title"><h3 class="helper-lp-outro_helper-card-name">Soshie</h3><p class="text-size-5xl text-size-2xl--mobile text-weight-medium">Your first reliable AI for social media marketing.</p></div><div class="helper-lp-outro_helper-card-control"><a data-wf-native-id-path="23b47274-98b6-0113-b01e-d89b7ddfa4d6" data-wf-ao-click-engagement-tracking="true" data-wf-element-id="23b47274-98b6-0113-b01e-d89b7ddfa4d6" href="/pricing-v3?helper=soshie" class="button is-lp is-small w-inline-block"><div class="text--18">Try Soshie Risk Free</div><div class="arrow-right w-embed"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
