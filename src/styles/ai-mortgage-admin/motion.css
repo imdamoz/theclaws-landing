@@ -1,0 +1,299 @@
+/* =============================================================
+   MOTION + FX — v6 extras
+   Grid backgrounds, scroll reveals, hover states, kinetic moments
+   ============================================================= */
+
+/* Global reveal state */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); will-change: opacity, transform; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+.reveal-delay-5 { transition-delay: 0.4s; }
+.reveal-delay-6 { transition-delay: 0.48s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  width: var(--sp, 0%);
+  background: var(--lime);
+  z-index: 100; pointer-events: none;
+  box-shadow: 0 0 12px rgba(212,255,63,0.6);
+  transition: width 0.05s linear;
+}
+
+/* Floating CTA (appears after hero) */
+.float-cta {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  background: var(--ink); color: var(--fg-inv);
+  padding: 12px 18px 12px 14px;
+  border-radius: 999px;
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-body); font-size: 13px; font-weight: 500;
+  box-shadow: 0 12px 30px -12px rgba(9,9,11,0.5);
+  z-index: 60;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+  text-decoration: none;
+}
+.float-cta.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.float-cta:hover { background: var(--lime); color: var(--lime-ink); }
+.float-cta .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 4px rgba(212,255,63,0.25); }
+.float-cta:hover .dot { background: var(--lime-ink); box-shadow: 0 0 0 4px rgba(10,23,0,0.15); }
+@media (max-width: 640px) { .float-cta { bottom: 16px; right: 16px; padding: 10px 14px 10px 12px; font-size: 12px; } }
+
+/* Grid background utility */
+.bg-grid {
+  position: relative;
+  isolation: isolate;
+}
+.bg-grid::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(9,9,11,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(9,9,11,0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+  pointer-events: none; z-index: 0;
+}
+.bg-grid > * { position: relative; z-index: 1; }
+
+.bg-dots {
+  position: relative;
+  isolation: isolate;
+}
+.bg-dots::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(9,9,11,0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+  pointer-events: none; z-index: 0;
+}
+.bg-dots > * { position: relative; z-index: 1; }
+
+.bg-grid-dark::before {
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px);
+}
+
+/* ========== HERO enhancements ========== */
+.hero { position: relative; }
+.hero-left h1 .mark {
+  background-size: 0% 37%;
+  background-repeat: no-repeat;
+  background-position: 0 92%;
+  background-image: linear-gradient(var(--lime), var(--lime));
+  transition: background-size 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.hero-left h1.mark-in .mark { background-size: 100% 37%; }
+
+.eyebrow .counter { display: inline-block; font-variant-numeric: tabular-nums; font-weight: 700; color: var(--ink); }
+
+/* Agent stage parallax-ready widgets */
+.fcard { transition: translate 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), scale 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.4s ease; will-change: translate, scale; }
+.fcard:hover {
+  translate: 0 -4px;
+  scale: 1.02;
+  box-shadow: 0 24px 48px -16px rgba(9,9,11,0.3), 0 4px 8px -2px rgba(9,9,11,0.1);
+  z-index: 5;
+}
+
+/* Magnetic CTA */
+.btn.btn-magnet { transition: transform 0.25s cubic-bezier(0.3, 1.5, 0.4, 1), background 0.2s ease, color 0.2s ease; }
+
+
+/* ========== PROBLEM bars animation ========== */
+.bar .fill { position: relative; transform: scaleY(0); transform-origin: bottom; transition: transform 0.9s cubic-bezier(0.3, 0.7, 0.2, 1); }
+.bar .fill > * { opacity: 0; transition: opacity 0.4s ease 0.5s; }
+.prob.in .bar:nth-child(1) .fill { transform: scaleY(1); transition-delay: 0.0s; }
+.prob.in .bar:nth-child(2) .fill { transform: scaleY(1); transition-delay: 0.12s; }
+.prob.in .bar:nth-child(3) .fill { transform: scaleY(1); transition-delay: 0.24s; }
+.prob.in .bar:nth-child(4) .fill { transform: scaleY(1); transition-delay: 0.36s; }
+.prob.in .bar .fill > * { opacity: 1; }
+
+.bar .fill {
+  transition: transform 0.9s cubic-bezier(0.3, 0.7, 0.2, 1), box-shadow 0.3s ease;
+}
+.bar:hover .fill {
+  box-shadow: 0 20px 40px -16px rgba(9,9,11,0.3);
+}
+
+/* ========== TRANSCRIPT typewriter ========== */
+.transcript blockquote .hl {
+  background: transparent;
+  transition: background 0.6s ease 0.3s;
+}
+.real.in .transcript blockquote .hl { background: var(--lime); }
+
+/* ========== STAIRCASE hover ========== */
+.stair { transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.3s ease; cursor: default; position: relative; overflow: hidden; }
+.stair::after {
+  content: ''; position: absolute; top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  transition: left 0.8s ease;
+  pointer-events: none;
+}
+.stair:hover { transform: translateY(-8px); box-shadow: 0 28px 48px -20px rgba(9,9,11,0.3); }
+.stair:hover::after { left: 100%; }
+.stair-2:hover { box-shadow: 0 28px 48px -20px rgba(9,9,11,0.6); }
+.stair .step-n {
+  transition: transform 0.5s cubic-bezier(0.3, 1.2, 0.4, 1);
+}
+.stair:hover .step-n { transform: translateX(4px) scale(1.08); }
+
+/* ========== CASE hover ========== */
+.case-pdf { transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.case-pdf:hover { transform: rotate(0deg) scale(1.02); }
+.caught-row { transition: background 0.3s ease, padding-left 0.3s ease; padding-left: 0; }
+.caught-row:hover { background: rgba(212,255,63,0.04); padding-left: 8px; }
+.caught-row .cn { transition: color 0.3s ease, transform 0.3s ease; }
+.caught-row:hover .cn { transform: scale(1.15); }
+.case-outcome .v .big-count {
+  font-variant-numeric: tabular-nums; display: inline-block;
+}
+
+/* ========== COMPARE hover ========== */
+.cmp-row { transition: background 0.25s ease; position: relative; }
+.cmp-row:hover { background: rgba(9,9,11,0.02); }
+.cmp-row::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 0;
+  background: var(--lime);
+  transition: width 0.3s ease;
+}
+.cmp-row:hover::before { width: 4px; }
+
+/* ========== BENTO hover ========== */
+.bi { transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.4s ease; position: relative; overflow: hidden; }
+.bi::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(212,255,63,0.12), transparent 40%);
+  opacity: 0; transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.bi:hover { transform: translateY(-4px); box-shadow: 0 24px 40px -16px rgba(9,9,11,0.2); }
+.bi:hover::before { opacity: 1; }
+.bi-1:hover::before, .bi-3:hover::before { opacity: 0; }
+.bi-1:hover { box-shadow: 0 24px 40px -16px rgba(9,9,11,0.5); }
+
+/* ========== POSTCARDS hover ========== */
+.pc { transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.4s ease; }
+.pc-1:hover { transform: rotate(0deg) translateY(-6px); box-shadow: 0 28px 48px -16px rgba(9,9,11,0.25); }
+.pc-2:hover { transform: rotate(0deg) translateY(-6px); box-shadow: 0 28px 48px -16px rgba(9,9,11,0.25); }
+.pc-feat:hover { transform: rotate(0deg) translateY(-6px); box-shadow: 0 32px 56px -16px rgba(9,9,11,0.5); }
+
+/* ========== FAQ accordion ========== */
+.qa {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+.qa:hover { border-bottom-color: var(--ink); }
+.qa .qa-head {
+  display: flex; align-items: baseline; gap: 16px;
+  margin-bottom: 0;
+}
+.qa h4 {
+  flex: 1;
+  margin-bottom: 0;
+  transition: color 0.2s ease;
+}
+.qa .qa-tog {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--ink); color: var(--lime);
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-mono); font-size: 16px; font-weight: 700;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.qa .qa-body {
+  max-height: 0; overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
+  margin-top: 0;
+}
+.qa.open .qa-body { max-height: 500px; opacity: 1; margin-top: 14px; }
+.qa.open .qa-tog { transform: rotate(45deg); background: var(--lime); color: var(--lime-ink); }
+.qa.open h4 { color: var(--ink); }
+
+/* ========== FINAL CTA — kinetic ========== */
+.final h2 {
+  position: relative;
+}
+.final h2 .word {
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.final:hover h2 .word:nth-child(odd) { transform: translateY(-4px); }
+.final:hover h2 .word:nth-child(even) { transform: translateY(4px); }
+
+.final-orbit {
+  position: absolute; top: 50%; left: 50%;
+  width: 900px; height: 900px;
+  border: 1px dashed var(--line);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0.5;
+  animation: orbit 60s linear infinite;
+}
+.final-orbit.o2 { width: 700px; height: 700px; animation-duration: 45s; animation-direction: reverse; opacity: 0.3; }
+@keyframes orbit {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.final { overflow: hidden; position: relative; }
+
+/* ========== SECTION LABEL animation ========== */
+.sec-label::before {
+  transition: width 0.6s cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+.reveal.in .sec-label::before {}
+
+/* ========== Big animated count accents ========== */
+.big-num {
+  font-family: var(--font-display); font-weight: 700;
+  letter-spacing: -0.04em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+  display: inline-block;
+}
+
+/* ========== Nav scroll state ========== */
+.nav.scrolled {
+  background: rgba(250, 250, 250, 0.96);
+  box-shadow: 0 4px 16px -8px rgba(9,9,11,0.15);
+}
+
+/* ========== Ticker pause on hover ========== */
+.ticker:hover { animation-play-state: paused; }
+
+/* ========== Hero eyebrow orbital pulse ========== */
+.hero-left .eyebrow { position: relative; overflow: hidden; }
+.hero-left .eyebrow::after {
+  content: '';
+  position: absolute; top: 50%; left: -40px;
+  width: 30px; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212,255,63,0.4), transparent);
+  transform: translateY(-50%);
+  animation: sweep 4s ease-in-out infinite;
+}
+@keyframes sweep {
+  0%, 100% { left: -40px; }
+  50% { left: calc(100% + 40px); }
+}
+
+/* ========== Arrow on CTA buttons ========== */
+.btn .arrow { display: inline-block; transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.btn:hover .arrow { transform: translateX(4px); }

@@ -1,4 +1,13 @@
 ---
+const {
+  title = 'TheClaws — AI Super Agents',
+  description = 'AI Super Agents that maximize human productivity',
+  ogTitle = 'TheClaws — Scale your business without hiring more staff',
+  ogDescription = 'Deploy AI Agents in minutes to handle follow-ups, booking, project coordination, and invoicing inside your existing tools.',
+  ogImage = 'https://theclaws.ai/assets/featured-img.png',
+  ogUrl = 'https://theclaws.ai',
+  includeHomeStyles = true,
+} = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -6,22 +15,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TheClaws — AI Super Agents</title>
-  <meta name="description" content="AI Super Agents that maximize human productivity" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
 
   <!-- Open Graph / Facebook / WhatsApp -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="TheClaws — Scale your business without hiring more staff" />
-  <meta property="og:description" content="Deploy AI Agents in minutes to handle follow-ups, booking, project coordination, and invoicing inside your existing tools." />
-  <meta property="og:image" content="https://theclaws.ai/assets/featured-img.png" />
-  <meta property="og:url" content="https://theclaws.ai" />
+  <meta property="og:title" content={ogTitle} />
+  <meta property="og:description" content={ogDescription} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:url" content={ogUrl} />
   <meta property="og:site_name" content="TheClaws" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="TheClaws — Scale your business without hiring more staff" />
-  <meta name="twitter:description" content="Deploy AI Agents in minutes to handle follow-ups, booking, project coordination, and invoicing inside your existing tools." />
-  <meta name="twitter:image" content="https://theclaws.ai/assets/featured-img.png" />
+  <meta name="twitter:title" content={ogTitle} />
+  <meta name="twitter:description" content={ogDescription} />
+  <meta name="twitter:image" content={ogImage} />
 
   <!-- Hotjar Tracking Code -->
   <script is:inline>
@@ -81,16 +90,20 @@
     .ExpandablePill_expandablePill__Cmoj5 { opacity: 1 !important; }
   </style>
 
-  <!-- Inspiration3 CSS (for testimonials section) -->
-  <link rel="stylesheet" href="/inspiration3/css/sintraweb.shared.61297f412.min.css" />
+  {includeHomeStyles && (
+    <>
+      <!-- Homepage Webflow + TheClaws reference CSS bundle -->
+      <link rel="stylesheet" href="/inspiration3/css/sintraweb.shared.61297f412.min.css" />
+      <link rel="stylesheet" href="/css/f940fe1fd2e7ae7a.css" />
+      <link rel="stylesheet" href="/css/ef46db3751d8e999.css" />
+      <link rel="stylesheet" href="/css/adaeedc4bf7ccafc.css" />
+      <link rel="stylesheet" href="/css/3620510e7c1dbba6.css" />
+      <link rel="stylesheet" href="/css/56c650500295bc46.css" />
+      <link rel="stylesheet" href="/css/3d7024d4ab600e69.css" />
+    </>
+  )}
 
-  <!-- Reference CSS (all 6 files, unchanged) -->
-  <link rel="stylesheet" href="/css/f940fe1fd2e7ae7a.css" />
-  <link rel="stylesheet" href="/css/ef46db3751d8e999.css" />
-  <link rel="stylesheet" href="/css/adaeedc4bf7ccafc.css" />
-  <link rel="stylesheet" href="/css/3620510e7c1dbba6.css" />
-  <link rel="stylesheet" href="/css/56c650500295bc46.css" />
-  <link rel="stylesheet" href="/css/3d7024d4ab600e69.css" />
+  <slot name="head" />
 </head>
 <body>
 <slot />

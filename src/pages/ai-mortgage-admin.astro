@@ -1,0 +1,741 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/ai-mortgage-admin/styles.css';
+import '../styles/ai-mortgage-admin/sections.css';
+import '../styles/ai-mortgage-admin/motion.css';
+---
+
+<Layout
+  title="AI Mortgage Admin — More cases submitted. Less time lost to admin."
+  description="Upload the case. AI Mortgage Admin reviews the file and drafts the client chase for whatever is missing."
+  ogTitle="AI Mortgage Admin — More cases submitted. Less time lost to admin."
+  ogDescription="Upload the case. AI Mortgage Admin reviews the file and drafts the client chase for whatever is missing."
+  includeHomeStyles={false}
+>
+
+<div class="scroll-progress"></div>
+<a class="float-cta" href="#book"><span class="dot"></span>Book a call<span class="arrow">→</span></a>
+
+<!-- NAV -->
+<header class="wrap">
+  <nav class="nav">
+    <a class="nav-brand" href="#">
+      <img src="/images/the-claws-logo.svg" alt="TheClaws" class="nav-brand-logo" />
+      <span>AI Mortgage Admin</span>
+    </a>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#how">How it works</a>
+      <a href="#case">Case study</a>
+      <a href="#incl">Included</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="btn btn-sm btn-primary" href="#book">Book a call <span class="arrow">→</span></a>
+  </nav>
+</header>
+
+<!-- ============ HERO (all above fold) ============ -->
+<section class="hero wrap">
+  <div class="hero-left">
+    <div class="eyebrow reveal"><span class="dot"></span>Documents processed in <span class="counter" data-count="8" data-suffix=" minutes">8 minutes</span>, not hours</div>
+    <h1 class="reveal reveal-delay-1">More cases submitted.<br><span class="mark">Less time lost to admin.</span></h1>
+    <p class="sub reveal reveal-delay-2">Upload the case. AI Mortgage Admin reviews the file and drafts the client chase for whatever is missing.</p>
+    <div class="btns reveal reveal-delay-3">
+      <a class="btn btn-lime btn-magnet" href="#book">Book a call &amp; see it on your file <span class="arrow">→</span></a>
+      <a class="btn btn-ghost" href="#how">See how it works</a>
+    </div>
+    <p class="micro reveal reveal-delay-4">On the call we review one of your live cases and show you the gaps it would flag before submission. No prep needed. Bring the file.</p>
+
+    <hr class="hero-divider reveal reveal-delay-4">
+
+    <div class="hero-caps reveal reveal-delay-5">
+      <div class="hero-cap">
+        <span class="ic">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line></svg>
+        </span>
+        <strong>Reads the whole file</strong>
+        <span>Bank statements, credit file, payslips, deposit source, protection notes.</span>
+      </div>
+      <div class="hero-cap">
+        <span class="ic">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </span>
+        <strong>Drafts the chase</strong>
+        <span>Written from the actual file. You review before sending.</span>
+      </div>
+      <div class="hero-cap">
+        <span class="ic">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </span>
+        <strong>Fits your firm's rules</strong>
+        <span>Your compliance wording, your network, your tone.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stage">
+    <img class="agent" src="/images/hero-ai-mortgage-admin.webp" alt="AI Mortgage Admin reviewing a case file">
+    <div class="sbubble"><span class="spark"></span> What needs attention on case #2847?</div>
+
+    <!-- Missing items -->
+    <div class="fcard fcard-alert">
+      <div class="fc-head">
+        <span class="ic">!</span>
+        <span>Missing items flagged</span>
+        <span class="pill">4</span>
+      </div>
+      <div class="chip-list">
+        <div class="chip-item"><svg class="chip-ic" width="11" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span><b>Payslip</b> · March</span></div>
+        <div class="chip-item"><svg class="chip-ic" width="11" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span><b>Bank statement</b> · p.4</span></div>
+        <div class="chip-item"><svg class="chip-ic" width="11" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span><b>Deposit source</b> · explanation</span></div>
+        <div class="chip-item"><svg class="chip-ic" width="11" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span><b>Credit file</b> · missing</span></div>
+      </div>
+    </div>
+
+    <!-- Todo -->
+    <div class="fcard fcard-todo">
+      <div class="fc-head">
+        <span class="ic">✓</span>
+        <span>Todo List</span>
+        <span class="pill lime">2 ITEMS</span>
+      </div>
+      <div class="todo-i">
+        <div class="ti-head">🗂 Credit File<span class="ti-pill">Undisclosed</span></div>
+        <div class="ti-sub">Hard search, undisclosed finance</div>
+      </div>
+      <div class="todo-i">
+        <div class="ti-head">📝 Suitability Note<span class="ti-pill out">Reviewed</span></div>
+        <div class="ti-sub">Declined CI cover rationale added</div>
+      </div>
+    </div>
+
+    <!-- WA -->
+    <div class="fcard fcard-wa">
+      <div class="fc-head">
+        <span class="ic ic-wa" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </span>
+        <span>WhatsApp chase</span>
+        <span class="pill">Draft</span>
+      </div>
+      <div class="wa-msg">Hi Mr Smith, quick one to get your file submitted. Could you send me your March payslip, page 4 of your bank statement, and a short note explaining where the deposit came from?</div>
+      <div class="wa-meta">
+        <span>To: Mr Smith</span>
+        <span class="send">Review &amp; send →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= LOGO TICKER ========================= -->
+<div class="ticker-band">
+  <div class="ticker">
+    <span>Halifax</span><span>·</span>
+    <span>Nationwide</span><span>·</span>
+    <span>HSBC</span><span>·</span>
+    <span>Santander</span><span>·</span>
+    <span>NatWest</span><span>·</span>
+    <span>Barclays</span><span>·</span>
+    <span>Virgin Money</span><span>·</span>
+    <span>Coventry BS</span><span>·</span>
+    <span>Accord</span><span>·</span>
+    <!-- duplicate for seamless loop -->
+    <span>Halifax</span><span>·</span>
+    <span>Nationwide</span><span>·</span>
+    <span>HSBC</span><span>·</span>
+    <span>Santander</span><span>·</span>
+    <span>NatWest</span><span>·</span>
+    <span>Barclays</span><span>·</span>
+    <span>Virgin Money</span><span>·</span>
+    <span>Coventry BS</span><span>·</span>
+    <span>Accord</span><span>·</span>
+  </div>
+</div>
+
+<!-- ============ PROBLEM + REAL PROBLEM — combined ============ -->
+<section id="problem" class="real bg-grid bg-grid-dark">
+  <div class="wrap real-grid">
+    <div class="reveal">
+      <div class="sec-label">The problem</div>
+      <h2>Your advice is not the bottleneck. Mortgage admin is.</h2>
+      <p>You already know how to advise. What slows you down is everything around it: checking statements, matching payslips, spotting credit issues, proving deposit source, writing notes, evidencing protection, and chasing missing documents.</p>
+      <p>Every hour spent on that is an hour not advising, or being home, and even when it is done, the case still comes back from the lender, from compliance, or from the client.</p>
+      <div class="problem-cards">
+        <div class="pcard">
+          <span class="pcard-k">01 / Doc review</span>
+          <h4>Bank statements</h4>
+          <p>Income, conduct, gambling, transfers, debts.</p>
+        </div>
+        <div class="pcard pcard-dark">
+          <span class="pcard-k">02 / Adverse</span>
+          <h4>Credit files</h4>
+          <p>Missed payments, CCJs, debts, hard searches.</p>
+        </div>
+        <div class="pcard">
+          <span class="pcard-k">03 / Evidence</span>
+          <h4>Case notes</h4>
+          <p>Income, deposit, suitability, rationale.</p>
+        </div>
+        <div class="pcard pcard-lime">
+          <span class="pcard-k">04 / Client work</span>
+          <h4>Client chase</h4>
+          <p>Draft WhatsApps, emails, and follow-up questions.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="real-col">
+      <div class="transcript reveal reveal-delay-2">
+        <div class="sec-label">The real problem</div>
+        <h2 style="margin-top: 12px; margin-bottom: 28px;">The admin around each case sets the cap.</h2>
+
+        <blockquote>
+          I feel like I'm working at <span class="hl">full capacity</span>, but I can't grow because admin eats my time.
+        </blockquote>
+        <div class="sig">— Advisor using AI Mortgage Admin</div>
+
+        <div class="body-txt">
+          <strong>More cases means more statements to check</strong>, more credit files to read, more clients to chase, more notes to tidy. So the advisor either stops taking more cases, or takes them and pays for it with evenings and weekends.
+          <br><br>
+          AI Mortgage Admin is built to <span class="lime">lift that cap.</span> Not by changing how you advise. By taking the admin work that sits between advice given and case submitted off your desk.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIXES — ledger ============ -->
+<section class="fixes">
+  <div class="wrap">
+    <div class="sec-label reveal">Why the usual fixes do not work</div>
+    <h2 class="reveal reveal-delay-1">Hiring a case manager takes months. Templates do not read the file. Generic AI does not know a CCJ from a hard search.</h2>
+
+    <div class="ledger">
+      <div class="ledger-row fail reveal reveal-delay-2">
+        <div class="n">01 / TRIED</div>
+        <div>
+          <h4>A case manager</h4>
+        </div>
+        <p>Costs a full salary before it helps. Needs training on your firm's process, your network's quirks, and your protection rationale. Still leaves the advisor doing the judgement calls.</p>
+      </div>
+      <div class="ledger-row fail reveal reveal-delay-3">
+        <div class="n">02 / TRIED</div>
+        <div>
+          <h4>WhatsApp and email templates</h4>
+        </div>
+        <p>Generic "please send more documents" messages. They do not look at the file, do not know what is actually missing, and the client ignores them or sends the wrong thing.</p>
+      </div>
+      <div class="ledger-row fail reveal reveal-delay-4">
+        <div class="n">03 / TRIED</div>
+        <div>
+          <h4>Generic AI chatbots</h4>
+        </div>
+        <p>Wait for you to explain the whole case from scratch every time. They do not understand gifted deposits, overseas transfers, defaults versus CCJs, or why a declined cover needs a file note.</p>
+      </div>
+      <div class="ledger-row win reveal reveal-delay-5">
+        <div class="n">04 / HOW IT FITS</div>
+        <div>
+          <h4>A review and drafting layer. You stay the advisor on the file.</h4>
+        </div>
+        <p>Every flag, every WhatsApp, every email is <strong>reviewed by you before anything moves.</strong> It does not submit, send, or sign anything off. Built for mortgage and protection files specifically, not generic document review. Your compliance wording, your network's process, and your approved tone are configured at setup.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW — staircase ============ -->
+<section id="how" class="how bg-grid">
+  <div class="wrap">
+    <div class="sec-label reveal">How it works</div>
+    <h2 class="reveal reveal-delay-1">Four steps from messy file to submission-ready.</h2>
+
+    <div class="staircase">
+      <div class="stair stair-1 reveal reveal-delay-2">
+        <span class="step-n">01</span>
+        <h3>Upload the case documents</h3>
+        <p>Bank statements, credit file, payslips, deposit evidence, protection notes, fact find.</p>
+      </div>
+      <div class="stair stair-2 reveal reveal-delay-3">
+        <span class="step-n">02</span>
+        <h3>AI Mortgage Admin reviews the file</h3>
+        <p>Checks every document, cross-references the story, flags what is missing or risky.</p>
+      </div>
+      <div class="stair stair-3 reveal reveal-delay-4">
+        <span class="step-n">03</span>
+        <h3>You get flags, questions, and draft messages</h3>
+        <p>Review the gaps, approve the WhatsApp or email chase, decide what goes to the client.</p>
+      </div>
+      <div class="stair stair-4 reveal reveal-delay-5">
+        <span class="step-n">04</span>
+        <h3>You submit a cleaner case</h3>
+        <p>File goes to the lender with fewer gaps, fewer weak notes, and fewer avoidable queries.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CASE ============ -->
+<section id="case" class="case">
+  <div class="wrap">
+    <div class="sec-label">[ Case study ]</div>
+
+    <div class="case-layout">
+      <div class="case-left reveal">
+        <div class="case-pdf">
+          <span class="pk">Case study · 01</span>
+          <h4>The file looked ready. The review found three things before the lender did.</h4>
+          <div class="pdf-sub">First-time buyer purchase. £30,000 deposit. A closer look before submission.</div>
+
+          <div class="case-outcome">
+            <div class="item">
+              <span class="k">Outcome</span>
+              <span class="v">Corrected before submission</span>
+            </div>
+            <div class="item">
+              <span class="k">Lender queries avoided</span>
+              <span class="v">2 foreseeable</span>
+            </div>
+            <div class="item">
+              <span class="k">Offer issued</span>
+              <span class="v">4 days later</span>
+            </div>
+          </div>
+
+          <div class="pdf-pages">
+            <b>AI Mortgage Admin</b>
+            <span>12 pages</span>
+          </div>
+        </div>
+
+        <a class="btn btn-on-dark case-cta" href="#book">Download the full case study <span class="arrow">↓</span></a>
+      </div>
+
+      <div class="case-copy reveal reveal-delay-2">
+        <svg class="pdf-hint-arrow" width="140" height="49" viewBox="0 0 380 132" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M1.44574 61.1935C5.23881 71.6566 16.7955 64.7185 23.614 61.6428C35.3007 55.9435 47.9577 52.9106 60.3997 49.3619C83.9192 41.9887 108.212 37.8563 132.641 34.9294C157.522 30.0079 183.236 33.026 207.182 40.9376C183.77 53.9122 153.66 81.0519 168.379 110.216C175.948 124.291 192.779 134.463 208.911 131.256C238.839 125.568 279.667 74.6545 252.929 47.6279C299.216 49.7015 323.858 72.3163 357.971 99.9322C361.278 102.457 364.175 105.586 367.697 107.775C375.232 111.833 383.187 102.199 377.767 95.5513C353.57 75.8968 329.896 53.8897 301.066 41.1857C278.681 33.6456 253.731 29.0003 230.167 32.1792C207.385 22.6752 182.827 16.4308 158.039 16.3897C127.824 17.7823 97.5398 22.9522 68.199 30.3273C47.5646 35.954 26.9417 41.5376 7.64304 50.9397C3.00375 51.7153 0.107731 56.7864 1.44574 61.1935ZM182.568 86.0698C191.622 68.2207 209.814 55.957 228.223 49.2408C235.559 53.5751 246.271 59.6258 245.686 69.366C245.706 69.2363 245.728 69.1063 245.749 68.9765C245.756 68.764 245.762 68.5513 245.769 68.339C241.838 89.9531 224.799 112.882 201.929 115.758C188.306 114.388 175.531 99.5471 182.568 86.0698Z"/>
+          <path d="M0.00134323 66.0661C-0.121404 74.1831 8.46788 76.029 14.9021 76.7328C28.114 79.009 41.2882 81.4408 54.3712 84.3637C60.9683 85.1908 67.0892 88.9615 73.6263 89.1714C80.5725 88.2328 82.7969 78.5809 77.0331 74.6251C58.152 66.6058 36.9941 64.781 16.9606 60.7204C21.7513 43.5116 32.5459 28.4019 41.1777 12.9929C42.4149 11.082 43.1307 9.02166 42.7477 6.72538C41.9198 -0.0972456 31.9611 -2.58451 28.2025 3.31897C23.6449 10.6168 19.3715 18.0967 15.1861 25.6116C8.33517 38.1859 0.332096 51.3684 0.00134323 66.0661Z"/>
+        </svg>
+
+        <h2>The file looked ready. The review found <em>three things</em> before the lender did.</h2>
+
+        <div class="cs-cards-stack">
+          <div class="case-card cc-neutral">
+            <div class="cc-head">
+              <span class="cc-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </span>
+              <h3>The situation</h3>
+            </div>
+            <p>A residential purchase case for a first-time buyer on a joint application. Income evidence, three months of bank statements, a £30,000 deposit, and protection recommendation notes were all on file. The advisor was ready to submit.</p>
+          </div>
+          <div class="case-card cc-alert">
+            <div class="cc-head">
+              <span class="cc-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </span>
+              <h3>What AI Mortgage Admin caught</h3>
+            </div>
+            <p>A £8,500 family transfer with no gifted deposit letter. An overtime income note that did not match the salary credits on two months of statements. A weak protection rationale where critical illness cover had been declined on budget grounds without evidence. It then drafted the client WhatsApp and the email to the compliance checker.</p>
+          </div>
+          <div class="case-card cc-success">
+            <div class="cc-head">
+              <span class="cc-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <h3>The outcome</h3>
+            </div>
+            <p>The advisor corrected the file before submission. Two foreseeable lender queries avoided. Compliance signed off first time. Client returned the gifted deposit letter and overtime explanation the same evening. Offer issued four days later.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARE ============ -->
+<section class="cmp bg-dots">
+  <div class="wrap">
+    <div class="cmp-top reveal">
+      <div class="cmp-head">
+        <div class="sec-label">Compared to</div>
+        <h2>What most advisors try before this, and why the gap is still there.</h2>
+      </div>
+      <div class="cmp-foot">
+        The point is not that any of these are wrong. The point is that each one solves part of the problem. AI Mortgage Admin was built to cover the part that keeps falling back on the advisor.
+      </div>
+    </div>
+
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>
+              <span class="cmp-q">Can it <em>actually</em> do the work properly?</span>
+            </th>
+            <th>
+              <div class="cmp-col">
+                <span class="cmp-ic">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="cmp-lbl">Case manager</span>
+              </div>
+            </th>
+            <th>
+              <div class="cmp-col">
+                <span class="cmp-ic">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+                </span>
+                <span class="cmp-lbl">Templates</span>
+              </div>
+            </th>
+            <th>
+              <div class="cmp-col">
+                <span class="cmp-ic">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/></svg>
+                </span>
+                <span class="cmp-lbl">ChatGPT on a file</span>
+              </div>
+            </th>
+            <th class="col-us">
+              <div class="cmp-col">
+                <span class="cmp-ic cmp-ic-kai">
+                  <img src="/images/account-manager.webp" alt="Kai" width="52" height="52" loading="lazy" />
+                </span>
+                <span class="cmp-lbl">AI Mortgage Admin</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Reads the case before replying</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Partial</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Spots credit &amp; bank statement issues</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Drafts updates based on the actual client file</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Generic only</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Chases missing documents &amp; information</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Partial</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Flags lender-risk issues early</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Works on adverse, first-time buyer &amp; messy cases</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Limited</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Ready from day one</th>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INCLUDED — bento ============ -->
+<section id="incl" class="incl bg-grid">
+  <div class="wrap">
+    <div class="incl-head reveal">
+      <div>
+        <div class="sec-label">What's included</div>
+        <h2>Seven steps from messy file to submission-ready.</h2>
+      </div>
+      <p class="sub">Each step runs on your live case file. You review the output before anything goes to the client or the lender.</p>
+    </div>
+
+    <ol class="incl-flow reveal" aria-label="Workflow steps">
+      <li><span class="fn">01</span><span class="fl">Red flags</span></li>
+      <li><span class="fn">02</span><span class="fl">Consistency</span></li>
+      <li><span class="fn">03</span><span class="fl">Funds trail</span></li>
+      <li><span class="fn">04</span><span class="fl">Income</span></li>
+      <li><span class="fn">05</span><span class="fl">Protection</span></li>
+      <li><span class="fn">06</span><span class="fl">Chase</span></li>
+      <li><span class="fn">07</span><span class="fl">Summary</span></li>
+    </ol>
+
+    <div class="incl-grid">
+      <div class="incl-card incl-1 reveal reveal-delay-1">
+        <span class="incl-wm" aria-hidden="true">01</span>
+        <span class="incl-n">Red flags</span>
+        <h4>Bank statement red flag review</h4>
+        <p>Flags gambling, cash deposits, overdraft reliance, unexplained transfers, bounced payments, undisclosed commitments and other risks across every statement in the file.</p>
+        <div class="saves">
+          <span class="slbl">What it saves you</span>
+          <span class="svalue">Avoids lender queries — less rework and fewer delays at underwriting.</span>
+        </div>
+      </div>
+      <div class="incl-card incl-2 reveal reveal-delay-2">
+        <span class="incl-wm" aria-hidden="true">02</span>
+        <span class="incl-n">Consistency</span>
+        <h4>Credit file consistency check</h4>
+        <p>Compares declared commitments against loans, cards, car finance, missed payments, defaults, CCJs, hard searches and active balances. Nothing the client "forgot to mention" surprises you later.</p>
+        <div class="saves">
+          <span class="slbl">What it saves you</span>
+          <span class="svalue">Prevents submission delays — stops avoidable declines, queries and back-and-forth.</span>
+        </div>
+      </div>
+      <div class="incl-card incl-3 reveal reveal-delay-1">
+        <span class="incl-wm" aria-hidden="true">03</span>
+        <span class="incl-n">Funds trail</span>
+        <h4>Deposit source and funds trail check</h4>
+        <p>Reviews gifted deposits, family transfers, overseas funds, business transfers, large incoming credits and whether the explanation and paper trail are complete and acceptable.</p>
+        <div class="saves">
+          <span class="slbl">What it saves you</span>
+          <span class="svalue">Reduces fall-through risk — protects the case from issues that can cost you the deal.</span>
+        </div>
+      </div>
+      <div class="incl-card incl-4 reveal reveal-delay-2">
+        <span class="incl-wm" aria-hidden="true">04</span>
+        <span class="incl-n">Income</span>
+        <h4>Income and evidence check</h4>
+        <p>Checks payslips, salary credits, variable income, bonus, overtime, self-employed income, benefits and whether the documents support the case being presented.</p>
+        <div class="saves">
+          <span class="slbl">What it saves you</span>
+          <span class="svalue">Faster to submit, stronger case — cuts time lost checking evidence and fixing gaps.</span>
+        </div>
+      </div>
+      <div class="incl-card incl-5 reveal reveal-delay-3">
+        <span class="incl-wm" aria-hidden="true">05</span>
+        <span class="incl-n">Protection</span>
+        <h4>Protection suitability file check</h4>
+        <p>Reviews needs, budget, shortfalls, recommendations, declined cover and whether the conversation is properly evidenced for compliance.</p>
+        <div class="saves">
+          <span class="slbl">What it saves you</span>
+          <span class="svalue">Reduces compliance risk — keeps your file clean and advice well evidenced.</span>
+        </div>
+      </div>
+      <div class="incl-card incl-6 reveal reveal-delay-1">
+        <span class="incl-wm" aria-hidden="true">06</span>
+        <span class="incl-n">Chase</span>
+        <h4>Client chase messages and follow-up drafts</h4>
+        <p>Creates WhatsApp and email drafts for missing documents, source of funds questions, deposit explanations, income queries and other follow-ups.</p>
+        <div class="saves">
+          <span class="slbl">What it saves you</span>
+          <span class="svalue">Saves hours chasing clients — frees up time for advice and new business.</span>
+        </div>
+      </div>
+      <div class="incl-card incl-7 reveal reveal-delay-2">
+        <span class="incl-wm" aria-hidden="true">07</span>
+        <span class="incl-n">Summary</span>
+        <h4>Submission-ready issue summary</h4>
+        <p>Pulls all risks, gaps and unanswered points into one clear summary so you know exactly what needs sorting before you hit submit.</p>
+        <div class="saves">
+          <span class="slbl">What it saves you</span>
+          <span class="svalue">Stops rework after submission — less back-and-forth, fewer hold-ups, smoother completions.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cost-strip reveal">
+      <div>
+        <h3>Chasing documents, re-checking files and fixing avoidable issues steals adviser time.</h3>
+        <p>More admin = fewer client conversations, slower submissions, more rework and less revenue-generating time.</p>
+        <p><strong style="color:var(--fg-inv)">Total value to your business:</strong> protects adviser time, reduces delays and rework, and helps you write more business, not more admin.</p>
+      </div>
+      <div class="pbox">
+        <div class="l">Your price</div>
+        <div class="n">$300</div>
+        <div class="u">/ month</div>
+        <a class="btn btn-on-dark" href="#book">Book a call &amp; see it on your file <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUARANTEE + TESTIMONIALS — merged ============ -->
+<section class="testi">
+  <div class="wrap">
+    <div class="grt-pair">
+      <div class="ticket reveal">
+        <div class="dash-divider"></div>
+        <div class="ticket-left">
+          <div class="kicker">— The guarantee</div>
+          <h2>If it misses a material issue clearly visible in the file, <em>you do not pay.</em></h2>
+          <p>An undisclosed direct debit. An adverse credit flag. A clear inconsistency in the evidence. Run it on your live cases — if it misses any of that, full refund. No forms.</p>
+        </div>
+        <div class="ticket-right">
+          <div class="big"><em><span class="big-count" data-count="100" data-suffix="%">100%</span></em></div>
+          <div class="small">Full refund · if we miss it</div>
+          <div class="refund">Most files have something. Most cases have three.</div>
+        </div>
+      </div>
+      <div class="testi-head reveal reveal-delay-2">
+        <div class="sec-label">What advisors say</div>
+        <h2>What advisors are actually<br>getting out of it.</h2>
+      </div>
+    </div>
+
+    <div class="testi-layout">
+      <div class="testi-feat reveal reveal-delay-1">
+        <span class="featured-tag">Featured</span>
+        <blockquote>My packaging is a lot cleaner now. I used to get two or three underwriter queries a week on things I should have spotted myself. That has dropped off almost completely, and the cases that do go back are on stuff I genuinely could not have known.</blockquote>
+        <div class="stats">
+          <div class="s"><div class="n">~80%</div><div class="l">Fewer underwriter queries</div></div>
+          <div class="s"><div class="n">3 weeks</div><div class="l">Until cleaner packaging became normal</div></div>
+        </div>
+        <div class="author">
+          <div class="av">JM</div>
+          <div class="who"><b>James Mercer</b><span>Mortgage and protection advisor, Northcote Financial</span></div>
+        </div>
+      </div>
+
+      <div class="testi-video reveal reveal-delay-2">
+        <span class="vhead">Watch it in 42 seconds</span>
+        <h4>James tells the story in his own words</h4>
+        <div class="vframe">
+          <span class="dur">0:42</span>
+        </div>
+        <p class="vmeta">Recorded after 3 weeks of using AI Mortgage Admin.</p>
+      </div>
+    </div>
+
+    <div class="testi-side">
+      <div class="testi-quote reveal reveal-delay-3">
+        <blockquote>The suitability notes were the surprise for me. It flags the bits of the protection conversation that I have not evidenced properly, before compliance does. That alone has saved me two rounds of back and forth on most files.</blockquote>
+        <div class="author">
+          <div class="av">SP</div>
+          <div class="who"><b>Sarah Patel</b><span>Advisor and case manager, Linden Grove Mortgages</span></div>
+        </div>
+      </div>
+
+      <div class="testi-quote reveal reveal-delay-4">
+        <blockquote>The chase drafts are the thing my team will not give up. The WhatsApp is written, the missing items are listed properly, I read it, tweak it, and send. Saves me a good hour a day at minimum.</blockquote>
+        <div class="author">
+          <div class="av">DO</div>
+          <div class="who"><b>David Okafor</b><span>Broker and firm principal, Bridgewell Mortgage Advisors</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ — flat two col ============ -->
+<section id="faq" class="faq bg-grid">
+  <div class="wrap">
+    <div class="faq-head reveal">
+      <div>
+        <div class="sec-label">Before the call</div>
+        <h2>Questions advisors ask before booking</h2>
+      </div>
+      <p class="faq-lede">Everything you need to know before you bring a case. If it's not here, we'll cover it on the call.</p>
+    </div>
+
+    <div class="faq-grid">
+      <div class="qa reveal reveal-delay-1">
+        <div class="qa-head">
+          <span class="qn">Q1</span>
+          <h4>Does this replace my advice?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>No. You remain the advisor. It checks the file, evidence, notes, and gaps before submission. You make every decision.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-2">
+        <div class="qa-head">
+          <span class="qn">Q2</span>
+          <h4>Will this work with my network or firm process?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Yes. Use it as a pre-check before your normal submission, file checking, or compliance process. It fits around what you already do.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-3">
+        <div class="qa-head">
+          <span class="qn">Q3</span>
+          <h4>What about client data?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Data is handled under your firm-approved process. Add your privacy and compliance wording here. We walk through the exact data handling on the call.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-2">
+        <div class="qa-head">
+          <span class="qn">Q4</span>
+          <h4>What if the lender still asks a question?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Some queries cannot be avoided. But reviewed files reduce the avoidable ones: the missing page, the unexplained credit, the undisclosed commitment.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-3">
+        <div class="qa-head">
+          <span class="qn">Q5</span>
+          <h4>Can it draft WhatsApp and email messages?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Yes. Client chases, follow-up questions, and response wording, all drafted from the actual file. You review before sending.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-4">
+        <div class="qa-head">
+          <span class="qn">Q6</span>
+          <h4>What happens on the demo call?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Bring one live case. We review it together in about 20 minutes. You see the flags, the drafted client message, and the missing items. Then you decide if it is worth continuing.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIMITED — strip ============ -->
+<section class="limited">
+  <div class="wrap">
+    <div class="limited-inner">
+      <div class="kicker"><span class="dot"></span>Demo calls are limited</div>
+      <p>We run 3 advisor demo calls per week so each one reviews a real case properly. When the week is full, new advisors move to the next available slot.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section id="book" class="final">
+  <div class="wrap">
+    <div class="sec-label reveal">20-minute demo call</div>
+    <h2 class="reveal reveal-delay-1">Bring one live file. See what it would have caught <em>before the lender did.</em></h2>
+    <p class="lede reveal reveal-delay-2">Every preventable query costs time. Every weak note creates risk. In one demo call we will show you what a pre-submission admin check looks like on your actual case.</p>
+    <div class="final-actions reveal reveal-delay-3">
+      <a class="btn btn-lg btn-on-dark btn-magnet" href="#book">Book a call &amp; see it on your file <span class="arrow">→</span></a>
+      <a class="btn btn-lg btn-on-dark-ghost" href="#book">Get the free file-ready checklist</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-inner">
+      <div class="foot-brand">AI Mortgage Admin</div>
+      <div>© 2026 · Built for UK mortgage advisors</div>
+      <div>Terms · Privacy</div>
+    </div>
+  </div>
+</footer>
+
+<script src="/scripts/ai-mortgage-admin-motion.js" is:inline defer></script>
+
+</Layout>
