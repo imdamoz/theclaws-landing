@@ -1556,12 +1556,11 @@
 }
 .foot-inner a { color: var(--fg-inv-3); text-decoration: none; }
 .foot-inner a:hover { color: var(--fg-inv); }
-.foot-brand::before {
-  content: 'AI';
-  width: 28px; height: 28px; border-radius: 999px;
-  background: var(--lime); color: var(--lime-ink);
-  display: inline-flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 800;
+.foot-brand-img {
+  width: 32px; height: 32px; border-radius: 999px;
+  object-fit: cover; object-position: top center;
+  border: 2px solid var(--lime);
+  flex-shrink: 0;
 }
 @media (max-width: 640px) { .foot-inner { flex-direction: column; gap: 12px; text-align: center; } }
 
