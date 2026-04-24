@@ -1497,7 +1497,7 @@
 /* ===================== FINAL CTA ===================== */
 .final {
   background: var(--ink); color: var(--fg-inv);
-  padding: 96px 0 80px;
+  padding: 48px 0 64px;
   text-align: center;
   position: relative; overflow: hidden;
 }
