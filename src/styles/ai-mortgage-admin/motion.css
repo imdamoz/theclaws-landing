@@ -23,7 +23,7 @@
   width: var(--sp, 0%);
   background: var(--lime);
   z-index: 100; pointer-events: none;
-  box-shadow: 0 0 12px rgba(212,255,63,0.6);
+  box-shadow: 0 0 12px rgba(83,215,149,0.6);
   transition: width 0.05s linear;
 }
 
@@ -45,7 +45,7 @@
 }
 .float-cta.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
 .float-cta:hover { background: var(--lime); color: var(--lime-ink); }
-.float-cta .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 4px rgba(212,255,63,0.25); }
+.float-cta .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 4px rgba(83,215,149,0.25); }
 .float-cta:hover .dot { background: var(--lime-ink); box-shadow: 0 0 0 4px rgba(10,23,0,0.15); }
 @media (max-width: 640px) { .float-cta { bottom: 16px; right: 16px; padding: 10px 14px 10px 12px; font-size: 12px; } }
 
@@ -156,7 +156,7 @@
 .case-pdf { transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .case-pdf:hover { transform: rotate(0deg) scale(1.02); }
 .caught-row { transition: background 0.3s ease, padding-left 0.3s ease; padding-left: 0; }
-.caught-row:hover { background: rgba(212,255,63,0.04); padding-left: 8px; }
+.caught-row:hover { background: rgba(83,215,149,0.04); padding-left: 8px; }
 .caught-row .cn { transition: color 0.3s ease, transform 0.3s ease; }
 .caught-row:hover .cn { transform: scale(1.15); }
 .case-outcome .v .big-count {
@@ -177,7 +177,7 @@
 .bi { transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.4s ease; position: relative; overflow: hidden; }
 .bi::before {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(212,255,63,0.12), transparent 40%);
+  background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(83,215,149,0.12), transparent 40%);
   opacity: 0; transition: opacity 0.4s ease;
   pointer-events: none;
 }
@@ -228,16 +228,10 @@
 .qa.open .qa-tog { transform: rotate(45deg); background: var(--lime); color: var(--lime-ink); }
 .qa.open h4 { color: var(--ink); }
 
-/* ========== FINAL CTA — kinetic ========== */
+/* ========== FINAL CTA ========== */
 .final h2 {
   position: relative;
 }
-.final h2 .word {
-  display: inline-block;
-  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.final:hover h2 .word:nth-child(odd) { transform: translateY(-4px); }
-.final:hover h2 .word:nth-child(even) { transform: translateY(4px); }
 
 .final-orbit {
   position: absolute; top: 50%; left: 50%;
@@ -279,13 +273,26 @@
 /* ========== Ticker pause on hover ========== */
 .ticker:hover { animation-play-state: paused; }
 
+/* ========== Hero case rotator ========== */
+.hero-stage .is-rotatable {
+  transition: opacity 280ms ease, transform 280ms ease;
+}
+.hero-stage .is-rotatable.is-rotating {
+  opacity: 0;
+  transform: translateY(4px);
+}
+.hero-stage .sbubble.is-rotatable.is-rotating,
+.hero-stage .fcard-wa.is-rotatable.is-rotating {
+  transform: translateX(-50%) translateY(4px);
+}
+
 /* ========== Hero eyebrow orbital pulse ========== */
 .hero-left .eyebrow { position: relative; overflow: hidden; }
 .hero-left .eyebrow::after {
   content: '';
   position: absolute; top: 50%; left: -40px;
   width: 30px; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(212,255,63,0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(83,215,149,0.4), transparent);
   transform: translateY(-50%);
   animation: sweep 4s ease-in-out infinite;
 }
