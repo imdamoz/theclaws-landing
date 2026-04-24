@@ -1554,6 +1554,8 @@
   text-transform: none;
   display: flex; align-items: center; gap: 10px;
 }
+.foot-inner a { color: var(--fg-inv-3); text-decoration: none; }
+.foot-inner a:hover { color: var(--fg-inv); }
 .foot-brand::before {
   content: 'AI';
   width: 28px; height: 28px; border-radius: 999px;
