@@ -372,7 +372,7 @@
   font-size: 9px; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--fg-3);
 }
-.note-lime { background: #CBF34F; }
+.note-lime { background: var(--lime); }
 .note-lime .note-attr { color: rgba(9,9,11,0.55); }
 .note-1 { top: -12%; left: 4%; transform: rotate(-4deg); z-index: 1; }
 .note-2 { top: 16%; right: 0; transform: rotate(3deg); z-index: 2; }
