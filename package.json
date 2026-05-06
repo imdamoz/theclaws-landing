@@ -5,13 +5,17 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "12",
     "astro": "^5.7.10",
     "gsap": "^3.12.7"
   },
   "devDependencies": {
-    "playwright": "^1.59.1"
+    "playwright": "^1.59.1",
+    "wrangler": "^4.88.0"
   }
 }
