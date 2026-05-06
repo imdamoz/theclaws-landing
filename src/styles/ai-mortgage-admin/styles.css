@@ -24,10 +24,11 @@
   --paper:      #F1F1F3;   /* light neutral gray, used as page bg */
   --paper-2:    #E4E4E7;
 
-  /* One accent: Kai mint */
+  /* One accent: Kai mint (per-page pages override these tokens) */
   --lime:       #53D795;
   --lime-2:     #3FC085;
   --lime-ink:   #0A1700;
+  --lime-rgb:   83, 215, 149;
 
   --fg-inv:     #FFFFFF;
   --fg-inv-2:   #D4D4D8;
@@ -182,11 +183,11 @@ ul { margin: 0; padding: 0; list-style: none; }
 .chip-lime { background: var(--lime); color: var(--lime-ink); border-color: var(--lime); }
 .chip-dark { background: var(--ink); color: var(--fg-inv); border-color: var(--ink); }
 .chip .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-.chip .dot-live { background: var(--lime); box-shadow: 0 0 0 3px rgba(83,215,149,0.25); animation: pulse 2s infinite; }
+.chip .dot-live { background: var(--lime); box-shadow: 0 0 0 3px rgba(var(--lime-rgb),0.25); animation: pulse 2s infinite; }
 
 @keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(83,215,149,0.35); }
-  50%      { box-shadow: 0 0 0 5px rgba(83,215,149,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(var(--lime-rgb),0.35); }
+  50%      { box-shadow: 0 0 0 5px rgba(var(--lime-rgb),0); }
 }
 
 /* Section */

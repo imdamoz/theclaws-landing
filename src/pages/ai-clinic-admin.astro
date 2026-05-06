@@ -1,0 +1,1377 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/ai-mortgage-admin/styles.css';
+import '../styles/ai-mortgage-admin/sections.css';
+import '../styles/ai-mortgage-admin/motion.css';
+---
+
+<Layout
+  title="Mia Clinic Admin — More patients seen. Less time lost on paperwork."
+  description="Connect the patient file. Mia Clinic Admin reviews records, medications and follow-ups, and drafts the patient and clinician chases for whatever is missing."
+  ogTitle="Mia Clinic Admin — More patients seen. Less time lost on paperwork."
+  ogDescription="Connect the patient file. Mia Clinic Admin reviews records, medications and follow-ups, and drafts the patient and clinician chases for whatever is missing."
+  includeHomeStyles={false}
+>
+
+<style is:global>
+  /* Per-page accent override — pink for Mia (clinic). */
+  :root {
+    --lime: #FF5CA0;
+    --lime-2: #E63A8A;
+    --lime-ink: #FFFFFF;
+    --lime-rgb: 255, 92, 160;
+  }
+
+  /* ===== Hero v2 (4-card layout) — Mia Clinic Admin ===== */
+  .hero-stage .agent { width: 80%; margin-top: 0; }
+  .hero-stage .sbubble { display: none; }
+
+  .hero-stage .fcard-tasks,
+  .hero-stage .fcard-workflows,
+  .hero-stage .fcard-meds,
+  .hero-stage .fcard-reminder {
+    position: absolute;
+    background: var(--surface);
+    border-radius: 11px;
+    padding: 10px;
+    box-shadow: 0 12px 26px -10px rgba(9,9,11,0.16), 0 1px 3px -1px rgba(9,9,11,0.05);
+    border: 1px solid rgba(225, 227, 226, 0.6);
+    font-family: var(--font-body);
+  }
+  .hero-stage .fcard-tasks     { top: 30px;   left: 0;    width: 200px; transform: rotate(-1deg); z-index: 4; }
+  .hero-stage .fcard-workflows { top: 12px;   right: 0;   width: 198px; transform: rotate(2deg);  z-index: 5; }
+  .hero-stage .fcard-meds      { bottom: 60px; left: 0;   width: 204px; transform: rotate(3deg);  z-index: 5; }
+  .hero-stage .fcard-reminder  { bottom: 30px; right: 0;  width: 220px; transform: rotate(-2deg); z-index: 4; }
+
+  @media (max-width: 820px) {
+    .hero-stage .fcard-tasks     { top: 30px;   left: 4px;  width: 180px; }
+    .hero-stage .fcard-workflows { top: 10px;   right: 4px; width: 180px; }
+    .hero-stage .fcard-meds      { bottom: 50px; left: 4px; width: 180px; }
+    .hero-stage .fcard-reminder  { bottom: 20px; right: 4px; width: 200px; }
+  }
+
+  /* ----- Shared header ----- */
+  .clc-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-bottom: 9px;
+  }
+  .clc-head-left { display: flex; align-items: center; gap: 6px; min-width: 0; flex: 1; }
+  .clc-icon-box {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    background: rgba(var(--lime-rgb), 0.10);
+    color: var(--lime);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .clc-icon-box svg { width: 12px; height: 12px; }
+  .clc-icon-box.danger { background: #FFDAD6; color: #93000A; }
+  .clc-icon-box.danger svg { width: 12px; height: 12px; }
+  .clc-title-block { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
+  .clc-title {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .clc-title.accent { color: var(--lime); }
+  .clc-sub {
+    font-size: 7.5px;
+    color: var(--fg-3);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .clc-tag {
+    font-family: var(--font-body);
+    font-size: 8px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .clc-tag-active { background: rgba(108, 248, 187, 0.30); color: #00714D; }
+  .clc-tag-active::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: #006C49;
+  }
+  .clc-tag-open { background: var(--lime); color: var(--lime-ink); font-weight: 500; font-family: var(--font-body); }
+  .clc-tag-alerts { background: rgba(186, 26, 26, 0.10); color: #BA1A1A; }
+  .clc-tag-draft { background: var(--surface-3); color: var(--ink); font-weight: 600; }
+
+  /* ----- Follow-up Tasks card ----- */
+  .clc-task-list { display: flex; flex-direction: column; gap: 6px; }
+  .clc-task-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    padding: 7px;
+    background: rgba(168,168,168,0.08);
+    border-radius: 7px;
+  }
+  .clc-task-icon {
+    width: 19px; height: 19px;
+    background: var(--surface);
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0.5px 1px rgba(0,0,0,0.05);
+    color: var(--lime);
+  }
+  .clc-task-icon svg { width: 11px; height: 11px; }
+  .clc-task-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
+  .clc-task-name { font-family: var(--font-display); font-size: 9px; font-weight: 600; color: var(--ink); line-height: 1.3; }
+  .clc-task-meta { font-size: 7.5px; color: var(--fg-3); line-height: 1.3; }
+
+  /* ----- Workflows card (status rows) ----- */
+  .clc-status-list { display: flex; flex-direction: column; gap: 6px; }
+  .clc-status-row { display: flex; align-items: flex-start; gap: 7px; }
+  .clc-status-icon {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .clc-status-icon.danger { background: rgba(255, 218, 214, 0.50); color: #BA1A1A; }
+  .clc-status-icon.neutral { background: var(--surface-3); color: #004532; }
+  .clc-status-icon.success { background: rgba(108, 248, 187, 0.30); color: #006C49; }
+  .clc-status-icon svg { width: 9px; height: 9px; }
+  .clc-status-body { flex: 1; min-width: 0; }
+  .clc-status-row-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+  }
+  .clc-status-name {
+    font-family: var(--font-display);
+    font-size: 8.5px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .clc-status-meta { font-size: 7px; color: var(--fg-3); line-height: 1.3; }
+  .clc-status-pill {
+    font-family: var(--font-body);
+    font-size: 7px;
+    font-weight: 500;
+    padding: 1px 5px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .clc-status-pill-detected { background: rgba(255, 218, 214, 0.50); color: #BA1A1A; }
+  .clc-status-pill-queued { background: var(--surface-3); color: #004532; }
+  .clc-status-pill-drafted { background: var(--surface-3); color: var(--fg-3); }
+  .clc-status-pill-suggested { background: rgba(108, 248, 187, 0.30); color: #006C49; }
+  .clc-review-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin-top: 8px;
+    margin-left: auto;
+    font-size: 8px;
+    font-weight: 600;
+    color: #004532;
+    text-decoration: none;
+  }
+  .clc-review-link svg { width: 9px; height: 9px; }
+
+  /* ----- Medication Check card ----- */
+  .clc-meds-box {
+    background: rgba(168,168,168,0.08);
+    border-radius: 7px;
+    padding: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .clc-meds-col { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .clc-meds-label {
+    font-size: 6.5px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--fg-3);
+    line-height: 1.2;
+  }
+  .clc-meds-value {
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .clc-alert-box {
+    position: relative;
+    background: #FFF7ED;
+    border-radius: 7px;
+    padding: 8px 8px 8px 11px;
+    margin-bottom: 6px;
+    overflow: hidden;
+  }
+  .clc-alert-box::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: rgba(249, 115, 22, 0.6);
+  }
+  .clc-alert-title {
+    font-family: var(--font-display);
+    font-size: 8px;
+    font-weight: 600;
+    color: #9A3412;
+    line-height: 1.3;
+    margin-bottom: 2px;
+  }
+  .clc-alert-body {
+    font-size: 7.5px;
+    color: rgba(120, 53, 15, 0.85);
+    line-height: 1.4;
+  }
+  .clc-action-box {
+    background: rgba(var(--lime-rgb), 0.10);
+    border-radius: 7px;
+    padding: 7px 8px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .clc-action-box svg { width: 11px; height: 11px; color: var(--lime); flex-shrink: 0; }
+  .clc-action-text { font-size: 8px; color: var(--ink); line-height: 1.3; }
+  .clc-action-text b { color: var(--lime); font-weight: 600; }
+  .clc-btn-row { display: flex; gap: 6px; }
+  .clc-btn-row > * { flex: 1; }
+  .clc-btn-ghost {
+    background: var(--surface-3);
+    color: var(--lime-2);
+    border: none;
+    border-radius: 7px;
+    padding: 6px 8px;
+    font-family: var(--font-display);
+    font-size: 8.5px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+  }
+  .clc-btn-primary {
+    background: var(--lime);
+    color: var(--lime-ink);
+    border: none;
+    border-radius: 7px;
+    padding: 6px 8px;
+    font-family: var(--font-display);
+    font-size: 8.5px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  /* ----- Patient Reminder card ----- */
+  .clc-wa-icon {
+    width: 22px; height: 22px;
+    background: #25D366;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+  }
+  .clc-wa-icon svg { width: 13px; height: 13px; }
+  .clc-msg-label {
+    font-size: 8px;
+    font-weight: 700;
+    color: var(--fg-3);
+    line-height: 1.2;
+    margin-bottom: 5px;
+  }
+  .clc-msg-box {
+    background: #FFEFF6;
+    border-radius: 6px;
+    padding: 8px 9px;
+    font-size: 8.5px;
+    color: var(--ink);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .clc-msg-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding-top: 8px;
+    border-top: 1px solid var(--line);
+  }
+  .clc-msg-to {
+    font-size: 8px;
+    color: var(--fg-3);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .clc-msg-to b { color: var(--ink); font-weight: 600; font-size: 9px; }
+  .clc-send-btn {
+    background: var(--lime);
+    color: var(--lime-ink);
+    border: none;
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-family: var(--font-display);
+    font-size: 8.5px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .clc-send-btn svg { width: 9px; height: 9px; }
+</style>
+
+<div class="scroll-progress"></div>
+<a class="float-cta" href="#book"><span class="dot"></span>Book a call<span class="arrow">→</span></a>
+
+<!-- NAV -->
+<header class="wrap">
+  <nav class="nav">
+    <a class="nav-brand" href="#">
+      <img src="/images/the-claws-logo.svg" alt="TheClaws" class="nav-brand-logo" />
+      <span>Mia Clinic Admin</span>
+    </a>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#how">How it works</a>
+      <a href="#case">Case study</a>
+      <a href="#incl">Included</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="btn btn-sm btn-primary" href="#book">Book a call <span class="arrow">→</span></a>
+  </nav>
+</header>
+
+<!-- ============ HERO (all above fold) ============ -->
+<section class="hero wrap">
+  <div class="hero-left">
+    <div class="eyebrow reveal"><span class="dot"></span>Patient workflows done in minutes, not hours</div>
+    <h1 class="reveal reveal-delay-1">More patients seen.<br><span class="mark">Less time lost on paperwork.</span></h1>
+    <p class="sub reveal reveal-delay-2">Connect the patient file. Mia Clinic Admin reviews records, medications and follow-ups, and drafts the patient and clinician chases for whatever is missing.</p>
+    <div class="btns reveal reveal-delay-3">
+      <a class="btn btn-lime btn-magnet" href="#book">Book a call &amp; see it on your clinic <span class="arrow">→</span></a>
+      <a class="btn btn-ghost" href="#how">See how it works</a>
+    </div>
+    <p class="micro reveal reveal-delay-4">We'll review one live patient on the call and show the gaps it would flag — bring the chart, no prep needed.</p>
+
+    <hr class="hero-divider reveal reveal-delay-4">
+
+    <div class="hero-caps reveal reveal-delay-5">
+      <div class="hero-cap">
+        <span class="ic">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line></svg>
+        </span>
+        <strong>Reads the whole record</strong>
+        <span>Notes, prescriptions, labs, allergies, history, intake.</span>
+      </div>
+      <div class="hero-cap">
+        <span class="ic">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </span>
+        <strong>Drafts the chase</strong>
+        <span>Patient, GP, specialist, lab. You review before sending.</span>
+      </div>
+      <div class="hero-cap">
+        <span class="ic">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </span>
+        <strong>Fits your clinic's protocols</strong>
+        <span>Your formulary, your safeguarding, your tone.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stage">
+    <img class="agent" src="/images/mia-agent-ai-clinic-admin.png" alt="Mia Clinic Admin reviewing a patient record">
+
+    <!-- Follow-up Tasks card -->
+    <div class="fcard-tasks">
+      <div class="clc-head">
+        <div class="clc-title-block">
+          <span class="clc-title">Follow-up Tasks</span>
+        </div>
+        <span class="clc-tag clc-tag-open">5 Open</span>
+      </div>
+
+      <div class="clc-task-list">
+        <div class="clc-task-row">
+          <span class="clc-task-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </span>
+          <div class="clc-task-text">
+            <span class="clc-task-name">Call Back Patient</span>
+            <span class="clc-task-meta">Test results explanation</span>
+          </div>
+        </div>
+
+        <div class="clc-task-row">
+          <span class="clc-task-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          </span>
+          <div class="clc-task-text">
+            <span class="clc-task-name">Send Sick Note</span>
+            <span class="clc-task-meta">Template ready</span>
+          </div>
+        </div>
+
+        <div class="clc-task-row">
+          <span class="clc-task-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </span>
+          <div class="clc-task-text">
+            <span class="clc-task-name">Book Follow-up</span>
+            <span class="clc-task-meta">2 weeks from today</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Clinic Assistant card -->
+    <div class="fcard-workflows">
+      <div class="clc-head">
+        <div class="clc-head-left">
+          <span class="clc-icon-box">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1l1.5 4.5L18 7l-4.5 1.5L12 13l-1.5-4.5L6 7l4.5-1.5L12 1z"/><path d="M19 13l.9 2.7L22.5 17l-2.6.8L19 21l-.9-3.2-2.6-.8 2.6-1.3.9-2.7z"/></svg>
+          </span>
+          <div class="clc-title-block">
+            <span class="clc-title accent">AI Clinic Assistant</span>
+            <span class="clc-sub">Automated Workflows</span>
+          </div>
+        </div>
+        <span class="clc-tag clc-tag-active">Active</span>
+      </div>
+
+      <div class="clc-status-list">
+        <div class="clc-status-row">
+          <span class="clc-status-icon danger">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </span>
+          <div class="clc-status-body">
+            <div class="clc-status-row-top">
+              <span class="clc-status-name">Intake Forms</span>
+              <span class="clc-status-pill clc-status-pill-detected">Detected</span>
+            </div>
+            <span class="clc-status-meta">Missing answers detected</span>
+          </div>
+        </div>
+
+        <div class="clc-status-row">
+          <span class="clc-status-icon neutral">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </span>
+          <div class="clc-status-body">
+            <div class="clc-status-row-top">
+              <span class="clc-status-name">Appointment Reminders</span>
+              <span class="clc-status-pill clc-status-pill-queued">Queued</span>
+            </div>
+            <span class="clc-status-meta">SMS queued</span>
+          </div>
+        </div>
+
+        <div class="clc-status-row">
+          <span class="clc-status-icon neutral">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </span>
+          <div class="clc-status-body">
+            <div class="clc-status-row-top">
+              <span class="clc-status-name">Doctor Notes</span>
+              <span class="clc-status-pill clc-status-pill-drafted">Drafted</span>
+            </div>
+            <span class="clc-status-meta">Draft summary created</span>
+          </div>
+        </div>
+
+        <div class="clc-status-row">
+          <span class="clc-status-icon success">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6.5"/><path d="M12 22v-6.5"/><polyline points="20 7 12 12 4 7"/><polyline points="20 17 12 22 4 17"/><polyline points="20 12 12 17 4 12"/></svg>
+          </span>
+          <div class="clc-status-body">
+            <div class="clc-status-row-top">
+              <span class="clc-status-name">Billing Codes</span>
+              <span class="clc-status-pill clc-status-pill-suggested">Suggested</span>
+            </div>
+            <span class="clc-status-meta">Suggested from visit type</span>
+          </div>
+        </div>
+      </div>
+
+      <a class="clc-review-link" href="#">
+        Review Actions
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+    <!-- Medication Check card -->
+    <div class="fcard-meds">
+      <div class="clc-head">
+        <div class="clc-head-left">
+          <span class="clc-icon-box danger">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </span>
+          <div class="clc-title-block">
+            <span class="clc-title">Medication Check</span>
+            <span class="clc-sub">Patient: Omar Ali</span>
+          </div>
+        </div>
+        <span class="clc-tag clc-tag-alerts">2 Alerts</span>
+      </div>
+
+      <div class="clc-meds-box">
+        <div class="clc-meds-col">
+          <span class="clc-meds-label">Current meds</span>
+          <span class="clc-meds-value">Ramipril 5mg</span>
+        </div>
+        <div class="clc-meds-col">
+          <span class="clc-meds-label">New request</span>
+          <span class="clc-meds-value">Ibuprofen</span>
+        </div>
+      </div>
+
+      <div class="clc-alert-box">
+        <div class="clc-alert-title">AI Interaction Alert</div>
+        <div class="clc-alert-body">Possible blood pressure interaction detected between Ramipril and Ibuprofen. NSAIDs can reduce the antihypertensive effect of ACE inhibitors.</div>
+      </div>
+
+      <div class="clc-action-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span class="clc-action-text">Suggested Action: <b>Doctor review required.</b></span>
+      </div>
+
+      <div class="clc-btn-row">
+        <button class="clc-btn-ghost">Reject Request</button>
+        <button class="clc-btn-primary">Review File</button>
+      </div>
+    </div>
+
+    <!-- Patient Reminder card -->
+    <div class="fcard-reminder">
+      <div class="clc-head">
+        <div class="clc-head-left">
+          <span class="clc-wa-icon" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </span>
+          <div class="clc-title-block">
+            <span class="clc-title">Patient Reminder</span>
+            <span class="clc-sub">Automated Outreach</span>
+          </div>
+        </div>
+        <span class="clc-tag clc-tag-draft">Draft</span>
+      </div>
+
+      <div class="clc-msg-label">Message preview</div>
+      <div class="clc-msg-box">"Hi Amira, your blood test results are ready for review. Dr Patel would like to schedule a follow-up appointment this week. Please choose a suitable time."</div>
+
+      <div class="clc-msg-foot">
+        <span class="clc-msg-to">To: <b>Amira Khan</b></span>
+        <button class="clc-send-btn">
+          Review &amp; send
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= CLAIM TICKER ========================= -->
+<div class="ticker-band">
+  <div class="ticker">
+    <span class="t-strong">What would you do with 15 extra hours a week?</span>
+    <span class="t-sep">·</span>
+    <span>Because that's what the admin is costing you.</span>
+    <span class="t-sep">·</span>
+    <span class="t-strong">Future clinics don't pay it anymore</span>
+    <span class="t-sep">—</span>
+    <span>they approve what their AI already drafted.</span>
+    <span class="t-sep">·</span>
+    <!-- duplicate for seamless loop -->
+    <span class="t-strong">What would you do with 15 extra hours a week?</span>
+    <span class="t-sep">·</span>
+    <span>Because that's what the admin is costing you.</span>
+    <span class="t-sep">·</span>
+    <span class="t-strong">Future clinics don't pay it anymore</span>
+    <span class="t-sep">—</span>
+    <span>they approve what their AI already drafted.</span>
+    <span class="t-sep">·</span>
+  </div>
+</div>
+
+<!-- ============ PROBLEM + REAL PROBLEM — combined ============ -->
+<section id="problem" class="real bg-grid bg-grid-dark">
+  <div class="wrap real-grid">
+    <div class="reveal">
+      <div class="sec-label">The problem</div>
+      <h2>Your clinical work is not the bottleneck. <em>Patient admin</em> is.</h2>
+      <p>You already know how to diagnose, treat and care. What slows you down is everything around it: chasing intake forms, reviewing lab results, drafting referrals, evidencing safeguarding, coordinating recalls and chasing missing information.</p>
+      <div class="problem-cards">
+        <div class="pcard">
+          <span class="pcard-k">01 / Records</span>
+          <h4>Patient intake</h4>
+          <p>Forms, history, allergies, consents, screening.</p>
+        </div>
+        <div class="pcard pcard-dark">
+          <span class="pcard-k">02 / Risk</span>
+          <h4>Medication &amp; interactions</h4>
+          <p>Drug-drug, allergies, dosing, contraindications.</p>
+        </div>
+        <div class="pcard">
+          <span class="pcard-k">03 / Evidence</span>
+          <h4>Notes &amp; referrals</h4>
+          <p>SOAP notes, referral letters, lab follow-ups.</p>
+        </div>
+        <div class="pcard pcard-lime">
+          <span class="pcard-k">04 / Patient work</span>
+          <h4>Patient chase</h4>
+          <p>Draft SMS, emails, and follow-up questions.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="real-col">
+      <div class="transcript reveal reveal-delay-2">
+        <div class="sec-label">The real problem</div>
+
+        <div class="transcript-stage">
+          <img class="transcript-photo" src="/images/the-real-problem.png" alt="An exhausted GP at a desk surrounded by patient notes" />
+
+          <div class="stage-overlay">
+            <div class="stage-quote-wrap">
+              <blockquote class="stage-quote">
+                I feel like I'm working at <span class="hl">full capacity</span>, but I can't grow the practice because admin eats my time.
+              </blockquote>
+              <div class="sig stage-sig">— GP using Mia Clinic Admin</div>
+            </div>
+
+            <div class="notes-wall" aria-hidden="true">
+              <div class="note note-1">
+                <span class="note-tape"></span>
+                <p>"Lab returned Friday. Recall went out Wednesday. Patient noticed."</p>
+                <span class="note-attr">— GP, Birmingham</span>
+              </div>
+              <div class="note note-2 note-lime">
+                <span class="note-tape"></span>
+                <p>"Recall list is 11 conditions. Miss one, missed diagnosis."</p>
+                <span class="note-attr">— Practice manager, Bristol</span>
+              </div>
+              <div class="note note-3">
+                <span class="note-tape"></span>
+                <p>"Notes at 11pm. My family sees me less than my EMIS."</p>
+                <span class="note-attr">— GP partner, Manchester</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="body-txt">
+          The admin around each patient sets the cap. <strong>More patients means more intake forms to chase</strong>, more lab results to review, more referrals to write, more recalls to track. So the team either stops growing the list, or takes it on and pays for it with evenings and weekends.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIXES — problems + how it fits ============ -->
+<section class="fixes">
+  <div class="wrap">
+    <div class="fixes-head reveal">
+      <div class="sec-label fixes-eyebrow">
+        <svg class="sl-ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Why the usual fixes do not work
+      </div>
+      <h2>Hiring a practice manager takes months. Templates <em>do not read the chart</em>. Generic AI does not know an INR from an MMR.</h2>
+    </div>
+
+    <div class="fix-row reveal reveal-delay-2">
+      <div class="fix-card fc-fail">
+        <span class="fc-badge fc-x" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+        <span class="fc-ic" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </span>
+        <h4>A practice manager</h4>
+        <p>Costs a full salary before it helps. Needs training on your clinic's process, your protocols and your formulary. Still leaves the clinician doing the judgement calls.</p>
+      </div>
+      <div class="fix-card fc-fail">
+        <span class="fc-badge fc-x" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+        <span class="fc-ic" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </span>
+        <h4>SMS and email templates</h4>
+        <p>Generic "please complete your form" messages. They do not look at the record, do not know what is actually missing, and the patient ignores them or sends the wrong thing.</p>
+      </div>
+      <div class="fix-card fc-fail">
+        <span class="fc-badge fc-x" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+        <span class="fc-ic" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </span>
+        <h4>Generic AI chatbots</h4>
+        <p>Wait for you to explain the whole patient from scratch every time. They do not understand drug interactions, recall windows, BNF formularies or why a high-risk patient needs a careful follow-up note.</p>
+      </div>
+    </div>
+
+    <div class="fits-box reveal reveal-delay-3">
+      <span class="fits-pill">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        How it fits
+      </span>
+      <div class="fits-body">
+        <h3>A review and drafting layer. You stay the clinician on the patient.</h3>
+        <div class="fits-body-copy">
+          <p>Every flag, every SMS, every email is reviewed by you before anything moves. Mia Clinic Admin does not prescribe, send or sign anything off.</p>
+        </div>
+      </div>
+
+      <div class="fix-row fix-row-win">
+        <div class="fix-card fc-win">
+          <span class="fc-badge fc-check" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="fc-ic" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="9 12 11 14 15 10"/></svg>
+          </span>
+          <h4>You decide what goes out</h4>
+          <p>It drafts, flags, and asks. It does not prescribe, send or sign anything off.</p>
+        </div>
+        <div class="fix-card fc-win">
+          <span class="fc-badge fc-check" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="fc-ic" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </span>
+          <h4>Built for clinical files</h4>
+          <p>Records, prescriptions, labs, recalls, referrals, consents. Not generic document review.</p>
+        </div>
+        <div class="fix-card fc-win">
+          <span class="fc-badge fc-check" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="fc-ic" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          </span>
+          <h4>Fits your clinic's protocols</h4>
+          <p>Your formulary, your safeguarding, your approved tone. Configured at setup.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW — step flow ============ -->
+<section id="how" class="how bg-grid">
+  <div class="wrap">
+    <div class="sec-label reveal">How it works</div>
+    <h2 class="reveal reveal-delay-1">Four steps from messy chart to <em>consultation-ready.</em></h2>
+
+    <div class="how-flow">
+      <div class="hstep reveal reveal-delay-2">
+        <span class="hs-eyebrow">Step one</span>
+        <h3>Connect the patient file</h3>
+        <div class="hs-visual">
+          <div class="doc-mock">
+            <span class="doc-line w70"></span>
+            <span class="doc-line w50"></span>
+            <span class="doc-line w65"></span>
+            <span class="doc-block"></span>
+          </div>
+        </div>
+        <p>Notes, prescriptions, labs, allergies, history, intake forms.</p>
+        <span class="hs-tag">Connect file</span>
+      </div>
+
+      <div class="hs-arrow" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+
+      <div class="hstep reveal reveal-delay-3">
+        <span class="hs-eyebrow">Step two</span>
+        <h3>Mia Clinic Admin reviews the patient</h3>
+        <div class="hs-visual">
+          <div class="review-mock">
+            <div class="rm-card-back"></div>
+            <div class="rm-card">
+              <span class="rm-head"></span>
+              <span class="rm-line w60"></span>
+              <span class="rm-line w45"></span>
+              <span class="rm-reply" aria-hidden="true">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <p>Reads every part of the record, cross-references the story, flags what is missing or risky.</p>
+        <span class="hs-tag">Full review</span>
+      </div>
+
+      <div class="hs-arrow" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+
+      <div class="hstep reveal reveal-delay-4">
+        <span class="hs-eyebrow">Step three</span>
+        <h3>You get flags, questions &amp; drafts</h3>
+        <div class="hs-visual">
+          <div class="chips-mock">
+            <span class="cm-chip cm-1">Missing form</span>
+            <span class="cm-chip cm-2">Drug interaction</span>
+            <span class="cm-chip cm-3">Recall due</span>
+          </div>
+        </div>
+        <p>Review the flags, approve the SMS or email chase, decide what goes to the patient.</p>
+        <span class="hs-tag">Clear flags</span>
+      </div>
+
+      <div class="hs-arrow" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+
+      <div class="hstep reveal reveal-delay-5">
+        <span class="hs-eyebrow">Step four</span>
+        <h3>You see a cleaner patient</h3>
+        <div class="hs-visual">
+          <div class="tiles-mock">
+            <span class="tm-tile tm-1">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg>
+            </span>
+            <span class="tm-tile tm-2">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </span>
+          </div>
+        </div>
+        <p>Consultation runs with fewer gaps, fewer missing answers, and fewer avoidable follow-ups.</p>
+        <span class="hs-tag">Cleaner consult</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CASE ============ -->
+<section id="case" class="case">
+  <div class="wrap">
+    <div class="sec-label">[ Case study ]</div>
+
+    <div class="case-layout">
+      <div class="case-left reveal">
+        <div class="case-pdf">
+          <span class="pk">Case study · 01</span>
+          <h4>The chart looked ready. The review found three things before the patient did.</h4>
+          <div class="pdf-sub">55-year-old hypertensive patient. Annual review. A closer look before the consultation.</div>
+
+          <div class="case-outcome">
+            <div class="item">
+              <span class="k">Outcome</span>
+              <span class="v">Corrected before consult</span>
+            </div>
+            <div class="item">
+              <span class="k">Follow-up issues avoided</span>
+              <span class="v">2 foreseeable</span>
+            </div>
+            <div class="item">
+              <span class="k">Care plan updated</span>
+              <span class="v">1 day later</span>
+            </div>
+          </div>
+
+          <div class="pdf-pages">
+            <b>Mia Clinic Admin</b>
+            <span>12 pages</span>
+          </div>
+        </div>
+
+        <a class="btn btn-on-dark case-cta" href="#book">Download the full case study <span class="arrow">↓</span></a>
+      </div>
+
+      <div class="case-copy reveal reveal-delay-2">
+        <svg class="pdf-hint-arrow" width="140" height="49" viewBox="0 0 380 132" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M1.44574 61.1935C5.23881 71.6566 16.7955 64.7185 23.614 61.6428C35.3007 55.9435 47.9577 52.9106 60.3997 49.3619C83.9192 41.9887 108.212 37.8563 132.641 34.9294C157.522 30.0079 183.236 33.026 207.182 40.9376C183.77 53.9122 153.66 81.0519 168.379 110.216C175.948 124.291 192.779 134.463 208.911 131.256C238.839 125.568 279.667 74.6545 252.929 47.6279C299.216 49.7015 323.858 72.3163 357.971 99.9322C361.278 102.457 364.175 105.586 367.697 107.775C375.232 111.833 383.187 102.199 377.767 95.5513C353.57 75.8968 329.896 53.8897 301.066 41.1857C278.681 33.6456 253.731 29.0003 230.167 32.1792C207.385 22.6752 182.827 16.4308 158.039 16.3897C127.824 17.7823 97.5398 22.9522 68.199 30.3273C47.5646 35.954 26.9417 41.5376 7.64304 50.9397C3.00375 51.7153 0.107731 56.7864 1.44574 61.1935ZM182.568 86.0698C191.622 68.2207 209.814 55.957 228.223 49.2408C235.559 53.5751 246.271 59.6258 245.686 69.366C245.706 69.2363 245.728 69.1063 245.749 68.9765C245.756 68.764 245.762 68.5513 245.769 68.339C241.838 89.9531 224.799 112.882 201.929 115.758C188.306 114.388 175.531 99.5471 182.568 86.0698Z"/>
+          <path d="M0.00134323 66.0661C-0.121404 74.1831 8.46788 76.029 14.9021 76.7328C28.114 79.009 41.2882 81.4408 54.3712 84.3637C60.9683 85.1908 67.0892 88.9615 73.6263 89.1714C80.5725 88.2328 82.7969 78.5809 77.0331 74.6251C58.152 66.6058 36.9941 64.781 16.9606 60.7204C21.7513 43.5116 32.5459 28.4019 41.1777 12.9929C42.4149 11.082 43.1307 9.02166 42.7477 6.72538C41.9198 -0.0972456 31.9611 -2.58451 28.2025 3.31897C23.6449 10.6168 19.3715 18.0967 15.1861 25.6116C8.33517 38.1859 0.332096 51.3684 0.00134323 66.0661Z"/>
+        </svg>
+
+        <h2>The chart looked ready. The review found <em>three things</em> before the patient did.</h2>
+
+        <div class="cs-cards-stack">
+          <div class="case-card cc-neutral">
+            <div class="cc-head">
+              <span class="cc-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </span>
+              <h3>The situation</h3>
+            </div>
+            <p>A 55-year-old patient on antihypertensives attending an annual review. Notes, current medications, recent BP readings and last year's bloods all on file. The GP was ready to consult.</p>
+          </div>
+          <div class="case-card cc-alert">
+            <div class="cc-head">
+              <span class="cc-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </span>
+              <h3>What Mia Clinic Admin caught</h3>
+            </div>
+            <p>A new ibuprofen request with a flagged interaction against the patient's ramipril. A missed annual diabetic review eligibility based on the HbA1c trend. A weak referral note where the cardiology onward letter had not been drafted. It then drafted the patient SMS and the cardiology referral email.</p>
+          </div>
+          <div class="case-card cc-success">
+            <div class="cc-head">
+              <span class="cc-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <h3>The outcome</h3>
+            </div>
+            <p>The GP corrected the chart before the consult. Two foreseeable follow-up issues avoided. Patient was switched to a safer analgesic, booked for diabetic review, and the cardiology referral went out the next day. Care plan updated within 24 hours.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARE ============ -->
+<section class="cmp bg-dots">
+  <div class="wrap">
+    <div class="cmp-top reveal">
+      <div class="cmp-head">
+        <div class="sec-label">Compared to</div>
+        <h2>What most clinics try before this, and why the <em>gap is still there.</em></h2>
+      </div>
+    </div>
+
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>
+              <span class="cmp-q">Can it <em>actually</em> do the work properly?</span>
+            </th>
+            <th>
+              <div class="cmp-col">
+                <span class="cmp-ic">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="cmp-lbl">Practice manager</span>
+              </div>
+            </th>
+            <th>
+              <div class="cmp-col">
+                <span class="cmp-ic">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+                </span>
+                <span class="cmp-lbl">Templates</span>
+              </div>
+            </th>
+            <th>
+              <div class="cmp-col">
+                <span class="cmp-ic">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/></svg>
+                </span>
+                <span class="cmp-lbl">ChatGPT on a chart</span>
+              </div>
+            </th>
+            <th class="col-us">
+              <div class="cmp-col">
+                <span class="cmp-ic cmp-ic-kai">
+                  <img src="/images/talent-manager.webp" alt="Mia" width="52" height="52" loading="lazy" />
+                </span>
+                <span class="cmp-lbl">Mia Clinic Admin</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Reads the patient before replying</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Partial</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Spots medication &amp; interaction issues</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Drafts updates based on the actual patient file</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Generic only</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Chases missing forms &amp; information</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Partial</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Flags recall &amp; follow-up risks early</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Works on chronic, complex &amp; messy patients</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Limited</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Ready from day one</th>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INCLUDED — table ============ -->
+<section id="incl" class="incl bg-grid">
+  <div class="wrap">
+    <div class="incl-head reveal">
+      <div>
+        <div class="sec-label">What's included <span class="sl-tag">[ 07 · The pre-consult layer ]</span></div>
+        <h2>The pre-consult admin layer that <em>clears the chart</em> before it comes back to you.</h2>
+      </div>
+      <p class="sub">Built on your live patient file, not generic templates. Each row runs on the real record and you review the output before anything goes to the patient or specialist.</p>
+    </div>
+
+    <div class="incl-card reveal">
+      <table class="incl-table">
+        <thead>
+          <tr>
+            <th class="th-n">No.</th>
+            <th class="th-cap">Capability</th>
+            <th class="th-fin">Clinical impact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-n"><em>01</em></td>
+            <td class="td-cap">
+              <h4>Patient record red flag review</h4>
+              <p>Flags missing answers, allergies, contraindicated medications, overdue recalls, ambiguous symptoms and other risks across the whole patient file.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Avoids missed diagnoses</strong>
+              <span>Less rework and fewer follow-up visits.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>02</em></td>
+            <td class="td-cap">
+              <h4>Medication &amp; interaction consistency check</h4>
+              <p>Compares current prescriptions against new requests, allergies, BNF cautions, dosing for renal/hepatic function and previous adverse reactions. Nothing "forgotten" surprises you later.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Prevents prescribing errors</strong>
+              <span>Stops avoidable safety queries and back-and-forth.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>03</em></td>
+            <td class="td-cap">
+              <h4>Lab result &amp; recall paper-trail check</h4>
+              <p>Reviews returned bloods, imaging, biopsy results, recall windows for chronic conditions and whether the explanation and paper trail are complete and acceptable.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Reduces missed-result risk</strong>
+              <span>Protects the patient from issues that can cost their care plan.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>04</em></td>
+            <td class="td-cap">
+              <h4>Intake form &amp; history evidence check</h4>
+              <p>Checks completeness of intake answers, family history, social history, lifestyle factors and whether the documents support the consult being delivered.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Faster to consult, stronger record</strong>
+              <span>Cuts time lost checking forms and fixing gaps.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>05</em></td>
+            <td class="td-cap">
+              <h4>Referral letter &amp; onward care file check</h4>
+              <p>Reviews specialist referrals, allied health onward letters, sick notes, fit notes and whether the pack is complete and ready for the recipient.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Reduces compliance risk</strong>
+              <span>Keeps your file clean and the patient well evidenced.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>06</em></td>
+            <td class="td-cap">
+              <h4>Patient &amp; clinician chase messages</h4>
+              <p>Creates SMS and email drafts for missing forms, lab follow-ups, prescription reviews, recall reminders, no-show rebookings and other follow-ups.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Saves hours chasing patients</strong>
+              <span>Frees up time for clinical work and complex cases.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>07</em></td>
+            <td class="td-cap">
+              <h4>Consultation-ready issue summary</h4>
+              <p>Pulls all flags, gaps and unanswered points into one clear summary so you know exactly what needs sorting before the patient sits down.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Stops admin after the consult</strong>
+              <span>Less back-and-forth, fewer hold-ups, smoother lists.</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="incl-note">
+        <div class="note-col">
+          <span class="note-ic" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </span>
+          <div>
+            <h5>The real cost of manual admin</h5>
+            <p>Chasing patients, re-checking charts and fixing avoidable issues steals clinician time. The time you could be spending in consultations, with complex patients or with your family.</p>
+          </div>
+        </div>
+        <div class="note-col">
+          <span class="note-ic" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </span>
+          <div>
+            <h5>The financial impact</h5>
+            <p>More admin = fewer patient appointments, slower follow-ups, more rework and less revenue-generating time.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="incl-total">
+        <div class="it-left">
+          <h3>Total value to your clinic</h3>
+          <p>Protects clinician time, reduces delays and rework, and helps you see more patients, not more admin.</p>
+        </div>
+        <div class="it-right">
+          <div class="it-lbl">Your price</div>
+          <div class="it-price"><span class="p-n">$300</span><span class="p-u">/mo</span></div>
+        </div>
+      </div>
+
+      <div class="incl-foot">
+        <a class="btn btn-primary" href="#book">Book a call &amp; see it on your clinic <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUARANTEE + TESTIMONIALS — merged ============ -->
+<section class="testi">
+  <div class="wrap">
+    <div class="grt-pair">
+      <div class="ticket reveal">
+        <div class="dash-divider"></div>
+        <div class="ticket-left">
+          <div class="kicker">— The guarantee</div>
+          <h2>If it misses a material issue clearly visible in the record, <em>you do not pay.</em></h2>
+          <p>Drug interactions, missed recalls, evidence inconsistencies. If we miss any, full refund. No forms.</p>
+        </div>
+        <div class="ticket-right">
+          <div class="big"><em><span class="big-count" data-count="100" data-suffix="%">100%</span></em></div>
+          <div class="small">Full refund · if we miss it</div>
+          <div class="refund">Most patients have something. Most charts have three.</div>
+        </div>
+      </div>
+      <div class="testi-head reveal reveal-delay-2">
+        <div class="sec-label">What clinicians say</div>
+        <h2>What clinicians are <em>actually</em> getting out of it.</h2>
+      </div>
+    </div>
+
+    <div class="testi-layout">
+      <div class="testi-feat reveal reveal-delay-1">
+        <span class="featured-tag">Featured</span>
+        <blockquote>My consults are a lot tighter now. I used to miss two or three follow-ups a week — overdue recalls, lab results that needed action, prescriptions that needed review. That has dropped off almost completely.</blockquote>
+        <div class="stats">
+          <div class="s"><div class="n">~80%</div><div class="l">Fewer follow-up misses</div></div>
+          <div class="s"><div class="n">3 weeks</div><div class="l">Until our list felt under control</div></div>
+        </div>
+        <div class="author">
+          <div class="av">JM</div>
+          <div class="who"><b>Dr James Mercer</b><span>GP partner, Northcote Surgery</span></div>
+        </div>
+      </div>
+
+      <div class="testi-video reveal reveal-delay-2">
+        <span class="vhead">Watch it in 42 seconds</span>
+        <h4>Dr Mercer tells the story in his own words</h4>
+        <div class="vframe">
+          <span class="dur">0:42</span>
+        </div>
+      </div>
+
+      <div class="testi-side">
+        <div class="testi-quote reveal reveal-delay-3">
+          <blockquote>The medication checks were the surprise. It catches the interactions I have not flagged properly, before the pharmacist does. Saves me two rounds of back and forth on most repeat prescriptions.</blockquote>
+          <div class="author">
+            <div class="av">SP</div>
+            <div class="who"><b>Dr Sarah Patel</b><span>GP, Linden Grove Practice</span></div>
+          </div>
+        </div>
+
+        <div class="testi-quote reveal reveal-delay-4">
+          <blockquote>The chase drafts are what my team will not give up. SMS written, missing items listed, I tweak and send. Saves me a good hour a day.</blockquote>
+          <div class="author">
+            <div class="av">DO</div>
+            <div class="who"><b>David Okafor</b><span>Practice manager, Bridgewell Health Centre</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ — flat two col ============ -->
+<section id="faq" class="faq bg-grid">
+  <div class="wrap">
+    <div class="faq-head reveal">
+      <div>
+        <div class="sec-label">Before the call</div>
+        <h2>Questions clinicians ask <em>before booking</em></h2>
+      </div>
+    </div>
+
+    <div class="faq-grid">
+      <div class="qa reveal reveal-delay-1">
+        <div class="qa-head">
+          <span class="qn">Q1</span>
+          <h4>Does this replace my clinical decision-making?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>No. You remain the clinician. It checks the record, evidence, notes and gaps before the consult. You make every decision.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-2">
+        <div class="qa-head">
+          <span class="qn">Q2</span>
+          <h4>Will this work with my EMIS, SystmOne or Vision?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Yes. Use it as a pre-check before your normal consult, prescribing or referral process. It fits around what you already do.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-3">
+        <div class="qa-head">
+          <span class="qn">Q3</span>
+          <h4>What about patient data?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Data is handled under your clinic-approved process. Add your privacy and clinical governance wording here. We walk through the exact data handling on the call.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-2">
+        <div class="qa-head">
+          <span class="qn">Q4</span>
+          <h4>What if the patient still asks a question?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Some queries cannot be avoided. But reviewed records reduce the avoidable ones: the missed recall, the unflagged interaction, the unfiled consent.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-3">
+        <div class="qa-head">
+          <span class="qn">Q5</span>
+          <h4>Can it draft SMS and email messages?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Yes. Patient chases, follow-up questions, and response wording, all drafted from the actual record. You review before sending.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-4">
+        <div class="qa-head">
+          <span class="qn">Q6</span>
+          <h4>What happens on the demo call?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Bring one live patient or a typical week. We review it together in about 20 minutes. You see the flags, the drafted messages, and the missing items. Then you decide if it is worth continuing.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIMITED — strip ============ -->
+<section class="limited">
+  <div class="wrap">
+    <div class="limited-inner">
+      <div class="kicker"><span class="dot"></span>Demo calls are limited</div>
+      <p>We run 3 clinic demo calls per week so each one reviews a real patient list properly. When the week is full, new clinics move to the next available slot.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section id="book" class="final">
+  <div class="wrap">
+    <div class="sec-label reveal">20-minute demo call</div>
+    <h2 class="reveal reveal-delay-1">Bring one live patient. See what it would have caught <em>before the consult did.</em></h2>
+    <p class="lede reveal reveal-delay-2">Every preventable follow-up costs time. Every weak note creates risk. In one demo call we will show you what a pre-consult admin check looks like on your actual patient.</p>
+    <div class="final-actions reveal reveal-delay-3">
+      <a class="btn btn-xl btn-on-dark btn-magnet" href="#book">Book a call &amp; see it on your clinic <span class="arrow">→</span></a>
+      <a class="btn btn-on-dark-ghost" href="#book">Get the free consult-ready checklist</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-inner">
+      <div class="foot-brand"><img src="/images/talent-manager.webp" alt="Mia" class="foot-brand-img">Mia Clinic Admin</div>
+      <div>© 2026 · Built for clinics &amp; GPs</div>
+      <div><a href="/terms" target="_blank" rel="noopener">Terms</a> · <a href="/privacy" target="_blank" rel="noopener">Privacy</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="/scripts/ai-mortgage-admin-motion.js" is:inline defer></script>
+
+</Layout>

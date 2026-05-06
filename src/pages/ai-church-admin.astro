@@ -1,0 +1,1462 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/ai-mortgage-admin/styles.css';
+import '../styles/ai-mortgage-admin/sections.css';
+import '../styles/ai-mortgage-admin/motion.css';
+---
+
+<Layout
+  title="Zara Church Admin — More time on ministry. Less time lost to admin."
+  description="Connect the inbox. Zara Church Admin reviews member queries, giving and event sign-ups, and drafts the pastoral, volunteer and donor responses for whatever is missing."
+  ogTitle="Zara Church Admin — More time on ministry. Less time lost to admin."
+  ogDescription="Connect the inbox. Zara Church Admin reviews member queries, giving and event sign-ups, and drafts the pastoral, volunteer and donor responses for whatever is missing."
+  includeHomeStyles={false}
+>
+
+<style is:global>
+  /* Zara accent — amber. */
+  :root {
+    --lime: #F59E0B;
+    --lime-2: #D97706;
+    --lime-ink: #1F1500;
+    --lime-rgb: 245, 158, 11;
+  }
+
+  /* ===== Hero v2 (4-card layout) — Zara Church Admin ===== */
+  .hero-stage .agent { width: 86%; margin-top: 0; }
+  .hero-stage .sbubble { display: none; }
+
+  .hero-stage .fcard-checklist,
+  .hero-stage .fcard-reply,
+  .hero-stage .fcard-timeline,
+  .hero-stage .fcard-chase {
+    position: absolute;
+    background: var(--surface);
+    border-radius: 11px;
+    padding: 11px;
+    box-shadow: 0 12px 26px -10px rgba(9,9,11,0.16), 0 1px 3px -1px rgba(9,9,11,0.05);
+    border: 1px solid rgba(225, 227, 226, 0.6);
+    font-family: var(--font-body);
+  }
+  .hero-stage .fcard-checklist { top: 8px;     left: 0;    width: 218px; transform: rotate(3deg);  z-index: 5; }
+  .hero-stage .fcard-reply     { top: 40px;    right: 0;   width: 192px; z-index: 4; }
+  .hero-stage .fcard-timeline  { bottom: 50px; left: 16px; width: 200px; transform: rotate(-1deg); z-index: 4; }
+  .hero-stage .fcard-chase     { bottom: 30px; right: 0;   width: 198px; transform: rotate(-3deg); z-index: 5; }
+
+  @media (max-width: 820px) {
+    .hero-stage .fcard-checklist { top: 12px;    left: 4px;  width: 190px; }
+    .hero-stage .fcard-reply     { top: 30px;    right: 4px; width: 175px; }
+    .hero-stage .fcard-timeline  { bottom: 40px; left: 4px;  width: 180px; }
+    .hero-stage .fcard-chase     { bottom: 20px; right: 4px; width: 180px; }
+  }
+
+  /* ----- Shared header ----- */
+  .chc-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-bottom: 9px;
+  }
+  .chc-head-left { display: flex; align-items: center; gap: 6px; min-width: 0; flex: 1; }
+  .chc-icon {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    background: var(--surface-3);
+    color: var(--lime);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .chc-icon svg { width: 12px; height: 12px; }
+  .chc-title-block { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
+  .chc-title {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .chc-sub {
+    font-size: 7.5px;
+    color: var(--fg-3);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ----- Status pills ----- */
+  .chc-tag {
+    font-family: var(--font-body);
+    font-size: 8px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .chc-tag-progress { background: rgba(var(--lime-rgb), 0.15); color: var(--lime-2); }
+  .chc-tag-ready {
+    background: rgba(var(--lime-rgb), 0.15);
+    color: var(--lime-2);
+  }
+  .chc-tag-ready::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--lime);
+  }
+  .chc-tag-live {
+    background: rgba(var(--lime-rgb), 0.10);
+    color: var(--lime-2);
+  }
+  .chc-tag-live::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--lime);
+  }
+  .chc-tag-draft {
+    background: #FFEDD5;
+    color: #EA580C;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 7.5px;
+  }
+
+  /* ----- Sunday Checklist ----- */
+  .chc-progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 8px;
+    margin-bottom: 4px;
+  }
+  .chc-progress-row .lbl { color: var(--fg-3); }
+  .chc-progress-row .pct { color: var(--ink); font-weight: 500; }
+  .chc-progress {
+    height: 8px;
+    background: var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 9px;
+  }
+  .chc-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--lime-2) 0%, var(--lime) 100%);
+    border-radius: 999px;
+  }
+  .chc-list { display: flex; flex-direction: column; gap: 5px; margin-bottom: 9px; }
+  .chc-list-item {
+    background: var(--surface-3);
+    border-radius: 7px;
+    padding: 7px;
+    display: flex;
+    gap: 7px;
+    align-items: flex-start;
+  }
+  .chc-list-item.outline {
+    background: var(--surface);
+    border: 1px solid rgba(190, 201, 194, 0.30);
+    box-shadow: inset 3px 0 0 var(--lime);
+    padding-left: 9px;
+  }
+  .chc-list-item.outline.danger { box-shadow: inset 3px 0 0 #BA1A1A; }
+  .chc-list-mark {
+    width: 13px; height: 13px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: var(--lime);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .chc-list-mark svg { width: 11px; height: 11px; }
+  .chc-list-mark-empty {
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    border: 1px solid #BEC9C2;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .chc-list-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .chc-list-name { font-size: 9px; font-weight: 500; color: var(--ink); line-height: 1.3; }
+  .chc-list-name.done { text-decoration: line-through; opacity: 0.7; }
+  .chc-list-meta { font-size: 7.5px; color: var(--fg-3); line-height: 1.3; }
+  .chc-list-meta.danger { color: #BA1A1A; }
+  .chc-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    background: var(--lime);
+    color: var(--lime-ink);
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+  }
+  .chc-cta svg { width: 9px; height: 9px; }
+
+  /* ----- Pastoral Reply Draft (top-right) ----- */
+  .chc-msg-preview {
+    background: var(--surface-3);
+    border: 1px solid rgba(190, 201, 194, 0.20);
+    border-radius: 7px;
+    padding: 8px;
+    margin-bottom: 7px;
+  }
+  .chc-msg-preview-label {
+    font-family: var(--font-display);
+    font-size: 7.5px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+  .chc-msg-preview-body {
+    font-size: 7.5px;
+    color: var(--fg-3);
+    line-height: 1.5;
+  }
+  .chc-meta-rows { display: flex; flex-direction: column; gap: 4px; margin-bottom: 9px; }
+  .chc-meta-row {
+    background: var(--surface-2);
+    border: 1px solid rgba(190, 201, 194, 0.10);
+    border-radius: 6px;
+    padding: 6px 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .chc-meta-label {
+    font-size: 7px;
+    font-weight: 500;
+    color: var(--fg-3);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+  }
+  .chc-meta-value {
+    font-size: 8.5px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .chc-foot {
+    margin: -2px -11px -11px;
+    padding: 8px 11px;
+    background: var(--surface-3);
+    border-top: 1px solid rgba(190, 201, 194, 0.20);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 6px;
+    border-bottom-left-radius: 11px;
+    border-bottom-right-radius: 11px;
+  }
+  .chc-btn-text {
+    color: var(--lime);
+    font-size: 8px;
+    font-weight: 500;
+    background: none;
+    border: none;
+    padding: 5px 8px;
+    cursor: pointer;
+  }
+  .chc-btn-primary {
+    background: var(--lime);
+    color: var(--lime-ink);
+    border: none;
+    border-radius: 999px;
+    padding: 5px 10px;
+    font-size: 8px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .chc-btn-primary svg { width: 8px; height: 8px; }
+
+  /* ----- Service Timeline ----- */
+  .chc-timeline { position: relative; padding-left: 0; }
+  .chc-timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 4px;
+    bottom: 4px;
+    width: 1px;
+    background: var(--line);
+  }
+  .chc-timeline-item {
+    display: flex;
+    gap: 9px;
+    align-items: flex-start;
+    margin-bottom: 9px;
+    position: relative;
+  }
+  .chc-timeline-item:last-child { margin-bottom: 0; }
+  .chc-timeline-dot {
+    width: 15px; height: 15px;
+    border-radius: 50%;
+    background: var(--lime);
+    color: white;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 2px var(--surface);
+    z-index: 1;
+  }
+  .chc-timeline-dot svg { width: 8px; height: 8px; }
+  .chc-timeline-dot.muted { background: #EDEEED; color: var(--fg-3); }
+  .chc-timeline-body { flex: 1; min-width: 0; padding-top: 1px; }
+  .chc-timeline-row1 { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
+  .chc-timeline-name { font-size: 9px; font-weight: 600; color: var(--ink); line-height: 1.2; }
+  .chc-timeline-name.muted { color: var(--fg-3); }
+  .chc-timeline-status { font-size: 7px; font-weight: 500; color: var(--lime); line-height: 1.2; flex-shrink: 0; }
+  .chc-timeline-status.muted { color: var(--fg-4); }
+  .chc-timeline-meta { font-size: 7.5px; color: var(--fg-3); margin-top: 2px; line-height: 1.3; }
+  .chc-timeline-bar {
+    margin-top: 4px;
+    height: 3px;
+    background: var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .chc-timeline-bar-fill {
+    height: 100%;
+    background: var(--lime);
+    border-radius: 999px;
+  }
+
+  /* ----- Volunteer Chase ----- */
+  .chc-meta-box {
+    background: var(--surface-3);
+    border-radius: 7px;
+    padding: 7px;
+    margin-bottom: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .chc-meta-box .chc-meta-row { background: transparent; border: 0; padding: 0; }
+  .chc-priority-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .chc-priority-dot::before {
+    content: '';
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: #BA1A1A;
+  }
+  .chc-msg-block {
+    background: rgba(225, 227, 226, 0.30);
+    border: 1px solid rgba(190, 201, 194, 0.30);
+    border-radius: 7px;
+    padding: 7px;
+    margin-bottom: 9px;
+  }
+  .chc-msg-block-label {
+    font-size: 7px;
+    font-weight: 600;
+    color: var(--fg-3);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 3px;
+  }
+  .chc-msg-block-body {
+    font-size: 7.5px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .chc-btn-row { display: flex; gap: 5px; }
+  .chc-btn-row > * { flex: 1; }
+  .chc-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background: var(--surface-3);
+    color: var(--lime-2);
+    border: none;
+    border-radius: 9px;
+    padding: 5px 8px;
+    font-size: 8.5px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .chc-btn-ghost svg { width: 9px; height: 9px; }
+  .chc-btn-solid {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background: var(--lime);
+    color: var(--lime-ink);
+    border: none;
+    border-radius: 9px;
+    padding: 5px 8px;
+    font-size: 8.5px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .chc-btn-solid svg { width: 9px; height: 9px; }
+</style>
+
+<div class="scroll-progress"></div>
+<a class="float-cta" href="#book"><span class="dot"></span>Book a call<span class="arrow">→</span></a>
+
+<!-- NAV -->
+<header class="wrap">
+  <nav class="nav">
+    <a class="nav-brand" href="#">
+      <img src="/images/the-claws-logo.svg" alt="TheClaws" class="nav-brand-logo" />
+      <span>Zara Church Admin</span>
+    </a>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#how">How it works</a>
+      <a href="#case">Case study</a>
+      <a href="#incl">Included</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="btn btn-sm btn-primary" href="#book">Book a call <span class="arrow">→</span></a>
+  </nav>
+</header>
+
+<!-- ============ HERO (all above fold) ============ -->
+<section class="hero wrap">
+  <div class="hero-left">
+    <div class="eyebrow reveal"><span class="dot"></span>Inbox reviewed in minutes, not hours</div>
+    <h1 class="reveal reveal-delay-1">More time on ministry.<br><span class="mark">Less time lost to admin.</span></h1>
+    <p class="sub reveal reveal-delay-2">Connect the inbox. Zara Church Admin reviews member queries, giving and event sign-ups, and drafts the pastoral, volunteer and donor responses for whatever is missing.</p>
+    <div class="btns reveal reveal-delay-3">
+      <a class="btn btn-lime btn-magnet" href="#book">Book a call &amp; see it on your inbox <span class="arrow">→</span></a>
+      <a class="btn btn-ghost" href="#how">See how it works</a>
+    </div>
+    <p class="micro reveal reveal-delay-4">We'll review one live week of inbox on the call and show the gaps it would flag — bring the messages, no prep needed.</p>
+
+    <hr class="hero-divider reveal reveal-delay-4">
+
+    <div class="hero-caps reveal reveal-delay-5">
+      <div class="hero-cap">
+        <span class="ic">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line></svg>
+        </span>
+        <strong>Reads every message</strong>
+        <span>Pastoral queries, giving, sign-ups, safeguarding, school admin.</span>
+      </div>
+      <div class="hero-cap">
+        <span class="ic">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </span>
+        <strong>Drafts the response</strong>
+        <span>Member, family, volunteer, donor. You review before sending.</span>
+      </div>
+      <div class="hero-cap">
+        <span class="ic">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </span>
+        <strong>Fits your church's tone</strong>
+        <span>Your safeguarding policy, your welcome process, your voice.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stage">
+    <img class="agent" src="/images/zara-agent-ai-church-admin.png" alt="Zara Church Admin reviewing the parish inbox">
+
+    <!-- Sunday Checklist card -->
+    <div class="fcard-checklist">
+      <div class="chc-head">
+        <div class="chc-title-block">
+          <span class="chc-title">Sunday Checklist</span>
+          <div style="display: flex; align-items: center; gap: 6px; margin-top: 3px;">
+            <span class="chc-tag chc-tag-progress">82% Complete</span>
+            <span style="font-size: 7.5px; color: var(--fg-3);">This week</span>
+          </div>
+        </div>
+        <span class="chc-icon" style="width: 26px; height: 26px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+        </span>
+      </div>
+
+      <div class="chc-progress-row">
+        <span class="lbl">Progress</span>
+        <span class="pct">82%</span>
+      </div>
+      <div class="chc-progress"><div class="chc-progress-fill" style="width: 82%;"></div></div>
+
+      <div class="chc-list">
+        <div class="chc-list-item">
+          <span class="chc-list-mark">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          </span>
+          <div class="chc-list-text">
+            <span class="chc-list-name done">Sermon notes published</span>
+            <span class="chc-list-meta">Completed by Sarah on Oct 12</span>
+          </div>
+        </div>
+
+        <div class="chc-list-item outline">
+          <span class="chc-list-mark-empty"></span>
+          <div class="chc-list-text">
+            <span class="chc-list-name">Volunteer rota confirmed</span>
+            <span class="chc-list-meta">Due today</span>
+          </div>
+        </div>
+
+        <div class="chc-list-item outline danger">
+          <span class="chc-list-mark-empty"></span>
+          <div class="chc-list-text">
+            <span class="chc-list-name">Safeguarding records review</span>
+            <span class="chc-list-meta danger">3 items remaining</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="chc-cta">Request Review <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+    </div>
+
+    <!-- Pastoral Reply Draft card -->
+    <div class="fcard-reply">
+      <div class="chc-head">
+        <div class="chc-head-left">
+          <span class="chc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </span>
+          <div class="chc-title-block">
+            <span class="chc-title">Pastoral Reply</span>
+            <span class="chc-sub">Automated follow-up</span>
+          </div>
+        </div>
+        <span class="chc-tag chc-tag-ready">Ready to Send</span>
+      </div>
+
+      <div class="chc-msg-preview">
+        <div class="chc-msg-preview-label">Message Preview</div>
+        <div class="chc-msg-preview-body">"Hi Sarah, just checking in following our chat last week. The pastoral team would love to schedule a coffee — let me know what works for you this week."</div>
+      </div>
+
+      <div class="chc-meta-rows">
+        <div class="chc-meta-row">
+          <span class="chc-meta-label">To</span>
+          <span class="chc-meta-value">Sarah Whitman</span>
+        </div>
+        <div class="chc-meta-row">
+          <span class="chc-meta-label">Related concern</span>
+          <span class="chc-meta-value">Bereavement support</span>
+        </div>
+        <div class="chc-meta-row">
+          <span class="chc-meta-label">Priority</span>
+          <span class="chc-meta-value">Medium</span>
+        </div>
+      </div>
+
+      <div class="chc-foot">
+        <button class="chc-btn-text">Edit Draft</button>
+        <button class="chc-btn-primary">
+          Review &amp; Send
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Service Timeline card -->
+    <div class="fcard-timeline">
+      <div class="chc-head">
+        <div class="chc-title-block">
+          <span class="chc-title">Service Timeline</span>
+        </div>
+        <span class="chc-tag chc-tag-live">Live</span>
+      </div>
+
+      <div class="chc-timeline">
+        <div class="chc-timeline-item">
+          <span class="chc-timeline-dot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <div class="chc-timeline-body">
+            <div class="chc-timeline-row1">
+              <span class="chc-timeline-name">Welcome team briefed</span>
+              <span class="chc-timeline-status">Complete</span>
+            </div>
+            <div class="chc-timeline-meta">All 6 stewards confirmed</div>
+          </div>
+        </div>
+
+        <div class="chc-timeline-item">
+          <span class="chc-timeline-dot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <div class="chc-timeline-body">
+            <div class="chc-timeline-row1">
+              <span class="chc-timeline-name">Sound check passed</span>
+              <span class="chc-timeline-status">Complete</span>
+            </div>
+            <div class="chc-timeline-meta">Mics, monitors, livestream OK</div>
+          </div>
+        </div>
+
+        <div class="chc-timeline-item">
+          <span class="chc-timeline-dot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+          </span>
+          <div class="chc-timeline-body">
+            <div class="chc-timeline-row1">
+              <span class="chc-timeline-name">Worship rehearsal</span>
+              <span class="chc-timeline-status">In progress</span>
+            </div>
+            <div class="chc-timeline-meta">Band running through 4 songs</div>
+            <div class="chc-timeline-bar"><div class="chc-timeline-bar-fill" style="width: 60%;"></div></div>
+          </div>
+        </div>
+
+        <div class="chc-timeline-item">
+          <span class="chc-timeline-dot muted">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
+          </span>
+          <div class="chc-timeline-body">
+            <div class="chc-timeline-row1">
+              <span class="chc-timeline-name muted">Sunday service</span>
+              <span class="chc-timeline-status muted">Sunday 10am</span>
+            </div>
+            <div class="chc-timeline-meta">Doors open 9:30</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Volunteer Chase card -->
+    <div class="fcard-chase">
+      <div class="chc-head">
+        <div class="chc-head-left">
+          <span class="chc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </span>
+          <div class="chc-title-block">
+            <span class="chc-title">Volunteer Chase</span>
+            <span class="chc-sub">Automated Follow-up</span>
+          </div>
+        </div>
+        <span class="chc-tag chc-tag-draft">Draft Ready</span>
+      </div>
+
+      <div class="chc-meta-box">
+        <div class="chc-meta-row">
+          <span class="chc-meta-label">To</span>
+          <span class="chc-meta-value">Sunday School Lead</span>
+        </div>
+        <div class="chc-meta-row">
+          <span class="chc-meta-label">Related ministry</span>
+          <span class="chc-meta-value">Children's</span>
+        </div>
+        <div class="chc-meta-row">
+          <span class="chc-meta-label">Priority</span>
+          <span class="chc-meta-value chc-priority-dot">High</span>
+        </div>
+      </div>
+
+      <div class="chc-msg-block">
+        <div class="chc-msg-block-label">Message Preview</div>
+        <div class="chc-msg-block-body">"Hi James, please confirm your DBS expiry and the Sunday School roster for next week before Friday."</div>
+      </div>
+
+      <div class="chc-btn-row">
+        <button class="chc-btn-ghost">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Edit
+        </button>
+        <button class="chc-btn-solid">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+          Review &amp; Send
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= CLAIM TICKER ========================= -->
+<div class="ticker-band">
+  <div class="ticker">
+    <span class="t-strong">What would you do with 15 extra hours a week?</span>
+    <span class="t-sep">·</span>
+    <span>Because that's what the admin is costing you.</span>
+    <span class="t-sep">·</span>
+    <span class="t-strong">Future churches don't pay it anymore</span>
+    <span class="t-sep">—</span>
+    <span>they approve what their AI already drafted.</span>
+    <span class="t-sep">·</span>
+    <!-- duplicate for seamless loop -->
+    <span class="t-strong">What would you do with 15 extra hours a week?</span>
+    <span class="t-sep">·</span>
+    <span>Because that's what the admin is costing you.</span>
+    <span class="t-sep">·</span>
+    <span class="t-strong">Future churches don't pay it anymore</span>
+    <span class="t-sep">—</span>
+    <span>they approve what their AI already drafted.</span>
+    <span class="t-sep">·</span>
+  </div>
+</div>
+
+<!-- ============ PROBLEM + REAL PROBLEM — combined ============ -->
+<section id="problem" class="real bg-grid bg-grid-dark">
+  <div class="wrap real-grid">
+    <div class="reveal">
+      <div class="sec-label">The problem</div>
+      <h2>Your ministry is not the bottleneck. <em>Church admin</em> is.</h2>
+      <p>You already know how to lead, teach and pastor. What slows you down is everything around it: replying to member queries, processing giving, evidencing safeguarding, coordinating volunteers, drafting responses and chasing missing items.</p>
+      <div class="problem-cards">
+        <div class="pcard">
+          <span class="pcard-k">01 / Member care</span>
+          <h4>Pastoral inbox</h4>
+          <p>Prayer requests, counselling queries, family updates, urgent care.</p>
+        </div>
+        <div class="pcard pcard-dark">
+          <span class="pcard-k">02 / Compliance</span>
+          <h4>Safeguarding &amp; DBS</h4>
+          <p>Volunteer checks, training records, expiries, policy reviews.</p>
+        </div>
+        <div class="pcard">
+          <span class="pcard-k">03 / Giving</span>
+          <h4>Donations &amp; Gift Aid</h4>
+          <p>One-off, monthly, declarations, claims, reminders.</p>
+        </div>
+        <div class="pcard pcard-lime">
+          <span class="pcard-k">04 / Comms work</span>
+          <h4>Member chase</h4>
+          <p>Draft messages, emails, and follow-up replies.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="real-col">
+      <div class="transcript reveal reveal-delay-2">
+        <div class="sec-label">The real problem</div>
+
+        <div class="transcript-stage">
+          <img class="transcript-photo" src="/images/the-real-problem.png" alt="An exhausted pastor at a desk surrounded by paperwork and notes" />
+
+          <div class="stage-overlay">
+            <div class="stage-quote-wrap">
+              <blockquote class="stage-quote">
+                I feel like I'm working at <span class="hl">full capacity</span>, but I can't grow the ministry because admin eats my time.
+              </blockquote>
+              <div class="sig stage-sig">— Pastor using Zara Church Admin</div>
+            </div>
+
+            <div class="notes-wall" aria-hidden="true">
+              <div class="note note-1">
+                <span class="note-tape"></span>
+                <p>"Prayer request came Friday. We replied Wednesday. Lost the moment."</p>
+                <span class="note-attr">— Vicar, Birmingham</span>
+              </div>
+              <div class="note note-2 note-lime">
+                <span class="note-tape"></span>
+                <p>"Safeguarding pack is 9 fields per volunteer. Miss one, the rota stops."</p>
+                <span class="note-attr">— Children's lead, Bristol</span>
+              </div>
+              <div class="note note-3">
+                <span class="note-tape"></span>
+                <p>"Replying at 11pm. My family sees me less than my email."</p>
+                <span class="note-attr">— Senior pastor, Manchester</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="body-txt">
+          The admin around each ministry sets the cap. <strong>More members means more pastoral replies to write</strong>, more giving forms to chase, more safeguarding to track, more events to coordinate. So the team either stops growing the ministry, or takes it on and pays for it with evenings and weekends.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIXES — problems + how it fits ============ -->
+<section class="fixes">
+  <div class="wrap">
+    <div class="fixes-head reveal">
+      <div class="sec-label fixes-eyebrow">
+        <svg class="sl-ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Why the usual fixes do not work
+      </div>
+      <h2>Hiring a parish administrator takes months. Templates <em>do not read the email</em>. Generic AI does not know a Gift Aid form from a baptism request.</h2>
+    </div>
+
+    <div class="fix-row reveal reveal-delay-2">
+      <div class="fix-card fc-fail">
+        <span class="fc-badge fc-x" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+        <span class="fc-ic" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </span>
+        <h4>A parish administrator</h4>
+        <p>Costs a full salary before it helps. Needs training on your church's process, your safeguarding pack and your tone. Still leaves the team doing the judgement calls.</p>
+      </div>
+      <div class="fix-card fc-fail">
+        <span class="fc-badge fc-x" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+        <span class="fc-ic" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </span>
+        <h4>Email and CRM templates</h4>
+        <p>Generic "thanks for your message" replies. They do not look at the actual query, do not know what is missing, and the member feels copy-pasted to.</p>
+      </div>
+      <div class="fix-card fc-fail">
+        <span class="fc-badge fc-x" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+        <span class="fc-ic" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </span>
+        <h4>Generic AI chatbots</h4>
+        <p>Wait for you to explain the whole context from scratch every time. They do not understand DBS expiries, Gift Aid, pastoral care or why a counselling request needs a careful, prayerful reply.</p>
+      </div>
+    </div>
+
+    <div class="fits-box reveal reveal-delay-3">
+      <span class="fits-pill">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        How it fits
+      </span>
+      <div class="fits-body">
+        <h3>A review and drafting layer. You stay the pastor on the inbox.</h3>
+        <div class="fits-body-copy">
+          <p>Every flag, every reply, every email is reviewed by you before anything moves. Zara Church Admin does not send, sign or commit anything off.</p>
+        </div>
+      </div>
+
+      <div class="fix-row fix-row-win">
+        <div class="fix-card fc-win">
+          <span class="fc-badge fc-check" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="fc-ic" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="9 12 11 14 15 10"/></svg>
+          </span>
+          <h4>You decide what goes out</h4>
+          <p>It drafts, flags, and asks. It does not send, commit or sign anything off.</p>
+        </div>
+        <div class="fix-card fc-win">
+          <span class="fc-badge fc-check" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="fc-ic" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </span>
+          <h4>Built for church admin</h4>
+          <p>Pastoral queries, Gift Aid, safeguarding, counselling, school admin, volunteer rotas. Not generic helpdesk.</p>
+        </div>
+        <div class="fix-card fc-win">
+          <span class="fc-badge fc-check" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="fc-ic" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          </span>
+          <h4>Fits your church's tone</h4>
+          <p>Your safeguarding policy, your welcome process, your approved voice. Configured at setup.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW — step flow ============ -->
+<section id="how" class="how bg-grid">
+  <div class="wrap">
+    <div class="sec-label reveal">How it works</div>
+    <h2 class="reveal reveal-delay-1">Four steps from messy inbox to <em>ready-to-send.</em></h2>
+
+    <div class="how-flow">
+      <div class="hstep reveal reveal-delay-2">
+        <span class="hs-eyebrow">Step one</span>
+        <h3>Connect the inbox</h3>
+        <div class="hs-visual">
+          <div class="doc-mock">
+            <span class="doc-line w70"></span>
+            <span class="doc-line w50"></span>
+            <span class="doc-line w65"></span>
+            <span class="doc-block"></span>
+          </div>
+        </div>
+        <p>Pastoral queries, donations, sign-ups, safeguarding records, volunteer applications, school admin.</p>
+        <span class="hs-tag">Connect inbox</span>
+      </div>
+
+      <div class="hs-arrow" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+
+      <div class="hstep reveal reveal-delay-3">
+        <span class="hs-eyebrow">Step two</span>
+        <h3>Zara Church Admin reviews the messages</h3>
+        <div class="hs-visual">
+          <div class="review-mock">
+            <div class="rm-card-back"></div>
+            <div class="rm-card">
+              <span class="rm-head"></span>
+              <span class="rm-line w60"></span>
+              <span class="rm-line w45"></span>
+              <span class="rm-reply" aria-hidden="true">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <p>Reads every message, cross-references the member file, flags what is urgent or risky.</p>
+        <span class="hs-tag">Full review</span>
+      </div>
+
+      <div class="hs-arrow" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+
+      <div class="hstep reveal reveal-delay-4">
+        <span class="hs-eyebrow">Step three</span>
+        <h3>You get flags, questions &amp; drafts</h3>
+        <div class="hs-visual">
+          <div class="chips-mock">
+            <span class="cm-chip cm-1">Crisis flag</span>
+            <span class="cm-chip cm-2">DBS expired</span>
+            <span class="cm-chip cm-3">Gift Aid gap</span>
+          </div>
+        </div>
+        <p>Review the flags, approve the reply, decide what goes back to the member.</p>
+        <span class="hs-tag">Clear flags</span>
+      </div>
+
+      <div class="hs-arrow" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+
+      <div class="hstep reveal reveal-delay-5">
+        <span class="hs-eyebrow">Step four</span>
+        <h3>You send a cleaner reply</h3>
+        <div class="hs-visual">
+          <div class="tiles-mock">
+            <span class="tm-tile tm-1">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg>
+            </span>
+            <span class="tm-tile tm-2">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </span>
+          </div>
+        </div>
+        <p>Members get a thoughtful response, faster, with fewer follow-up questions.</p>
+        <span class="hs-tag">Cleaner reply</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CASE ============ -->
+<section id="case" class="case">
+  <div class="wrap">
+    <div class="sec-label">[ Case study ]</div>
+
+    <div class="case-layout">
+      <div class="case-left reveal">
+        <div class="case-pdf">
+          <span class="pk">Case study · 01</span>
+          <h4>The replies looked ready. The review found three things before the member did.</h4>
+          <div class="pdf-sub">Mid-size parish church. 800 members. A closer look before Sunday.</div>
+
+          <div class="case-outcome">
+            <div class="item">
+              <span class="k">Outcome</span>
+              <span class="v">Corrected before send</span>
+            </div>
+            <div class="item">
+              <span class="k">Pastoral missteps avoided</span>
+              <span class="v">2 foreseeable</span>
+            </div>
+            <div class="item">
+              <span class="k">Reply landed</span>
+              <span class="v">1 day later</span>
+            </div>
+          </div>
+
+          <div class="pdf-pages">
+            <b>Zara Church Admin</b>
+            <span>12 pages</span>
+          </div>
+        </div>
+
+        <a class="btn btn-on-dark case-cta" href="#book">Download the full case study <span class="arrow">↓</span></a>
+      </div>
+
+      <div class="case-copy reveal reveal-delay-2">
+        <svg class="pdf-hint-arrow" width="140" height="49" viewBox="0 0 380 132" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M1.44574 61.1935C5.23881 71.6566 16.7955 64.7185 23.614 61.6428C35.3007 55.9435 47.9577 52.9106 60.3997 49.3619C83.9192 41.9887 108.212 37.8563 132.641 34.9294C157.522 30.0079 183.236 33.026 207.182 40.9376C183.77 53.9122 153.66 81.0519 168.379 110.216C175.948 124.291 192.779 134.463 208.911 131.256C238.839 125.568 279.667 74.6545 252.929 47.6279C299.216 49.7015 323.858 72.3163 357.971 99.9322C361.278 102.457 364.175 105.586 367.697 107.775C375.232 111.833 383.187 102.199 377.767 95.5513C353.57 75.8968 329.896 53.8897 301.066 41.1857C278.681 33.6456 253.731 29.0003 230.167 32.1792C207.385 22.6752 182.827 16.4308 158.039 16.3897C127.824 17.7823 97.5398 22.9522 68.199 30.3273C47.5646 35.954 26.9417 41.5376 7.64304 50.9397C3.00375 51.7153 0.107731 56.7864 1.44574 61.1935ZM182.568 86.0698C191.622 68.2207 209.814 55.957 228.223 49.2408C235.559 53.5751 246.271 59.6258 245.686 69.366C245.706 69.2363 245.728 69.1063 245.749 68.9765C245.756 68.764 245.762 68.5513 245.769 68.339C241.838 89.9531 224.799 112.882 201.929 115.758C188.306 114.388 175.531 99.5471 182.568 86.0698Z"/>
+          <path d="M0.00134323 66.0661C-0.121404 74.1831 8.46788 76.029 14.9021 76.7328C28.114 79.009 41.2882 81.4408 54.3712 84.3637C60.9683 85.1908 67.0892 88.9615 73.6263 89.1714C80.5725 88.2328 82.7969 78.5809 77.0331 74.6251C58.152 66.6058 36.9941 64.781 16.9606 60.7204C21.7513 43.5116 32.5459 28.4019 41.1777 12.9929C42.4149 11.082 43.1307 9.02166 42.7477 6.72538C41.9198 -0.0972456 31.9611 -2.58451 28.2025 3.31897C23.6449 10.6168 19.3715 18.0967 15.1861 25.6116C8.33517 38.1859 0.332096 51.3684 0.00134323 66.0661Z"/>
+        </svg>
+
+        <h2>The replies looked ready. The review found <em>three things</em> before the member did.</h2>
+
+        <div class="cs-cards-stack">
+          <div class="case-card cc-neutral">
+            <div class="cc-head">
+              <span class="cc-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </span>
+              <h3>The situation</h3>
+            </div>
+            <p>A mid-size parish church on a busy week. Pastoral inbox at 47 messages, three new volunteer applications, twelve Gift Aid declarations and a safeguarding policy review on the list. The team was ready to send Sunday's responses.</p>
+          </div>
+          <div class="case-card cc-alert">
+            <div class="cc-head">
+              <span class="cc-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </span>
+              <h3>What Zara Church Admin caught</h3>
+            </div>
+            <p>A pastoral query mentioning a recent bereavement that had been replied to with a generic event invite. A new volunteer DBS that had expired the day before. A weak Gift Aid declaration where the donor had ticked "higher rate" without supplying their HMRC reference. It then drafted the corrected pastoral reply and the volunteer follow-up.</p>
+          </div>
+          <div class="case-card cc-success">
+            <div class="cc-head">
+              <span class="cc-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <h3>The outcome</h3>
+            </div>
+            <p>The team corrected the inbox before sending. Two foreseeable pastoral missteps avoided. Volunteer rota signed off first time. Donor returned the HMRC reference and the bereavement reply went out within a day. The member said it was "the kindest reply they had ever had."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARE ============ -->
+<section class="cmp bg-dots">
+  <div class="wrap">
+    <div class="cmp-top reveal">
+      <div class="cmp-head">
+        <div class="sec-label">Compared to</div>
+        <h2>What most churches try before this, and why the <em>gap is still there.</em></h2>
+      </div>
+    </div>
+
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>
+              <span class="cmp-q">Can it <em>actually</em> do the work properly?</span>
+            </th>
+            <th>
+              <div class="cmp-col">
+                <span class="cmp-ic">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="cmp-lbl">Parish administrator</span>
+              </div>
+            </th>
+            <th>
+              <div class="cmp-col">
+                <span class="cmp-ic">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+                </span>
+                <span class="cmp-lbl">Templates</span>
+              </div>
+            </th>
+            <th>
+              <div class="cmp-col">
+                <span class="cmp-ic">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/></svg>
+                </span>
+                <span class="cmp-lbl">ChatGPT on the inbox</span>
+              </div>
+            </th>
+            <th class="col-us">
+              <div class="cmp-col">
+                <span class="cmp-ic cmp-ic-kai">
+                  <img src="/images/customer-support.webp" alt="Zara" width="52" height="52" loading="lazy" />
+                </span>
+                <span class="cmp-lbl">Zara Church Admin</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Reads the message before replying</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Partial</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Spots safeguarding &amp; Gift Aid issues</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Drafts replies based on the actual member file</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Generic only</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Chases missing forms &amp; information</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Partial</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Flags pastoral-risk issues early</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Works on schools, donations, events &amp; messy inboxes</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Limited</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Ready from day one</th>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INCLUDED — table ============ -->
+<section id="incl" class="incl bg-grid">
+  <div class="wrap">
+    <div class="incl-head reveal">
+      <div>
+        <div class="sec-label">What's included <span class="sl-tag">[ 07 · The pre-send layer ]</span></div>
+        <h2>The pre-send admin layer that <em>clears the inbox</em> before it comes back to you.</h2>
+      </div>
+      <p class="sub">Built on your live inbox, not generic templates. Each row runs on the real messages and you review the output before anything goes back to the member.</p>
+    </div>
+
+    <div class="incl-card reveal">
+      <table class="incl-table">
+        <thead>
+          <tr>
+            <th class="th-n">No.</th>
+            <th class="th-cap">Capability</th>
+            <th class="th-fin">Ministry impact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-n"><em>01</em></td>
+            <td class="td-cap">
+              <h4>Pastoral inbox red flag review</h4>
+              <p>Flags bereavement, crisis language, mental health concerns, urgent care requests, abuse disclosures and other risks across every message in the queue.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Avoids pastoral missteps</strong>
+              <span>Less rework and fewer member upsets.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>02</em></td>
+            <td class="td-cap">
+              <h4>Safeguarding &amp; DBS consistency check</h4>
+              <p>Compares volunteer DBS dates, training records, role assignments, policy versions and expiries against your safeguarding pack. Nothing "forgotten" surprises you later.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Prevents safeguarding incidents</strong>
+              <span>Stops avoidable risk, queries and back-and-forth.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>03</em></td>
+            <td class="td-cap">
+              <h4>Gift Aid &amp; giving paper-trail check</h4>
+              <p>Reviews declarations, HMRC references, regular giving setups, one-off donations and whether the explanation and paper trail are complete and acceptable.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Reduces compliance risk</strong>
+              <span>Protects giving income that supports the ministry.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>04</em></td>
+            <td class="td-cap">
+              <h4>Event sign-up &amp; sacrament evidence check</h4>
+              <p>Checks baptism, wedding, funeral and retreat sign-ups and whether the records support the booking being made.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Faster to confirm, stronger pack</strong>
+              <span>Cuts time lost checking sign-ups and fixing gaps.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>05</em></td>
+            <td class="td-cap">
+              <h4>School admissions &amp; parent comms file check</h4>
+              <p>Reviews admission queries, parent updates, attendance comms, faith reference letters and whether the response is complete and ready to send.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Reduces compliance risk</strong>
+              <span>Keeps your file clean and parents well informed.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>06</em></td>
+            <td class="td-cap">
+              <h4>Member, volunteer &amp; donor reply drafts</h4>
+              <p>Creates email and message drafts for missing forms, DBS reminders, Gift Aid follow-ups, sign-up confirmations and other replies.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Saves hours replying to members</strong>
+              <span>Frees up time for ministry, teaching and pastoral care.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>07</em></td>
+            <td class="td-cap">
+              <h4>Sunday-ready issue summary</h4>
+              <p>Pulls all flags, gaps and unanswered messages into one clear summary so you know exactly what needs sorting before Sunday.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Stops follow-up rework</strong>
+              <span>Less back-and-forth, fewer hold-ups, smoother weeks.</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="incl-note">
+        <div class="note-col">
+          <span class="note-ic" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </span>
+          <div>
+            <h5>The real cost of manual admin</h5>
+            <p>Replying to inboxes, re-checking forms and fixing avoidable issues steals ministry time. The time you could be spending with members, in prayer or planning the next sermon.</p>
+          </div>
+        </div>
+        <div class="note-col">
+          <span class="note-ic" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </span>
+          <div>
+            <h5>The ministry impact</h5>
+            <p>More admin = fewer pastoral conversations, slower replies, more rework and less time for the ministry that grows the church.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="incl-total">
+        <div class="it-left">
+          <h3>Total value to your church</h3>
+          <p>Protects ministry time, reduces delays and rework, and helps you serve more members, not more admin.</p>
+        </div>
+        <div class="it-right">
+          <div class="it-lbl">Your price</div>
+          <div class="it-price"><span class="p-n">$300</span><span class="p-u">/mo</span></div>
+        </div>
+      </div>
+
+      <div class="incl-foot">
+        <a class="btn btn-primary" href="#book">Book a call &amp; see it on your inbox <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUARANTEE + TESTIMONIALS — merged ============ -->
+<section class="testi">
+  <div class="wrap">
+    <div class="grt-pair">
+      <div class="ticket reveal">
+        <div class="dash-divider"></div>
+        <div class="ticket-left">
+          <div class="kicker">— The guarantee</div>
+          <h2>If it misses a material issue clearly visible in the inbox, <em>you do not pay.</em></h2>
+          <p>Crisis language, expired DBS, declaration inconsistencies. If we miss any, full refund. No forms.</p>
+        </div>
+        <div class="ticket-right">
+          <div class="big"><em><span class="big-count" data-count="100" data-suffix="%">100%</span></em></div>
+          <div class="small">Full refund · if we miss it</div>
+          <div class="refund">Most weeks have something. Most inboxes have three.</div>
+        </div>
+      </div>
+      <div class="testi-head reveal reveal-delay-2">
+        <div class="sec-label">What pastors say</div>
+        <h2>What pastors are <em>actually</em> getting out of it.</h2>
+      </div>
+    </div>
+
+    <div class="testi-layout">
+      <div class="testi-feat reveal reveal-delay-1">
+        <span class="featured-tag">Featured</span>
+        <blockquote>My replies are a lot warmer now. I used to miss two or three pastoral cues a week — bereavements landing in admin, expired DBSs slipping through. That has dropped off almost completely.</blockquote>
+        <div class="stats">
+          <div class="s"><div class="n">~80%</div><div class="l">Fewer pastoral misses</div></div>
+          <div class="s"><div class="n">3 weeks</div><div class="l">Until our inbox felt under control</div></div>
+        </div>
+        <div class="author">
+          <div class="av">JM</div>
+          <div class="who"><b>James Mercer</b><span>Vicar, Northcote Parish Church</span></div>
+        </div>
+      </div>
+
+      <div class="testi-video reveal reveal-delay-2">
+        <span class="vhead">Watch it in 42 seconds</span>
+        <h4>James tells the story in his own words</h4>
+        <div class="vframe">
+          <span class="dur">0:42</span>
+        </div>
+      </div>
+
+      <div class="testi-side">
+        <div class="testi-quote reveal reveal-delay-3">
+          <blockquote>The safeguarding flags were the surprise. It catches the DBS bits I have not evidenced properly, before the diocese does. Saves me two rounds of back and forth on most rotas.</blockquote>
+          <div class="author">
+            <div class="av">SP</div>
+            <div class="who"><b>Sarah Patel</b><span>Children's lead, Linden Grove Community Church</span></div>
+          </div>
+        </div>
+
+        <div class="testi-quote reveal reveal-delay-4">
+          <blockquote>The reply drafts are what my team will not give up. Pastoral message written, missing forms listed, I tweak and send. Saves me a good hour a day.</blockquote>
+          <div class="author">
+            <div class="av">DO</div>
+            <div class="who"><b>David Okafor</b><span>Senior pastor, Bridgewell Christian Centre</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ — flat two col ============ -->
+<section id="faq" class="faq bg-grid">
+  <div class="wrap">
+    <div class="faq-head reveal">
+      <div>
+        <div class="sec-label">Before the call</div>
+        <h2>Questions church teams ask <em>before booking</em></h2>
+      </div>
+    </div>
+
+    <div class="faq-grid">
+      <div class="qa reveal reveal-delay-1">
+        <div class="qa-head">
+          <span class="qn">Q1</span>
+          <h4>Does this replace my pastoring?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>No. You remain the pastor. It checks the inbox, evidence, replies and gaps before sending. You make every decision.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-2">
+        <div class="qa-head">
+          <span class="qn">Q2</span>
+          <h4>Will this work with my church's process?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Yes. Use it as a pre-check before your normal reply, safeguarding or finance process. It fits around what you already do.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-3">
+        <div class="qa-head">
+          <span class="qn">Q3</span>
+          <h4>What about member data?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Data is handled under your church-approved process. Add your privacy and safeguarding wording here. We walk through the exact data handling on the call.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-2">
+        <div class="qa-head">
+          <span class="qn">Q4</span>
+          <h4>What if the diocese still asks a question?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Some queries cannot be avoided. But reviewed inboxes reduce the avoidable ones: the missed bereavement, the expired DBS, the unfiled Gift Aid.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-3">
+        <div class="qa-head">
+          <span class="qn">Q5</span>
+          <h4>Can it draft email and WhatsApp messages?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Yes. Pastoral replies, volunteer follow-ups, and donor wording, all drafted from the actual message. You review before sending.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-4">
+        <div class="qa-head">
+          <span class="qn">Q6</span>
+          <h4>What happens on the demo call?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Bring one live week of inbox. We review it together in about 20 minutes. You see the flags, the drafted replies, and the missing items. Then you decide if it is worth continuing.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIMITED — strip ============ -->
+<section class="limited">
+  <div class="wrap">
+    <div class="limited-inner">
+      <div class="kicker"><span class="dot"></span>Demo calls are limited</div>
+      <p>We run 3 church demo calls per week so each one reviews a real inbox properly. When the week is full, new churches move to the next available slot.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section id="book" class="final">
+  <div class="wrap">
+    <div class="sec-label reveal">20-minute demo call</div>
+    <h2 class="reveal reveal-delay-1">Bring one live inbox. See what it would have caught <em>before the member did.</em></h2>
+    <p class="lede reveal reveal-delay-2">Every missed reply costs trust. Every late form creates risk. In one demo call we will show you what a pre-send admin check looks like on your actual inbox.</p>
+    <div class="final-actions reveal reveal-delay-3">
+      <a class="btn btn-xl btn-on-dark btn-magnet" href="#book">Book a call &amp; see it on your inbox <span class="arrow">→</span></a>
+      <a class="btn btn-on-dark-ghost" href="#book">Get the free Sunday-ready checklist</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-inner">
+      <div class="foot-brand"><img src="/images/customer-support.webp" alt="Zara" class="foot-brand-img">Zara Church Admin</div>
+      <div>© 2026 · Built for churches</div>
+      <div><a href="/terms" target="_blank" rel="noopener">Terms</a> · <a href="/privacy" target="_blank" rel="noopener">Privacy</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="/scripts/ai-mortgage-admin-motion.js" is:inline defer></script>
+
+</Layout>

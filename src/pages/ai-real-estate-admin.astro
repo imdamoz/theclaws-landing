@@ -1,0 +1,1431 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/ai-mortgage-admin/styles.css';
+import '../styles/ai-mortgage-admin/sections.css';
+import '../styles/ai-mortgage-admin/motion.css';
+---
+
+<Layout
+  title="Max Real Estate Admin — More deals exchanged. Less time lost to admin."
+  description="Connect the deal. Max Real Estate Admin reviews compliance, ID and source of funds, and drafts the buyer, vendor and solicitor chases for whatever is missing."
+  ogTitle="Max Real Estate Admin — More deals exchanged. Less time lost to admin."
+  ogDescription="Connect the deal. Max Real Estate Admin reviews compliance, ID and source of funds, and drafts the buyer, vendor and solicitor chases for whatever is missing."
+  includeHomeStyles={false}
+>
+
+<style is:global>
+  /* Per-page accent override — placeholder blue for Max. Final colour TBC. */
+  :root {
+    --lime: #4F8AF5;
+    --lime-2: #3B6EE0;
+    --lime-ink: #FFFFFF;
+    --lime-rgb: 79, 138, 245;
+  }
+
+  /* ===== Hero v2 (4-card layout) — Max Real Estate Admin ===== */
+  .hero-stage .agent {
+    width: 84%;
+    margin-top: 0;
+  }
+  .hero-stage .sbubble { display: none; }
+
+  /* Card positioning — overrides original 3-card layout */
+  .hero-stage .fcard-property,
+  .hero-stage .fcard-chain,
+  .hero-stage .fcard-compliance,
+  .hero-stage .fcard-memo {
+    position: absolute;
+    background: var(--surface);
+    border-radius: 11px;
+    padding: 10px;
+    box-shadow: 0 12px 26px -10px rgba(9,9,11,0.16), 0 1px 3px -1px rgba(9,9,11,0.05);
+    border: 1px solid rgba(225, 227, 226, 0.6);
+    font-family: var(--font-body);
+  }
+  .hero-stage .fcard-property   { top: 22px;   left: 0;     width: 192px; transform: rotate(-5deg); z-index: 4; }
+  .hero-stage .fcard-chain      { top: 0;      right: 0;    width: 188px; z-index: 5; }
+  .hero-stage .fcard-compliance { bottom: 70px; left: 8px;  width: 196px; transform: rotate(3deg);  z-index: 5; }
+  .hero-stage .fcard-memo       { bottom: 50px; right: 0;   width: 192px; transform: rotate(-4deg); z-index: 4; }
+
+  @media (max-width: 820px) {
+    .hero-stage .fcard-property   { top: 30px;   left: 4px;   width: 175px; }
+    .hero-stage .fcard-chain      { top: 4px;    right: 4px;  width: 175px; }
+    .hero-stage .fcard-compliance { bottom: 50px; left: 4px;  width: 175px; }
+    .hero-stage .fcard-memo       { bottom: 30px; right: 4px; width: 175px; }
+  }
+
+  /* ----- Shared card head ----- */
+  .h2-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-bottom: 9px;
+  }
+  .h2-head-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    flex: 1;
+  }
+  .h2-icon {
+    width: 20px; height: 20px;
+    border-radius: 5px;
+    background: rgba(var(--lime-rgb), 0.12);
+    color: var(--lime);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .h2-icon svg { width: 11px; height: 11px; }
+  .h2-title-block { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
+  .h2-title {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .h2-sub {
+    font-size: 7.5px;
+    color: var(--fg-3);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ----- Status pills (right side of head) ----- */
+  .h2-tag {
+    font-family: var(--font-mono);
+    font-size: 7.5px;
+    font-weight: 600;
+    padding: 2px 5px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .h2-tag-live { background: #FDF2E9; color: #E67E22; }
+  .h2-tag-live::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: #E67E22;
+    box-shadow: 0 0 0 1.5px rgba(230,126,34,0.25);
+  }
+  .h2-tag-issues { background: #FFDAD6; color: #93000A; }
+  .h2-tag-issues svg { width: 8px; height: 8px; }
+  .h2-tag-open { background: rgba(var(--lime-rgb), 0.12); color: var(--lime); }
+  .h2-tag-progress {
+    background: var(--surface-3);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 500;
+  }
+  .h2-tag-progress::before {
+    content: '';
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--lime);
+  }
+
+  /* ----- Property File card ----- */
+  .h2-progress {
+    height: 5px;
+    background: var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 9px;
+  }
+  .h2-progress-fill {
+    height: 100%;
+    background: var(--lime);
+    border-radius: 999px;
+  }
+  .h2-section-label {
+    font-family: var(--font-mono);
+    font-size: 7.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-3);
+    margin-bottom: 7px;
+  }
+  .h2-doc-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    padding: 3px 0;
+  }
+  .h2-doc-row + .h2-doc-row { border-top: 1px solid var(--line); padding-top: 6px; margin-top: 3px; }
+  .h2-doc-mark {
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .h2-doc-mark.done { background: rgba(var(--lime-rgb), 0.12); color: var(--lime); }
+  .h2-doc-mark.pending { background: var(--surface-3); color: var(--fg-4); }
+  .h2-doc-mark.empty { background: transparent; border: 1px solid var(--line-2); }
+  .h2-doc-mark svg { width: 7px; height: 7px; }
+  .h2-doc-text { display: flex; flex-direction: column; gap: 0; min-width: 0; }
+  .h2-doc-name { font-size: 8.5px; font-weight: 500; color: var(--ink); line-height: 1.3; }
+  .h2-doc-meta { font-size: 7px; color: var(--fg-3); line-height: 1.3; }
+  .h2-doc-link { font-size: 7px; color: var(--lime); text-decoration: underline; cursor: pointer; }
+
+  /* ----- Chain tracker rows ----- */
+  .h2-list { display: flex; flex-direction: column; gap: 5px; }
+  .h2-list-item {
+    background: rgba(168,168,168,0.08);
+    border-radius: 5px;
+    padding: 6px 7px;
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+  }
+  .h2-list-icon {
+    color: var(--lime);
+    margin-top: 1px;
+    flex-shrink: 0;
+    display: inline-flex;
+  }
+  .h2-list-icon svg { width: 9px; height: 9px; }
+  .h2-list-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .h2-list-title-row {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    font-size: 8px;
+  }
+  .h2-list-id { font-family: var(--font-display); font-weight: 700; color: var(--ink); }
+  .h2-list-sep { color: var(--fg-3); }
+  .h2-list-name { color: var(--ink); font-weight: 500; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .h2-list-meta-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-size: 7px;
+    color: var(--fg-3);
+  }
+  .h2-prio {
+    font-family: var(--font-mono);
+    font-size: 6.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 1px 4px;
+    border-radius: 2px;
+    line-height: 1.4;
+  }
+  .h2-prio-high { background: #FFDAD6; color: #93000A; }
+  .h2-prio-critical { background: #FDF2E9; color: #E67E22; }
+  .h2-prio-low { background: #E7E8E7; color: #3F4944; }
+  .h2-prio-normal { background: #8BD6B6; color: #FFFFFF; border-radius: 999px; padding: 1px 6px; }
+
+  /* ----- Compliance / Memo rows ----- */
+  .h2-comp-list { display: flex; flex-direction: column; gap: 4px; }
+  .h2-comp-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 4px 2px;
+  }
+  .h2-comp-row + .h2-comp-row { border-top: 1px solid var(--line); padding-top: 6px; }
+  .h2-comp-left { display: flex; align-items: center; gap: 7px; min-width: 0; flex: 1; }
+  .h2-comp-ic {
+    width: 19px; height: 19px;
+    border-radius: 50%;
+    background: rgba(var(--lime-rgb), 0.12);
+    color: var(--lime);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .h2-comp-ic.danger { background: rgba(186,26,26,0.10); color: #BA1A1A; }
+  .h2-comp-ic svg { width: 9px; height: 9px; }
+  .h2-comp-text { min-width: 0; display: flex; flex-direction: column; gap: 0; flex: 1; }
+  .h2-comp-name { font-size: 8.5px; font-weight: 600; color: var(--ink); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .h2-comp-meta { font-size: 7px; color: var(--fg-3); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .h2-status {
+    font-family: var(--font-body);
+    font-size: 7.5px;
+    font-weight: 500;
+    padding: 2px 6px;
+    border-radius: 999px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    white-space: nowrap;
+  }
+  .h2-status svg { width: 7px; height: 7px; }
+  .h2-status-ok { background: rgba(var(--lime-rgb), 0.12); color: var(--lime); }
+  .h2-status-warn { background: rgba(186,26,26,0.10); color: #BA1A1A; }
+  .h2-status-review { background: rgba(var(--lime-rgb), 0.12); color: var(--lime); }
+  .h2-status-pending { background: #E7E8E7; color: #3F4944; }
+  .h2-status-returned { background: rgba(254,243,199,0.7); color: #92400E; }
+  .h2-status-missing { background: rgba(255,237,213,0.9); color: #EA580C; }
+  .h2-status-approved { background: rgba(var(--lime-rgb), 0.12); color: var(--lime); }
+  .h2-memo-row { position: relative; padding: 6px 7px; background: rgba(168,168,168,0.08); border-radius: 6px; }
+  .h2-memo-row + .h2-memo-row { margin-top: 4px; }
+  .h2-memo-row.alert { box-shadow: inset 3px 0 0 #EA580C; }
+
+  /* ----- CTA button at bottom ----- */
+  .h2-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    background: var(--lime);
+    color: var(--lime-ink);
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 999px;
+    margin-top: 9px;
+    border: none;
+    cursor: pointer;
+  }
+  .h2-cta svg { width: 9px; height: 9px; }
+</style>
+
+<div class="scroll-progress"></div>
+<a class="float-cta" href="#book"><span class="dot"></span>Book a call<span class="arrow">→</span></a>
+
+<!-- NAV -->
+<header class="wrap">
+  <nav class="nav">
+    <a class="nav-brand" href="#">
+      <img src="/images/the-claws-logo.svg" alt="TheClaws" class="nav-brand-logo" />
+      <span>Max Real Estate Admin</span>
+    </a>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#how">How it works</a>
+      <a href="#case">Case study</a>
+      <a href="#incl">Included</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="btn btn-sm btn-primary" href="#book">Book a call <span class="arrow">→</span></a>
+  </nav>
+</header>
+
+<!-- ============ HERO (all above fold) ============ -->
+<section class="hero wrap">
+  <div class="hero-left">
+    <div class="eyebrow reveal"><span class="dot"></span>Compliance &amp; ID reviewed in minutes, not hours</div>
+    <h1 class="reveal reveal-delay-1">More deals exchanged.<br><span class="mark">Less time lost to admin.</span></h1>
+    <p class="sub reveal reveal-delay-2">Connect the deal. Max Real Estate Admin reviews compliance, ID and source of funds, and drafts the buyer, vendor and solicitor chases for whatever is missing.</p>
+    <div class="btns reveal reveal-delay-3">
+      <a class="btn btn-lime btn-magnet" href="#book">Book a call &amp; see it on your deal <span class="arrow">→</span></a>
+      <a class="btn btn-ghost" href="#how">See how it works</a>
+    </div>
+    <p class="micro reveal reveal-delay-4">We'll review one live deal on the call and show the gaps it would flag — bring the file, no prep needed.</p>
+
+    <hr class="hero-divider reveal reveal-delay-4">
+
+    <div class="hero-caps reveal reveal-delay-5">
+      <div class="hero-cap">
+        <span class="ic">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line></svg>
+        </span>
+        <strong>Reads the whole deal</strong>
+        <span>AML, ID, source of funds, chain notes, solicitor updates.</span>
+      </div>
+      <div class="hero-cap">
+        <span class="ic">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </span>
+        <strong>Drafts the chase</strong>
+        <span>Buyer, vendor, solicitor. You review before sending.</span>
+      </div>
+      <div class="hero-cap">
+        <span class="ic">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </span>
+        <strong>Fits your agency's rules</strong>
+        <span>Your AML pack, your network, your tone.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stage">
+    <img class="agent" src="/images/max-agent-ai-real-estate-admin.png" alt="Max Real Estate Admin reviewing a deal file">
+
+    <!-- Property File card -->
+    <div class="fcard-property">
+      <div class="h2-head">
+        <div class="h2-head-left">
+          <span class="h2-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </span>
+          <div class="h2-title-block">
+            <span class="h2-title">Property File</span>
+            <span class="h2-sub">124 Maplewood Drive</span>
+          </div>
+        </div>
+        <span class="h2-tag h2-tag-progress">78% Complete</span>
+      </div>
+      <div class="h2-progress"><div class="h2-progress-fill" style="width: 78%;"></div></div>
+      <div class="h2-section-label">Required documents</div>
+
+      <div class="h2-doc-row">
+        <span class="h2-doc-mark done">
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <div class="h2-doc-text">
+          <span class="h2-doc-name">Sales memo uploaded</span>
+          <span class="h2-doc-meta">Verified on Oct 24</span>
+        </div>
+      </div>
+      <div class="h2-doc-row">
+        <span class="h2-doc-mark done">
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <div class="h2-doc-text">
+          <span class="h2-doc-name">Proof of ID received</span>
+          <span class="h2-doc-meta">Verified on Oct 25</span>
+        </div>
+      </div>
+      <div class="h2-doc-row">
+        <span class="h2-doc-mark pending">
+          <svg width="10" height="3" viewBox="0 0 12 3" fill="currentColor" aria-hidden="true"><circle cx="2" cy="1.5" r="1"/><circle cx="6" cy="1.5" r="1"/><circle cx="10" cy="1.5" r="1"/></svg>
+        </span>
+        <div class="h2-doc-text">
+          <span class="h2-doc-name">Mortgage offer pending</span>
+          <span class="h2-doc-meta">Awaiting lender confirmation</span>
+        </div>
+      </div>
+      <div class="h2-doc-row">
+        <span class="h2-doc-mark empty"></span>
+        <div class="h2-doc-text">
+          <span class="h2-doc-name">Chain notes incomplete</span>
+          <a class="h2-doc-link" href="#">Update Notes</a>
+        </div>
+      </div>
+
+      <button class="h2-cta">Review File <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+    </div>
+
+    <!-- Chain Tracker card -->
+    <div class="fcard-chain">
+      <div class="h2-head">
+        <div class="h2-head-left">
+          <span class="h2-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </span>
+          <div class="h2-title-block">
+            <span class="h2-title">Chain Tracker</span>
+            <span class="h2-sub">Deal: 124 Maplewood Drive</span>
+          </div>
+        </div>
+        <span class="h2-tag h2-tag-live">Live</span>
+      </div>
+
+      <div class="h2-list">
+        <div class="h2-list-item">
+          <span class="h2-list-icon">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </span>
+          <div class="h2-list-body">
+            <div class="h2-list-title-row">
+              <span class="h2-list-id">CHN-014</span>
+              <span class="h2-list-sep">·</span>
+              <span class="h2-list-name">Buyer's solicitor reply</span>
+            </div>
+            <div class="h2-list-meta-row">
+              <span>Due in 2 days</span>
+              <span class="h2-prio h2-prio-high">High priority</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="h2-list-item">
+          <span class="h2-list-icon">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </span>
+          <div class="h2-list-body">
+            <div class="h2-list-title-row">
+              <span class="h2-list-id">CHN-017</span>
+              <span class="h2-list-sep">·</span>
+              <span class="h2-list-name">Lender confirmation</span>
+            </div>
+            <div class="h2-list-meta-row">
+              <span>Overdue</span>
+              <span class="h2-prio h2-prio-critical">Critical</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="h2-list-item">
+          <span class="h2-list-icon">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </span>
+          <div class="h2-list-body">
+            <div class="h2-list-title-row">
+              <span class="h2-list-id">CHN-021</span>
+              <span class="h2-list-sep">·</span>
+              <span class="h2-list-name">Searches returned</span>
+            </div>
+            <div class="h2-list-meta-row">
+              <span>Resolved</span>
+              <span class="h2-prio h2-prio-low">Low</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="h2-list-item">
+          <span class="h2-list-icon">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </span>
+          <div class="h2-list-body">
+            <div class="h2-list-title-row">
+              <span class="h2-list-id">CHN-024</span>
+              <span class="h2-list-sep">·</span>
+              <span class="h2-list-name">Vendor reply due</span>
+            </div>
+            <div class="h2-list-meta-row">
+              <span>Due today</span>
+              <span class="h2-prio h2-prio-normal">Normal</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="h2-cta">View Chain <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+    </div>
+
+    <!-- Deal Compliance card -->
+    <div class="fcard-compliance">
+      <div class="h2-head">
+        <div class="h2-title-block" style="gap: 3px;">
+          <span class="h2-title">Deal Compliance</span>
+          <span class="h2-sub">Reviewing transaction details.</span>
+        </div>
+        <span class="h2-tag h2-tag-issues">
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          3 Issues Found
+        </span>
+      </div>
+
+      <div class="h2-comp-list">
+        <div class="h2-comp-row">
+          <div class="h2-comp-left">
+            <span class="h2-comp-ic">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <div class="h2-comp-text">
+              <span class="h2-comp-name">Buyer ID</span>
+              <span class="h2-comp-meta">Document validation</span>
+            </div>
+          </div>
+          <span class="h2-status h2-status-ok">
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Verified
+          </span>
+        </div>
+
+        <div class="h2-comp-row">
+          <div class="h2-comp-left">
+            <span class="h2-comp-ic danger">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v4H3zM5 7v13h14V7"/><line x1="9" y1="11" x2="15" y2="11"/></svg>
+            </span>
+            <div class="h2-comp-text">
+              <span class="h2-comp-name">Source of Funds</span>
+              <span class="h2-comp-meta">Bank statements</span>
+            </div>
+          </div>
+          <span class="h2-status h2-status-warn">
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Missing statement
+          </span>
+        </div>
+
+        <div class="h2-comp-row">
+          <div class="h2-comp-left">
+            <span class="h2-comp-ic">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </span>
+            <div class="h2-comp-text">
+              <span class="h2-comp-name">AML Check</span>
+              <span class="h2-comp-meta">Background screening</span>
+            </div>
+          </div>
+          <span class="h2-status h2-status-review">Needs review</span>
+        </div>
+
+        <div class="h2-comp-row">
+          <div class="h2-comp-left">
+            <span class="h2-comp-ic">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6"/><path d="M23 11h-6"/></svg>
+            </span>
+            <div class="h2-comp-text">
+              <span class="h2-comp-name">Seller Details</span>
+              <span class="h2-comp-meta">Entity verification</span>
+            </div>
+          </div>
+          <span class="h2-status h2-status-ok">
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Complete
+          </span>
+        </div>
+      </div>
+
+      <button class="h2-cta">Review Deal <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+    </div>
+
+    <!-- Memo Pack card -->
+    <div class="fcard-memo">
+      <div class="h2-head">
+        <div class="h2-head-left">
+          <span class="h2-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          </span>
+          <div class="h2-title-block">
+            <span class="h2-title">Memo Pack</span>
+          </div>
+        </div>
+        <span class="h2-tag h2-tag-open">5 Open</span>
+      </div>
+
+      <div class="h2-memo-row">
+        <div class="h2-comp-row" style="padding: 0; border: 0;">
+          <div class="h2-comp-left">
+            <div class="h2-comp-text">
+              <span class="h2-comp-name">Sales memo</span>
+              <span class="h2-comp-meta">Drafted</span>
+            </div>
+          </div>
+          <span class="h2-status h2-status-pending">Awaiting approval</span>
+        </div>
+      </div>
+
+      <div class="h2-memo-row">
+        <div class="h2-comp-row" style="padding: 0; border: 0;">
+          <div class="h2-comp-left">
+            <div class="h2-comp-text">
+              <span class="h2-comp-name">Proof of ID</span>
+              <span class="h2-comp-meta">Buyer · DL-042</span>
+            </div>
+          </div>
+          <span class="h2-status h2-status-returned">Returned</span>
+        </div>
+      </div>
+
+      <div class="h2-memo-row alert">
+        <div class="h2-comp-row" style="padding: 0; border: 0;">
+          <div class="h2-comp-left">
+            <div class="h2-comp-text">
+              <span class="h2-comp-name">AML pack</span>
+              <span class="h2-comp-meta">High value</span>
+            </div>
+          </div>
+          <span class="h2-status h2-status-missing">
+            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Missing signature
+          </span>
+        </div>
+      </div>
+
+      <div class="h2-memo-row">
+        <div class="h2-comp-row" style="padding: 0; border: 0;">
+          <div class="h2-comp-left">
+            <div class="h2-comp-text">
+              <span class="h2-comp-name">Mortgage offer</span>
+              <span class="h2-comp-meta">Lender pack</span>
+            </div>
+          </div>
+          <span class="h2-status h2-status-approved">
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Approved
+          </span>
+        </div>
+      </div>
+
+      <button class="h2-cta">View All <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= CLAIM TICKER ========================= -->
+<div class="ticker-band">
+  <div class="ticker">
+    <span class="t-strong">What would you do with 15 extra hours a week?</span>
+    <span class="t-sep">·</span>
+    <span>Because that's what the admin is costing you.</span>
+    <span class="t-sep">·</span>
+    <span class="t-strong">Future agents don't pay it anymore</span>
+    <span class="t-sep">—</span>
+    <span>they approve what their AI already packaged.</span>
+    <span class="t-sep">·</span>
+    <!-- duplicate for seamless loop -->
+    <span class="t-strong">What would you do with 15 extra hours a week?</span>
+    <span class="t-sep">·</span>
+    <span>Because that's what the admin is costing you.</span>
+    <span class="t-sep">·</span>
+    <span class="t-strong">Future agents don't pay it anymore</span>
+    <span class="t-sep">—</span>
+    <span>they approve what their AI already packaged.</span>
+    <span class="t-sep">·</span>
+  </div>
+</div>
+
+<!-- ============ PROBLEM + REAL PROBLEM — combined ============ -->
+<section id="problem" class="real bg-grid bg-grid-dark">
+  <div class="wrap real-grid">
+    <div class="reveal">
+      <div class="sec-label">The problem</div>
+      <h2>Your sales talent is not the bottleneck. <em>Deal admin</em> is.</h2>
+      <p>You already know how to win the instruction and agree the deal. What slows you down is everything around it: chasing AML docs, verifying ID, proving source of funds, drafting memos, evidencing offers, coordinating solicitors and chasing missing items.</p>
+      <div class="problem-cards">
+        <div class="pcard">
+          <span class="pcard-k">01 / Compliance</span>
+          <h4>AML &amp; ID checks</h4>
+          <p>PEPs, sanctions, source of funds, ID verification.</p>
+        </div>
+        <div class="pcard pcard-dark">
+          <span class="pcard-k">02 / Chain risk</span>
+          <h4>Chain coordination</h4>
+          <p>Solicitor updates, queries, deadlines across all parties.</p>
+        </div>
+        <div class="pcard">
+          <span class="pcard-k">03 / Evidence</span>
+          <h4>Deal notes</h4>
+          <p>Offer trail, AML rationale, memo, file conduct.</p>
+        </div>
+        <div class="pcard pcard-lime">
+          <span class="pcard-k">04 / Client work</span>
+          <h4>Client chase</h4>
+          <p>Draft WhatsApps, emails, and follow-up questions.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="real-col">
+      <div class="transcript reveal reveal-delay-2">
+        <div class="sec-label">The real problem</div>
+
+        <div class="transcript-stage">
+          <img class="transcript-photo" src="/images/the-real-problem.png" alt="An exhausted estate agent at a desk surrounded by paperwork" />
+
+          <div class="stage-overlay">
+            <div class="stage-quote-wrap">
+              <blockquote class="stage-quote">
+                I feel like I'm working at <span class="hl">full capacity</span>, but I can't grow because admin eats my time.
+              </blockquote>
+              <div class="sig stage-sig">— Estate agent using Max Real Estate Admin</div>
+            </div>
+
+            <div class="notes-wall" aria-hidden="true">
+              <div class="note note-1">
+                <span class="note-tape"></span>
+                <p>"Memo went Friday. Solicitor only opened it Wednesday."</p>
+                <span class="note-attr">— Branch manager, Birmingham</span>
+              </div>
+              <div class="note note-2 note-lime">
+                <span class="note-tape"></span>
+                <p>"AML pack is 9 fields. Miss one, deal stalls."</p>
+                <span class="note-attr">— Sales agent, Bristol</span>
+              </div>
+              <div class="note note-3">
+                <span class="note-tape"></span>
+                <p>"Chasing chains at 11pm. My family sees me less than my CRM."</p>
+                <span class="note-attr">— Director, Manchester</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="body-txt">
+          The admin around each deal sets the cap. <strong>More deals means more AML to review</strong>, more IDs to verify, more clients to chase, more solicitors to coordinate. So the agent either stops taking on more deals, or takes them and pays for it with evenings and weekends.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIXES — problems + how it fits ============ -->
+<section class="fixes">
+  <div class="wrap">
+    <div class="fixes-head reveal">
+      <div class="sec-label fixes-eyebrow">
+        <svg class="sl-ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Why the usual fixes do not work
+      </div>
+      <h2>Hiring a sales progressor takes months. Templates <em>do not read the deal</em>. Generic AI does not know a memo from a statement.</h2>
+    </div>
+
+    <div class="fix-row reveal reveal-delay-2">
+      <div class="fix-card fc-fail">
+        <span class="fc-badge fc-x" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+        <span class="fc-ic" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </span>
+        <h4>A sales progressor</h4>
+        <p>Costs a full salary before it helps. Needs training on your firm's process, your AML pack and your network's quirks. Still leaves the agent doing the judgement calls.</p>
+      </div>
+      <div class="fix-card fc-fail">
+        <span class="fc-badge fc-x" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+        <span class="fc-ic" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </span>
+        <h4>WhatsApp and email templates</h4>
+        <p>Generic "please send your ID" messages. They do not look at the deal, do not know what is actually missing, and the client ignores them or sends the wrong thing.</p>
+      </div>
+      <div class="fix-card fc-fail">
+        <span class="fc-badge fc-x" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+        <span class="fc-ic" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </span>
+        <h4>Generic AI chatbots</h4>
+        <p>Wait for you to explain the whole deal from scratch every time. They do not understand source of funds, PEPs, gifted deposits, or why a high-value deal needs an enhanced AML note.</p>
+      </div>
+    </div>
+
+    <div class="fits-box reveal reveal-delay-3">
+      <span class="fits-pill">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        How it fits
+      </span>
+      <div class="fits-body">
+        <h3>A review and drafting layer. You stay the agent on the deal.</h3>
+        <div class="fits-body-copy">
+          <p>Every flag, every WhatsApp, every email is reviewed by you before anything moves. Max Real Estate Admin does not send, sign or submit anything off.</p>
+        </div>
+      </div>
+
+      <div class="fix-row fix-row-win">
+        <div class="fix-card fc-win">
+          <span class="fc-badge fc-check" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="fc-ic" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="9 12 11 14 15 10"/></svg>
+          </span>
+          <h4>You decide what goes out</h4>
+          <p>It drafts, flags, and asks. It does not send, submit, or sign anything off.</p>
+        </div>
+        <div class="fix-card fc-win">
+          <span class="fc-badge fc-check" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="fc-ic" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </span>
+          <h4>Built for property deals</h4>
+          <p>AML, ID, source of funds, memos, chain notes, solicitor packs. Not generic document review.</p>
+        </div>
+        <div class="fix-card fc-win">
+          <span class="fc-badge fc-check" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="fc-ic" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          </span>
+          <h4>Fits your agency's rules</h4>
+          <p>Your AML pack, your branch process, your approved tone. Configured at setup.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW — step flow ============ -->
+<section id="how" class="how bg-grid">
+  <div class="wrap">
+    <div class="sec-label reveal">How it works</div>
+    <h2 class="reveal reveal-delay-1">Four steps from messy deal to <em>exchange-ready.</em></h2>
+
+    <div class="how-flow">
+      <div class="hstep reveal reveal-delay-2">
+        <span class="hs-eyebrow">Step one</span>
+        <h3>Upload the deal documents</h3>
+        <div class="hs-visual">
+          <div class="doc-mock">
+            <span class="doc-line w70"></span>
+            <span class="doc-line w50"></span>
+            <span class="doc-line w65"></span>
+            <span class="doc-block"></span>
+          </div>
+        </div>
+        <p>AML pack, ID, source of funds, offer letter, memo, vendor instructions.</p>
+        <span class="hs-tag">Drop the file</span>
+      </div>
+
+      <div class="hs-arrow" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+
+      <div class="hstep reveal reveal-delay-3">
+        <span class="hs-eyebrow">Step two</span>
+        <h3>Max Real Estate Admin reviews the deal</h3>
+        <div class="hs-visual">
+          <div class="review-mock">
+            <div class="rm-card-back"></div>
+            <div class="rm-card">
+              <span class="rm-head"></span>
+              <span class="rm-line w60"></span>
+              <span class="rm-line w45"></span>
+              <span class="rm-reply" aria-hidden="true">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <p>Checks every document, cross-references the story, flags what is missing or risky.</p>
+        <span class="hs-tag">Full review</span>
+      </div>
+
+      <div class="hs-arrow" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+
+      <div class="hstep reveal reveal-delay-4">
+        <span class="hs-eyebrow">Step three</span>
+        <h3>You get flags, questions &amp; drafts</h3>
+        <div class="hs-visual">
+          <div class="chips-mock">
+            <span class="cm-chip cm-1">Missing ID</span>
+            <span class="cm-chip cm-2">PEP match</span>
+            <span class="cm-chip cm-3">Source of funds</span>
+          </div>
+        </div>
+        <p>Review the gaps, approve the WhatsApp or email chase, decide what goes to the client.</p>
+        <span class="hs-tag">Clear gaps</span>
+      </div>
+
+      <div class="hs-arrow" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+
+      <div class="hstep reveal reveal-delay-5">
+        <span class="hs-eyebrow">Step four</span>
+        <h3>You move a cleaner deal</h3>
+        <div class="hs-visual">
+          <div class="tiles-mock">
+            <span class="tm-tile tm-1">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg>
+            </span>
+            <span class="tm-tile tm-2">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </span>
+          </div>
+        </div>
+        <p>Memo goes to the solicitor with fewer gaps, fewer weak notes, and fewer avoidable hold-ups.</p>
+        <span class="hs-tag">Cleaner deal</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CASE ============ -->
+<section id="case" class="case">
+  <div class="wrap">
+    <div class="sec-label">[ Case study ]</div>
+
+    <div class="case-layout">
+      <div class="case-left reveal">
+        <div class="case-pdf">
+          <span class="pk">Case study · 01</span>
+          <h4>The deal looked ready. The review found three things before the solicitor did.</h4>
+          <div class="pdf-sub">First-time buyer purchase. £40,000 deposit. A closer look before the memo went out.</div>
+
+          <div class="case-outcome">
+            <div class="item">
+              <span class="k">Outcome</span>
+              <span class="v">Corrected before memo</span>
+            </div>
+            <div class="item">
+              <span class="k">Solicitor queries avoided</span>
+              <span class="v">2 foreseeable</span>
+            </div>
+            <div class="item">
+              <span class="k">Exchange agreed</span>
+              <span class="v">9 days later</span>
+            </div>
+          </div>
+
+          <div class="pdf-pages">
+            <b>Max Real Estate Admin</b>
+            <span>12 pages</span>
+          </div>
+        </div>
+
+        <a class="btn btn-on-dark case-cta" href="#book">Download the full case study <span class="arrow">↓</span></a>
+      </div>
+
+      <div class="case-copy reveal reveal-delay-2">
+        <svg class="pdf-hint-arrow" width="140" height="49" viewBox="0 0 380 132" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M1.44574 61.1935C5.23881 71.6566 16.7955 64.7185 23.614 61.6428C35.3007 55.9435 47.9577 52.9106 60.3997 49.3619C83.9192 41.9887 108.212 37.8563 132.641 34.9294C157.522 30.0079 183.236 33.026 207.182 40.9376C183.77 53.9122 153.66 81.0519 168.379 110.216C175.948 124.291 192.779 134.463 208.911 131.256C238.839 125.568 279.667 74.6545 252.929 47.6279C299.216 49.7015 323.858 72.3163 357.971 99.9322C361.278 102.457 364.175 105.586 367.697 107.775C375.232 111.833 383.187 102.199 377.767 95.5513C353.57 75.8968 329.896 53.8897 301.066 41.1857C278.681 33.6456 253.731 29.0003 230.167 32.1792C207.385 22.6752 182.827 16.4308 158.039 16.3897C127.824 17.7823 97.5398 22.9522 68.199 30.3273C47.5646 35.954 26.9417 41.5376 7.64304 50.9397C3.00375 51.7153 0.107731 56.7864 1.44574 61.1935ZM182.568 86.0698C191.622 68.2207 209.814 55.957 228.223 49.2408C235.559 53.5751 246.271 59.6258 245.686 69.366C245.706 69.2363 245.728 69.1063 245.749 68.9765C245.756 68.764 245.762 68.5513 245.769 68.339C241.838 89.9531 224.799 112.882 201.929 115.758C188.306 114.388 175.531 99.5471 182.568 86.0698Z"/>
+          <path d="M0.00134323 66.0661C-0.121404 74.1831 8.46788 76.029 14.9021 76.7328C28.114 79.009 41.2882 81.4408 54.3712 84.3637C60.9683 85.1908 67.0892 88.9615 73.6263 89.1714C80.5725 88.2328 82.7969 78.5809 77.0331 74.6251C58.152 66.6058 36.9941 64.781 16.9606 60.7204C21.7513 43.5116 32.5459 28.4019 41.1777 12.9929C42.4149 11.082 43.1307 9.02166 42.7477 6.72538C41.9198 -0.0972456 31.9611 -2.58451 28.2025 3.31897C23.6449 10.6168 19.3715 18.0967 15.1861 25.6116C8.33517 38.1859 0.332096 51.3684 0.00134323 66.0661Z"/>
+        </svg>
+
+        <h2>The deal looked ready. The review found <em>three things</em> before the solicitor did.</h2>
+
+        <div class="cs-cards-stack">
+          <div class="case-card cc-neutral">
+            <div class="cc-head">
+              <span class="cc-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </span>
+              <h3>The situation</h3>
+            </div>
+            <p>A residential purchase for a first-time buyer on a joint deal. Photo ID, two recent bank statements, a £40,000 deposit and signed offer letter were all on file. The agent was ready to send the memo to the solicitor.</p>
+          </div>
+          <div class="case-card cc-alert">
+            <div class="cc-head">
+              <span class="cc-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </span>
+              <h3>What Max Real Estate Admin caught</h3>
+            </div>
+            <p>A £12,000 family transfer with no gifted-deposit letter. A bonus income reference that did not match the salary credits on two months of statements. A weak AML note where source of funds was recorded as "savings" without a paper trail. It then drafted the buyer WhatsApp and the email to the solicitor.</p>
+          </div>
+          <div class="case-card cc-success">
+            <div class="cc-head">
+              <span class="cc-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <h3>The outcome</h3>
+            </div>
+            <p>The agent corrected the file before the memo went out. Two foreseeable solicitor queries avoided. Compliance signed off first time. Buyer returned the gifted-deposit letter and source-of-funds note the same evening. Exchange agreed nine days later.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARE ============ -->
+<section class="cmp bg-dots">
+  <div class="wrap">
+    <div class="cmp-top reveal">
+      <div class="cmp-head">
+        <div class="sec-label">Compared to</div>
+        <h2>What most agents try before this, and why the <em>gap is still there.</em></h2>
+      </div>
+    </div>
+
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>
+              <span class="cmp-q">Can it <em>actually</em> do the work properly?</span>
+            </th>
+            <th>
+              <div class="cmp-col">
+                <span class="cmp-ic">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="cmp-lbl">Sales progressor</span>
+              </div>
+            </th>
+            <th>
+              <div class="cmp-col">
+                <span class="cmp-ic">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+                </span>
+                <span class="cmp-lbl">Templates</span>
+              </div>
+            </th>
+            <th>
+              <div class="cmp-col">
+                <span class="cmp-ic">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/></svg>
+                </span>
+                <span class="cmp-lbl">ChatGPT on a deal</span>
+              </div>
+            </th>
+            <th class="col-us">
+              <div class="cmp-col">
+                <span class="cmp-ic cmp-ic-kai">
+                  <img src="/images/sales-assistant.webp" alt="Max" width="52" height="52" loading="lazy" />
+                </span>
+                <span class="cmp-lbl">Max Real Estate Admin</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Reads the deal before replying</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Partial</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Spots AML &amp; ID issues</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Drafts updates based on the actual deal file</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Generic only</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Chases missing documents &amp; information</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Partial</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Flags compliance-risk issues early</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Works on first-time buyer, chain &amp; messy deals</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Limited</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Ready from day one</th>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INCLUDED — table ============ -->
+<section id="incl" class="incl bg-grid">
+  <div class="wrap">
+    <div class="incl-head reveal">
+      <div>
+        <div class="sec-label">What's included <span class="sl-tag">[ 07 · The pre-exchange layer ]</span></div>
+        <h2>The pre-exchange admin layer that <em>clears the deal</em> before it comes back to you.</h2>
+      </div>
+      <p class="sub">Built on your live deal file, not generic templates. Each row runs on the real documents and you review the output before anything goes to the client or the solicitor.</p>
+    </div>
+
+    <div class="incl-card reveal">
+      <table class="incl-table">
+        <thead>
+          <tr>
+            <th class="th-n">No.</th>
+            <th class="th-cap">Capability</th>
+            <th class="th-fin">Financial impact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-n"><em>01</em></td>
+            <td class="td-cap">
+              <h4>AML, PEP &amp; sanctions screening</h4>
+              <p>Checks PEPs, sanctions lists, ownership chains, high-risk jurisdictions and unusual transfer patterns across the whole AML pack.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Avoids compliance risk</strong>
+              <span>Less rework and fewer regulatory exposure points.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>02</em></td>
+            <td class="td-cap">
+              <h4>ID &amp; residency consistency check</h4>
+              <p>Compares ID, address, residency status, expiry dates and selfie verification against the deal file. Nothing the client "forgot to mention" surprises you later.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Prevents memo delays</strong>
+              <span>Stops avoidable solicitor queries and back-and-forth.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>03</em></td>
+            <td class="td-cap">
+              <h4>Source of funds &amp; paper-trail check</h4>
+              <p>Reviews gifted deposits, family transfers, overseas funds, business transfers, large incoming credits and whether the explanation and paper trail are complete and acceptable.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Reduces fall-through risk</strong>
+              <span>Protects the deal from issues that can cost you completion.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>04</em></td>
+            <td class="td-cap">
+              <h4>Income &amp; affordability evidence</h4>
+              <p>Checks payslips, salary credits, variable income, bonus, overtime, self-employed income and whether the documents support the offer being presented.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Faster to memo, stronger deal</strong>
+              <span>Cuts time lost checking evidence and fixing gaps.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>05</em></td>
+            <td class="td-cap">
+              <h4>Memo of Sale &amp; solicitor pack file check</h4>
+              <p>Reviews terms, parties, conditions, disclosures, EPC, agency rates and whether the memo is complete and ready for solicitors.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Reduces compliance risk</strong>
+              <span>Keeps your file clean and the deal well evidenced.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>06</em></td>
+            <td class="td-cap">
+              <h4>Client &amp; solicitor chase messages</h4>
+              <p>Creates WhatsApp and email drafts for missing documents, source of funds questions, deposit explanations, ID queries and other follow-ups.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Saves hours chasing parties</strong>
+              <span>Frees up time for new instructions and viewings.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>07</em></td>
+            <td class="td-cap">
+              <h4>Exchange-ready issue summary</h4>
+              <p>Pulls all risks, gaps and unanswered points into one clear summary so you know exactly what needs sorting before the memo goes out.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Stops rework after memo</strong>
+              <span>Less back-and-forth, fewer hold-ups, smoother completions.</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="incl-note">
+        <div class="note-col">
+          <span class="note-ic" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </span>
+          <div>
+            <h5>The real cost of manual admin</h5>
+            <p>Chasing documents, re-checking deals and fixing avoidable issues steals agent time. The time you could be spending winning instructions or progressing exchanges.</p>
+          </div>
+        </div>
+        <div class="note-col">
+          <span class="note-ic" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </span>
+          <div>
+            <h5>The financial impact</h5>
+            <p>More admin = fewer client conversations, slower exchanges, more rework and less revenue-generating time.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="incl-total">
+        <div class="it-left">
+          <h3>Total value to your agency</h3>
+          <p>Protects agent time, reduces delays and rework, and helps you close more deals, not more admin.</p>
+        </div>
+        <div class="it-right">
+          <div class="it-lbl">Your price</div>
+          <div class="it-price"><span class="p-n">$300</span><span class="p-u">/mo</span></div>
+        </div>
+      </div>
+
+      <div class="incl-foot">
+        <a class="btn btn-primary" href="#book">Book a call &amp; see it on your deal <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUARANTEE + TESTIMONIALS — merged ============ -->
+<section class="testi">
+  <div class="wrap">
+    <div class="grt-pair">
+      <div class="ticket reveal">
+        <div class="dash-divider"></div>
+        <div class="ticket-left">
+          <div class="kicker">— The guarantee</div>
+          <h2>If it misses a material issue clearly visible in the deal, <em>you do not pay.</em></h2>
+          <p>Unverified IDs, undeclared funds, evidence inconsistencies. If we miss any, full refund. No forms.</p>
+        </div>
+        <div class="ticket-right">
+          <div class="big"><em><span class="big-count" data-count="100" data-suffix="%">100%</span></em></div>
+          <div class="small">Full refund · if we miss it</div>
+          <div class="refund">Most deals have something. Most files have three.</div>
+        </div>
+      </div>
+      <div class="testi-head reveal reveal-delay-2">
+        <div class="sec-label">What agents say</div>
+        <h2>What agents are <em>actually</em> getting out of it.</h2>
+      </div>
+    </div>
+
+    <div class="testi-layout">
+      <div class="testi-feat reveal reveal-delay-1">
+        <span class="featured-tag">Featured</span>
+        <blockquote>My deal packs are a lot cleaner now. I used to get two or three solicitor queries a week on things I should have spotted myself. That has dropped off almost completely.</blockquote>
+        <div class="stats">
+          <div class="s"><div class="n">~80%</div><div class="l">Fewer solicitor queries</div></div>
+          <div class="s"><div class="n">3 weeks</div><div class="l">Until cleaner deal packs became normal</div></div>
+        </div>
+        <div class="author">
+          <div class="av">JM</div>
+          <div class="who"><b>James Mercer</b><span>Director, Northcote Property</span></div>
+        </div>
+      </div>
+
+      <div class="testi-video reveal reveal-delay-2">
+        <span class="vhead">Watch it in 42 seconds</span>
+        <h4>James tells the story in his own words</h4>
+        <div class="vframe">
+          <span class="dur">0:42</span>
+        </div>
+      </div>
+
+      <div class="testi-side">
+        <div class="testi-quote reveal reveal-delay-3">
+          <blockquote>The AML notes were the surprise. It flags the source-of-funds bits I have not evidenced properly, before compliance does. Saves me two rounds of back and forth on most deals.</blockquote>
+          <div class="author">
+            <div class="av">SP</div>
+            <div class="who"><b>Sarah Patel</b><span>Branch manager, Linden Grove Estates</span></div>
+          </div>
+        </div>
+
+        <div class="testi-quote reveal reveal-delay-4">
+          <blockquote>The chase drafts are what my team will not give up. WhatsApp written, missing items listed, I tweak and send. Saves me a good hour a day.</blockquote>
+          <div class="author">
+            <div class="av">DO</div>
+            <div class="who"><b>David Okafor</b><span>Branch principal, Bridgewell Property</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ — flat two col ============ -->
+<section id="faq" class="faq bg-grid">
+  <div class="wrap">
+    <div class="faq-head reveal">
+      <div>
+        <div class="sec-label">Before the call</div>
+        <h2>Questions agents ask <em>before booking</em></h2>
+      </div>
+    </div>
+
+    <div class="faq-grid">
+      <div class="qa reveal reveal-delay-1">
+        <div class="qa-head">
+          <span class="qn">Q1</span>
+          <h4>Does this replace my role?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>No. You remain the agent. It checks the deal, evidence, notes and gaps before exchange. You make every decision.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-2">
+        <div class="qa-head">
+          <span class="qn">Q2</span>
+          <h4>Will this work with my network or branch process?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Yes. Use it as a pre-check before your normal memo, file checking, or compliance process. It fits around what you already do.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-3">
+        <div class="qa-head">
+          <span class="qn">Q3</span>
+          <h4>What about client data?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Data is handled under your firm-approved process. Add your privacy and compliance wording here. We walk through the exact data handling on the call.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-2">
+        <div class="qa-head">
+          <span class="qn">Q4</span>
+          <h4>What if the solicitor still asks a question?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Some queries cannot be avoided. But reviewed deals reduce the avoidable ones: the missing page, the unexplained credit, the undeclared transfer.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-3">
+        <div class="qa-head">
+          <span class="qn">Q5</span>
+          <h4>Can it draft WhatsApp and email messages?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Yes. Client chases, follow-up questions, and response wording, all drafted from the actual deal. You review before sending.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-4">
+        <div class="qa-head">
+          <span class="qn">Q6</span>
+          <h4>What happens on the demo call?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Bring one live deal. We review it together in about 20 minutes. You see the flags, the drafted client message, and the missing items. Then you decide if it is worth continuing.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIMITED — strip ============ -->
+<section class="limited">
+  <div class="wrap">
+    <div class="limited-inner">
+      <div class="kicker"><span class="dot"></span>Demo calls are limited</div>
+      <p>We run 3 agent demo calls per week so each one reviews a real deal properly. When the week is full, new agents move to the next available slot.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section id="book" class="final">
+  <div class="wrap">
+    <div class="sec-label reveal">20-minute demo call</div>
+    <h2 class="reveal reveal-delay-1">Bring one live deal. See what it would have caught <em>before the solicitor did.</em></h2>
+    <p class="lede reveal reveal-delay-2">Every preventable query costs time. Every weak note creates risk. In one demo call we will show you what a pre-exchange admin check looks like on your actual deal.</p>
+    <div class="final-actions reveal reveal-delay-3">
+      <a class="btn btn-xl btn-on-dark btn-magnet" href="#book">Book a call &amp; see it on your deal <span class="arrow">→</span></a>
+      <a class="btn btn-on-dark-ghost" href="#book">Get the free deal-ready checklist</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-inner">
+      <div class="foot-brand"><img src="/images/sales-assistant.webp" alt="Max" class="foot-brand-img">Max Real Estate Admin</div>
+      <div>© 2026 · Built for estate agents</div>
+      <div><a href="/terms" target="_blank" rel="noopener">Terms</a> · <a href="/privacy" target="_blank" rel="noopener">Privacy</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="/scripts/ai-mortgage-admin-motion.js" is:inline defer></script>
+
+</Layout>

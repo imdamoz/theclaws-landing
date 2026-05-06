@@ -42,8 +42,8 @@
   letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-inv);
   margin-bottom: 24px;
 }
-.hero-left .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 3px rgba(83,215,149,0.3); animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100% { box-shadow: 0 0 0 3px rgba(83,215,149,0.35); } 50% { box-shadow: 0 0 0 6px rgba(83,215,149,0); } }
+.hero-left .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 3px rgba(var(--lime-rgb),0.3); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { box-shadow: 0 0 0 3px rgba(var(--lime-rgb),0.35); } 50% { box-shadow: 0 0 0 6px rgba(var(--lime-rgb),0); } }
 
 .hero-left h1 {
   font-family: var(--font-display); font-weight: 700;
@@ -130,7 +130,7 @@
 .hero-stage .sbubble .spark {
   width: 8px; height: 8px; border-radius: 50%;
   background: var(--lime);
-  box-shadow: 0 0 0 3px rgba(83,215,149,0.3);
+  box-shadow: 0 0 0 3px rgba(var(--lime-rgb),0.3);
 }
 
 .fcard {
@@ -524,8 +524,8 @@
 }
 .fc-win .fc-ic {
   color: var(--lime-ink);
-  background: rgba(83,215,149,0.18);
-  border-color: rgba(83,215,149,0.35);
+  background: rgba(var(--lime-rgb),0.18);
+  border-color: rgba(var(--lime-rgb),0.35);
 }
 
 /* ===================== HOW — staircase ===================== */
@@ -845,8 +845,8 @@
   color: #F5A65A;
 }
 .case-card.cc-success {
-  background: rgba(83,215,149,0.08);
-  border-color: rgba(83,215,149,0.28);
+  background: rgba(var(--lime-rgb),0.08);
+  border-color: rgba(var(--lime-rgb),0.28);
 }
 .case-card.cc-success .cc-icon {
   background: var(--lime);
@@ -963,7 +963,7 @@
 .compare-table tbody tr:last-child td,
 .compare-table tbody tr:last-child th { border-bottom: 0; }
 .compare-table tbody td.compare-us {
-  background: rgba(83,215,149,0.12);
+  background: rgba(var(--lime-rgb),0.12);
   color: var(--ink);
 }
 .compare-table tbody tr:last-child td.compare-us { border-radius: 0 0 12px 12px; }
@@ -1314,7 +1314,7 @@
 .testi-feat::before {
   content: ''; position: absolute;
   top: -60px; left: -60px; width: 240px; height: 240px;
-  background: radial-gradient(circle, rgba(83,215,149,0.14) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(var(--lime-rgb),0.14) 0%, transparent 60%);
 }
 .testi-feat .featured-tag {
   font-family: var(--font-mono); font-size: 11px;
@@ -1504,7 +1504,7 @@
 .final::before, .final::after {
   content: ''; position: absolute;
   width: 520px; height: 520px;
-  background: radial-gradient(circle, rgba(83,215,149,0.08) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(var(--lime-rgb),0.08) 0%, transparent 60%);
   pointer-events: none;
 }
 .final::before { top: -260px; left: -180px; }

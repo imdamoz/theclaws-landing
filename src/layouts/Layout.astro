@@ -8,6 +8,7 @@ const {
   ogUrl = 'https://theclaws.ai',
   includeHomeStyles = true,
 } = Astro.props;
+
 ---
 
 <!DOCTYPE html>
@@ -108,6 +109,104 @@ const {
 </head>
 <body>
 <slot />
+
+{import.meta.env.DEV && (
+  <>
+  <style is:global>
+    .nav-pages-dd { position: relative; }
+    .nav-pages-dd-btn {
+      background: transparent;
+      border: 1px dashed #BEC9C2;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font: inherit;
+      font-size: 13px;
+      color: #71717A;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+    .nav-pages-dd-btn::before {
+      content: 'DEV';
+      background: #F43F5E;
+      color: #fff;
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+    .nav-pages-dd-btn::after { content: '▾'; font-size: 10px; }
+    .nav-pages-dd-btn:hover { color: #18181B; border-color: #18181B; }
+    .nav-pages-dd-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 220px;
+      background: #FFFFFF;
+      border-radius: 14px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.05);
+      padding: 6px;
+      display: none;
+      z-index: 100;
+    }
+    .nav-pages-dd.open .nav-pages-dd-menu { display: block; }
+    .nav-pages-dd-menu a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #18181B;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .nav-pages-dd-menu a small { color: #71717A; font-size: 11px; font-weight: 500; }
+    .nav-pages-dd-menu a:hover { background: #F4F4F5; }
+    .nav-pages-dd-menu a.active { background: #18181B; color: #fff; }
+    .nav-pages-dd-menu a.active small { color: rgba(255,255,255,0.7); }
+  </style>
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const navLinks = document.querySelector('.nav-links')
+        || document.querySelector('[class*="navLinks"]');
+      if (!navLinks) return;
+      const here = location.pathname.replace(/\/$/, '') || '/';
+      const pages = [
+        ['/',                       'Home',        ''],
+        ['/ai-mortgage-admin',      'Mortgage',    'Kai'],
+        ['/ai-real-estate-admin',   'Real Estate', 'Max'],
+        ['/ai-construction-admin',  'Construction','Mia'],
+        ['/ai-clinic-admin',        'Clinic',      'Mia'],
+        ['/ai-events-admin',        'Events',      'Eve'],
+        ['/ai-church-admin',        'Church',      'Zara'],
+      ];
+      const dd = document.createElement('div');
+      dd.className = 'nav-pages-dd';
+      dd.innerHTML = '<button type="button" class="nav-pages-dd-btn">Pages</button>' +
+        '<div class="nav-pages-dd-menu">' +
+        pages.map(([href, label, agent]) => {
+          const active = (here === href) ? ' active' : '';
+          const url = href === '/' ? '/' : href + '/';
+          const right = agent ? '<small>' + agent + '</small>' : '';
+          return '<a href="' + url + '" class="' + active.trim() + '"><span>' + label + '</span>' + right + '</a>';
+        }).join('') +
+        '</div>';
+      navLinks.appendChild(dd);
+      const btn = dd.querySelector('.nav-pages-dd-btn');
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dd.classList.toggle('open');
+      });
+      document.addEventListener('click', () => dd.classList.remove('open'));
+    });
+  </script>
+  </>
+)}
 
 <!-- Intercom -->
 <script is:inline>
