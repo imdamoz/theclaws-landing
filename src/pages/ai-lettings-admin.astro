@@ -1,0 +1,890 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/ai-mortgage-admin/styles.css';
+import '../styles/ai-mortgage-admin/sections.css';
+import '../styles/ai-mortgage-admin/motion.css';
+---
+
+<Layout
+  title="Ella Lettings Admin — More tenancies signed. Less time lost to admin."
+  description="Drop in the applicant. Ella Lettings Admin reads the application, drafts the AST and chases the tenant for whatever's missing."
+  ogTitle="Ella Lettings Admin — More tenancies signed. Less time lost to admin."
+  ogDescription="Drop in the applicant. Ella Lettings Admin reads the application, drafts the AST and chases the tenant for whatever's missing."
+  includeHomeStyles={false}
+>
+
+<style is:global>
+  /* Ella accent — violet. Premium property palette. */
+  :root {
+    --lime: #7C3AED;
+    --lime-2: #5B21B6;
+    --lime-ink: #FFFFFF;
+    --lime-rgb: 124, 58, 237;
+  }
+</style>
+
+<div class="scroll-progress"></div>
+<a class="float-cta" href="#book"><span class="dot"></span>Book a call<span class="arrow">→</span></a>
+
+<header class="wrap">
+  <nav class="nav">
+    <a class="nav-brand" href="#">
+      <img src="/images/the-claws-logo.svg" alt="TheClaws" class="nav-brand-logo" />
+      <span>Ella Lettings Admin</span>
+    </a>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#how">How it works</a>
+      <a href="#case">Case study</a>
+      <a href="#incl">Included</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="btn btn-sm btn-primary" href="#book">Book a call <span class="arrow">→</span></a>
+  </nav>
+</header>
+
+<section class="hero wrap">
+  <div class="hero-left">
+    <div class="eyebrow reveal"><span class="dot"></span>Applicants progressed in minutes, not days</div>
+    <h1 class="reveal reveal-delay-1">More tenancies signed.<br><span class="mark">Less time lost to admin.</span></h1>
+    <p class="sub reveal reveal-delay-2">Drop in the applicant. Ella Lettings Admin reads the application, drafts the AST and chases the tenant for whatever's missing.</p>
+    <div class="btns reveal reveal-delay-3">
+      <a class="btn btn-lime btn-magnet" href="#book">Book a call &amp; see it on your applicants <span class="arrow">→</span></a>
+      <a class="btn btn-ghost" href="#how">See how it works</a>
+    </div>
+    <p class="micro reveal reveal-delay-4">We'll review one live applicant on the call and show what it would have chased — bring the file, no prep needed.</p>
+
+    <hr class="hero-divider reveal reveal-delay-4">
+
+    <div class="hero-caps reveal reveal-delay-5">
+      <div class="hero-cap">
+        <span class="ic">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line></svg>
+        </span>
+        <strong>Reads the whole application</strong>
+        <span>Right-to-rent, employer ref, guarantor, deposit, payslips.</span>
+      </div>
+      <div class="hero-cap">
+        <span class="ic">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </span>
+        <strong>Drafts the chase</strong>
+        <span>Written from the actual application. You review before sending.</span>
+      </div>
+      <div class="hero-cap">
+        <span class="ic">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </span>
+        <strong>Fits your agency's process</strong>
+        <span>Your AST template, your fee scale, your CRM, your tone.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stage">
+    <img class="agent" src="/images/executive-assistant.webp" alt="Ella Lettings Admin reviewing an application">
+    <div class="sbubble"><span class="spark"></span> What needs attention on tenancy #LET-2847?</div>
+
+    <div class="fcard fcard-alert">
+      <div class="fc-head">
+        <span class="ic">!</span>
+        <span>Missing items flagged</span>
+        <span class="pill">4</span>
+      </div>
+      <div class="chip-list">
+        <div class="chip-item"><svg class="chip-ic" width="11" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span><b>Right-to-rent ID</b> · share code</span></div>
+        <div class="chip-item"><svg class="chip-ic" width="11" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span><b>Employer reference</b> · pending</span></div>
+        <div class="chip-item"><svg class="chip-ic" width="11" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span><b>Deposit</b> · 5 weeks rent</span></div>
+        <div class="chip-item"><svg class="chip-ic" width="11" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span><b>Guarantor form</b> · signed</span></div>
+      </div>
+    </div>
+
+    <div class="fcard fcard-todo">
+      <div class="fc-head">
+        <span class="ic">✓</span>
+        <span>Todo List</span>
+        <span class="pill lime">2 ITEMS</span>
+      </div>
+      <div class="todo-i">
+        <div class="ti-head">📜 AST<span class="ti-pill">Drafted</span></div>
+        <div class="ti-sub">12-month, break clause at 6, joint &amp; several</div>
+      </div>
+      <div class="todo-i">
+        <div class="ti-head">🏠 Viewing<span class="ti-pill out">Confirmed</span></div>
+        <div class="ti-sub">Saturday 2pm, follow-up viewing booked</div>
+      </div>
+    </div>
+
+    <div class="fcard fcard-wa">
+      <div class="fc-head">
+        <span class="ic ic-wa" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </span>
+        <span>WhatsApp chase</span>
+        <span class="pill">Draft</span>
+      </div>
+      <div class="wa-msg">Hi Ms Patel, lovely to confirm your offer's accepted! To get the AST signed and the move-in booked could you send your right-to-rent share code, ask your employer for a quick reference to the address below, and we'll send the deposit and guarantor links shortly?</div>
+      <div class="wa-meta">
+        <span>To: Ms Patel</span>
+        <span class="send">Review &amp; send →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker-band">
+  <div class="ticker">
+    <span class="t-strong">What would you do with 5 extra tenancies a month?</span>
+    <span class="t-sep">·</span>
+    <span>Because that's what the application admin is costing you.</span>
+    <span class="t-sep">·</span>
+    <span class="t-strong">Future agencies don't pay it anymore</span>
+    <span class="t-sep">—</span>
+    <span>they sign what their AI already prepped.</span>
+    <span class="t-sep">·</span>
+    <span class="t-strong">What would you do with 5 extra tenancies a month?</span>
+    <span class="t-sep">·</span>
+    <span>Because that's what the application admin is costing you.</span>
+    <span class="t-sep">·</span>
+    <span class="t-strong">Future agencies don't pay it anymore</span>
+    <span class="t-sep">—</span>
+    <span>they sign what their AI already prepped.</span>
+    <span class="t-sep">·</span>
+  </div>
+</div>
+
+<section id="problem" class="real bg-grid bg-grid-dark">
+  <div class="wrap real-grid">
+    <div class="reveal">
+      <div class="sec-label">The problem</div>
+      <h2>Your local knowledge is not the bottleneck. <em>Application admin</em> is.</h2>
+      <p>You already know how to let a property. What slows you down is everything around it: chasing right-to-rent IDs, waiting on employer references, drafting ASTs, taking deposits, registering schemes, organising inventories, and triaging maintenance reports.</p>
+      <div class="problem-cards">
+        <div class="pcard">
+          <span class="pcard-k">01 / Applicants</span>
+          <h4>Slow follow-up</h4>
+          <p>Tenants take whoever processes them first, not whoever's nicest.</p>
+        </div>
+        <div class="pcard pcard-dark">
+          <span class="pcard-k">02 / Compliance</span>
+          <h4>Right-to-rent &amp; refs</h4>
+          <p>Share codes, employer refs, previous landlord, guarantor.</p>
+        </div>
+        <div class="pcard">
+          <span class="pcard-k">03 / Tenancy</span>
+          <h4>AST &amp; deposit</h4>
+          <p>Tenancy agreement, prescribed info, deposit scheme registration.</p>
+        </div>
+        <div class="pcard pcard-lime">
+          <span class="pcard-k">04 / Tenant work</span>
+          <h4>Tenant chase</h4>
+          <p>Draft WhatsApps, rent reminders, maintenance triage.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="real-col">
+      <div class="transcript reveal reveal-delay-2">
+        <div class="sec-label">The real problem</div>
+
+        <div class="transcript-stage">
+          <img class="transcript-photo" src="/images/the-real-problem.png" alt="An exhausted lettings agent at the end of a busy day" />
+
+          <div class="stage-overlay">
+            <div class="stage-quote-wrap">
+              <blockquote class="stage-quote">
+                I lose tenancies <span class="hl">while waiting for references.</span> By the time they're back, the applicant's gone.
+              </blockquote>
+              <div class="sig stage-sig">— Lettings agent using Ella Lettings Admin</div>
+            </div>
+
+            <div class="notes-wall" aria-hidden="true">
+              <div class="note note-1">
+                <span class="note-tape"></span>
+                <p>"Offer accepted Monday. Right-to-rent didn't come till Friday. Lost the let."</p>
+                <span class="note-attr">— Lettings negotiator, Birmingham</span>
+              </div>
+              <div class="note note-2 note-lime">
+                <span class="note-tape"></span>
+                <p>"Deposit registered late. Section 21 notice now invalid. Awkward conversation with landlord."</p>
+                <span class="note-attr">— Property manager, Bristol</span>
+              </div>
+              <div class="note note-3">
+                <span class="note-tape"></span>
+                <p>"Maintenance reports at 11pm. My weekends are tenant WhatsApps."</p>
+                <span class="note-attr">— Branch manager, Manchester</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="body-txt">
+          The admin around each tenancy sets the cap. <strong>More applicants means more references to chase</strong>, more ASTs to draft, more deposits to register, more compliance to evidence. So the agency either stops marketing properties, or markets and pays for it with leaked applicants.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fixes">
+  <div class="wrap">
+    <div class="fixes-head reveal">
+      <div class="sec-label fixes-eyebrow">
+        <svg class="sl-ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Why the usual fixes do not work
+      </div>
+      <h2>Hiring an admin takes months. Templates <em>do not chase the references</em>. Generic AI does not know a Section 21 from a Section 8.</h2>
+    </div>
+
+    <div class="fix-row reveal reveal-delay-2">
+      <div class="fix-card fc-fail">
+        <span class="fc-badge fc-x" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+        <span class="fc-ic" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </span>
+        <h4>A lettings admin</h4>
+        <p>Costs a full salary before they're useful. Needs training on your AST, your CRM, your fee scale and your tone. Still leaves the negotiator chasing references.</p>
+      </div>
+      <div class="fix-card fc-fail">
+        <span class="fc-badge fc-x" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+        <span class="fc-ic" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </span>
+        <h4>Property portal templates</h4>
+        <p>Generic "thanks for your application" emails. They do not chase the share code, do not know the guarantor's late, and applicants ignore them or send the wrong document.</p>
+      </div>
+      <div class="fix-card fc-fail">
+        <span class="fc-badge fc-x" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+        <span class="fc-ic" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </span>
+        <h4>Generic AI chatbots</h4>
+        <p>Wait for you to explain the tenancy from scratch every time. They do not understand prescribed information, deposit-scheme registration deadlines, or why guarantor checks have to clear before move-in.</p>
+      </div>
+    </div>
+
+    <div class="fits-box reveal reveal-delay-3">
+      <span class="fits-pill">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        How it fits
+      </span>
+      <div class="fits-body">
+        <h3>A reading and drafting layer. You stay the agent on the tenancy.</h3>
+        <div class="fits-body-copy">
+          <p>Every reference chase, every WhatsApp, every AST is reviewed by you before anything moves. Ella Lettings Admin does not sign, send keys, or take deposits.</p>
+        </div>
+      </div>
+
+      <div class="fix-row fix-row-win">
+        <div class="fix-card fc-win">
+          <span class="fc-badge fc-check" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="fc-ic" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="9 12 11 14 15 10"/></svg>
+          </span>
+          <h4>You decide what goes out</h4>
+          <p>It drafts, chases, and flags. It does not sign the AST, register the deposit, or release keys.</p>
+        </div>
+        <div class="fix-card fc-win">
+          <span class="fc-badge fc-check" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="fc-ic" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </span>
+          <h4>Built for UK lettings</h4>
+          <p>Right-to-rent, AST, prescribed info, gas safety, EPC, EICR, deposit schemes. Not generic property follow-up.</p>
+        </div>
+        <div class="fix-card fc-win">
+          <span class="fc-badge fc-check" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="fc-ic" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          </span>
+          <h4>Fits your agency's process</h4>
+          <p>Your AST, your fee structure, your CRM, your TPO/Propertymark wording. Configured at setup.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" class="how bg-grid">
+  <div class="wrap">
+    <div class="sec-label reveal">How it works</div>
+    <h2 class="reveal reveal-delay-1">Four steps from offer accepted to <em>move-in ready.</em></h2>
+
+    <div class="how-flow">
+      <div class="hstep reveal reveal-delay-2">
+        <span class="hs-eyebrow">Step one</span>
+        <h3>Drop in the applicant</h3>
+        <div class="hs-visual">
+          <div class="doc-mock">
+            <span class="doc-line w70"></span>
+            <span class="doc-line w50"></span>
+            <span class="doc-line w65"></span>
+            <span class="doc-block"></span>
+          </div>
+        </div>
+        <p>Application form, ID, payslips, references, guarantor details, holding deposit.</p>
+        <span class="hs-tag">Drop the application</span>
+      </div>
+
+      <div class="hs-arrow" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+
+      <div class="hstep reveal reveal-delay-3">
+        <span class="hs-eyebrow">Step two</span>
+        <h3>Ella Lettings Admin reviews</h3>
+        <div class="hs-visual">
+          <div class="review-mock">
+            <div class="rm-card-back"></div>
+            <div class="rm-card">
+              <span class="rm-head"></span>
+              <span class="rm-line w60"></span>
+              <span class="rm-line w45"></span>
+              <span class="rm-reply" aria-hidden="true">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <p>Verifies right-to-rent, chases references, drafts the AST and prescribed info.</p>
+        <span class="hs-tag">Full review</span>
+      </div>
+
+      <div class="hs-arrow" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+
+      <div class="hstep reveal reveal-delay-4">
+        <span class="hs-eyebrow">Step three</span>
+        <h3>You get drafts &amp; flags</h3>
+        <div class="hs-visual">
+          <div class="chips-mock">
+            <span class="cm-chip cm-1">AST drafted</span>
+            <span class="cm-chip cm-2">Refs pending</span>
+            <span class="cm-chip cm-3">Deposit prompt</span>
+          </div>
+        </div>
+        <p>Review the AST, approve the WhatsApp chase, decide what goes to the tenant and the landlord.</p>
+        <span class="hs-tag">Tap, send, done</span>
+      </div>
+
+      <div class="hs-arrow" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+
+      <div class="hstep reveal reveal-delay-5">
+        <span class="hs-eyebrow">Step four</span>
+        <h3>You move the tenant in</h3>
+        <div class="hs-visual">
+          <div class="tiles-mock">
+            <span class="tm-tile tm-1">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg>
+            </span>
+            <span class="tm-tile tm-2">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </span>
+          </div>
+        </div>
+        <p>AST signed, deposit registered, gas safety / EPC / EICR on file. Inventory done. Keys handed over on time.</p>
+        <span class="hs-tag">Move-in done</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="case" class="case">
+  <div class="wrap">
+    <div class="sec-label">[ Case study ]</div>
+
+    <div class="case-layout">
+      <div class="case-left reveal">
+        <div class="case-pdf">
+          <span class="pk">Case study · 01</span>
+          <h4>Offer accepted Monday. Move-in keys Friday. Three things caught before signing.</h4>
+          <div class="pdf-sub">A 2-bed flat let at £1,650 pcm. Joint tenancy. A closer look between offer and signing.</div>
+
+          <div class="case-outcome">
+            <div class="item">
+              <span class="k">Outcome</span>
+              <span class="v">Move-in on schedule</span>
+            </div>
+            <div class="item">
+              <span class="k">Compliance issues caught</span>
+              <span class="v">3 pre-signing</span>
+            </div>
+            <div class="item">
+              <span class="k">Days from offer to keys</span>
+              <span class="v">5 working days</span>
+            </div>
+          </div>
+
+          <div class="pdf-pages">
+            <b>Ella Lettings Admin</b>
+            <span>12 pages</span>
+          </div>
+        </div>
+
+        <a class="btn btn-on-dark case-cta" href="#book">Download the full case study <span class="arrow">↓</span></a>
+      </div>
+
+      <div class="case-copy reveal reveal-delay-2">
+        <svg class="pdf-hint-arrow" width="140" height="49" viewBox="0 0 380 132" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M1.44574 61.1935C5.23881 71.6566 16.7955 64.7185 23.614 61.6428C35.3007 55.9435 47.9577 52.9106 60.3997 49.3619C83.9192 41.9887 108.212 37.8563 132.641 34.9294C157.522 30.0079 183.236 33.026 207.182 40.9376C183.77 53.9122 153.66 81.0519 168.379 110.216C175.948 124.291 192.779 134.463 208.911 131.256C238.839 125.568 279.667 74.6545 252.929 47.6279C299.216 49.7015 323.858 72.3163 357.971 99.9322C361.278 102.457 364.175 105.586 367.697 107.775C375.232 111.833 383.187 102.199 377.767 95.5513C353.57 75.8968 329.896 53.8897 301.066 41.1857C278.681 33.6456 253.731 29.0003 230.167 32.1792C207.385 22.6752 182.827 16.4308 158.039 16.3897C127.824 17.7823 97.5398 22.9522 68.199 30.3273C47.5646 35.954 26.9417 41.5376 7.64304 50.9397C3.00375 51.7153 0.107731 56.7864 1.44574 61.1935ZM182.568 86.0698C191.622 68.2207 209.814 55.957 228.223 49.2408C235.559 53.5751 246.271 59.6258 245.686 69.366C245.706 69.2363 245.728 69.1063 245.749 68.9765C245.756 68.764 245.762 68.5513 245.769 68.339C241.838 89.9531 224.799 112.882 201.929 115.758C188.306 114.388 175.531 99.5471 182.568 86.0698Z"/>
+          <path d="M0.00134323 66.0661C-0.121404 74.1831 8.46788 76.029 14.9021 76.7328C28.114 79.009 41.2882 81.4408 54.3712 84.3637C60.9683 85.1908 67.0892 88.9615 73.6263 89.1714C80.5725 88.2328 82.7969 78.5809 77.0331 74.6251C58.152 66.6058 36.9941 64.781 16.9606 60.7204C21.7513 43.5116 32.5459 28.4019 41.1777 12.9929C42.4149 11.082 43.1307 9.02166 42.7477 6.72538C41.9198 -0.0972456 31.9611 -2.58451 28.2025 3.31897C23.6449 10.6168 19.3715 18.0967 15.1861 25.6116C8.33517 38.1859 0.332096 51.3684 0.00134323 66.0661Z"/>
+        </svg>
+
+        <h2>Offer Monday, keys Friday. The review caught <em>three things</em> before signing.</h2>
+
+        <div class="cs-cards-stack">
+          <div class="case-card cc-neutral">
+            <div class="cc-head">
+              <span class="cc-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </span>
+              <h3>The situation</h3>
+            </div>
+            <p>A joint application on a 2-bed flat at £1,650 pcm. Two professional sharers. Offer accepted Monday morning. The team was racing to get everything done for a Friday move-in to align with the outgoing tenant's check-out.</p>
+          </div>
+          <div class="case-card cc-alert">
+            <div class="cc-head">
+              <span class="cc-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </span>
+              <h3>What Ella Lettings Admin caught</h3>
+            </div>
+            <p>One applicant's right-to-rent share code expired 2 days before the proposed move-in. The guarantor's affordability calculation was 30x rent on gross, not the firm's required 36x net. The gas safety certificate on file expired in 11 days — short for a 12-month AST. It then drafted the chase to the tenant, the guarantor follow-up and the contractor instruction.</p>
+          </div>
+          <div class="case-card cc-success">
+            <div class="cc-head">
+              <span class="cc-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <h3>The outcome</h3>
+            </div>
+            <p>Tenant generated a fresh share code Tuesday. Guarantor's affordability re-evidenced with a payslip and bonus letter Thursday. Gas engineer booked Wednesday for a fresh CP12. AST signed Friday morning, deposit registered same day, keys at 1pm. Move-in on schedule and the file fully compliant.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cmp bg-dots">
+  <div class="wrap">
+    <div class="cmp-top reveal">
+      <div class="cmp-head">
+        <div class="sec-label">Compared to</div>
+        <h2>What most agencies try before this, and why the <em>gap is still there.</em></h2>
+      </div>
+    </div>
+
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>
+              <span class="cmp-q">Can it <em>actually</em> handle the application properly?</span>
+            </th>
+            <th>
+              <div class="cmp-col">
+                <span class="cmp-ic">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="cmp-lbl">Lettings admin</span>
+              </div>
+            </th>
+            <th>
+              <div class="cmp-col">
+                <span class="cmp-ic">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+                </span>
+                <span class="cmp-lbl">Portal templates</span>
+              </div>
+            </th>
+            <th>
+              <div class="cmp-col">
+                <span class="cmp-ic">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/></svg>
+                </span>
+                <span class="cmp-lbl">ChatGPT on a let</span>
+              </div>
+            </th>
+            <th class="col-us">
+              <div class="cmp-col">
+                <span class="cmp-ic cmp-ic-kai">
+                  <img src="/images/executive-assistant.webp" alt="Ella" width="52" height="52" loading="lazy" />
+                </span>
+                <span class="cmp-lbl">Ella Lettings Admin</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Reads the application before replying</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Partial</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Spots right-to-rent, ref &amp; guarantor issues</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Drafts ASTs and tenant comms from the actual file</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Generic only</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Chases refs, IDs, deposits &amp; guarantors</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Partial</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Flags compliance issues early (gas / EPC / EICR / deposit scheme)</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Works on residential, HMO, student &amp; corporate lets</th>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-partial">Limited</span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+          <tr>
+            <th>Ready from day one</th>
+            <td><span class="compare-cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            <td class="compare-us"><span class="compare-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="incl" class="incl bg-grid">
+  <div class="wrap">
+    <div class="incl-head reveal">
+      <div>
+        <div class="sec-label">What's included <span class="sl-tag">[ 07 · The application-to-move-in layer ]</span></div>
+        <h2>The application-to-move-in admin layer that <em>turns offers into signed tenancies</em> while you stay on the negotiation.</h2>
+      </div>
+      <p class="sub">Built on your live applications, not generic templates. Each row runs on the actual file and you review the output before anything goes to the tenant or the landlord.</p>
+    </div>
+
+    <div class="incl-card reveal">
+      <table class="incl-table">
+        <thead>
+          <tr>
+            <th class="th-n">No.</th>
+            <th class="th-cap">Capability</th>
+            <th class="th-fin">Financial impact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-n"><em>01</em></td>
+            <td class="td-cap">
+              <h4>Application triage &amp; viewing booking</h4>
+              <p>Reads enquiries from Rightmove, Zoopla, OnTheMarket, web form and walk-ins. Drafts the personalised reply and books the viewing.</p>
+            </td>
+            <td class="td-fin">
+              <strong>More viewings, more offers</strong>
+              <span>Same-day replies stop applicants drifting elsewhere.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>02</em></td>
+            <td class="td-cap">
+              <h4>Reference &amp; right-to-rent verification</h4>
+              <p>Generates the right-to-rent share code request, drafts the employer reference email, the previous landlord letter and the credit-check consent.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Faster reference turn-around</strong>
+              <span>Compliance evidenced before move-in date.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>03</em></td>
+            <td class="td-cap">
+              <h4>AST drafting</h4>
+              <p>Pre-fills your firm's AST template with applicant names, property details, rent, deposit, term, break clauses and joint &amp; several wording.</p>
+            </td>
+            <td class="td-fin">
+              <strong>No more late-night AST drafts</strong>
+              <span>Negotiator reviews and tweaks, doesn't draft from scratch.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>04</em></td>
+            <td class="td-cap">
+              <h4>Deposit, fees &amp; guarantor chase</h4>
+              <p>Drafts deposit payment links, holding-deposit conversion notices, guarantor agreement chases and prescribed-information emails.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Cleaner Tenant Fees Act compliance</strong>
+              <span>Stops avoidable refund disputes and TPO complaints.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>05</em></td>
+            <td class="td-cap">
+              <h4>Inventory, check-in / check-out prep</h4>
+              <p>Drafts inventory clerk instructions, check-in appointment WhatsApps, key-collection notes, meter reading prompts and check-out reports.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Smoother move-ins</strong>
+              <span>Tenants arrive prepped, not chasing info.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>06</em></td>
+            <td class="td-cap">
+              <h4>Tenant comms (rent, maintenance, renewals)</h4>
+              <p>Drafts late-rent reminders, maintenance triage replies, renewal proposals and section notice covering letters — in your firm's tone.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Lower void &amp; arrears risk</strong>
+              <span>Earlier communication, fewer escalations.</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-n"><em>07</em></td>
+            <td class="td-cap">
+              <h4>Compliance summary</h4>
+              <p>Tracks gas safety, EPC, EICR, smoke alarm, CO alarm and deposit-scheme registration deadlines. Flags renewals before they expire.</p>
+            </td>
+            <td class="td-fin">
+              <strong>Fewer landlord penalties</strong>
+              <span>No invalid Section 21s, no fines, no enforcement letters.</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="incl-note">
+        <div class="note-col">
+          <span class="note-ic" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </span>
+          <div>
+            <h5>The real cost of manual admin</h5>
+            <p>Slow reference chases, late-drafted ASTs, missed gas-safety dates, weekend tenant WhatsApps. The hours add up — and the lost lets add up faster.</p>
+          </div>
+        </div>
+        <div class="note-col">
+          <span class="note-ic" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </span>
+          <div>
+            <h5>The financial impact</h5>
+            <p>One leaky pipeline = lost lets and unhappy landlords. Faster references, cleaner ASTs, smoother check-ins — your existing applicants start signing.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="incl-total">
+        <div class="it-left">
+          <h3>Total value to your agency</h3>
+          <p>Stops applicant leak, speeds up referencing, keeps compliance airtight and gives the team back its weekends.</p>
+        </div>
+        <div class="it-right">
+          <div class="it-lbl">Your price</div>
+          <div class="it-price"><span class="p-n">$300</span><span class="p-u">/mo</span></div>
+        </div>
+      </div>
+
+      <div class="incl-foot">
+        <a class="btn btn-primary" href="#book">Book a call &amp; see it on your applicants <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testi">
+  <div class="wrap">
+    <div class="grt-pair">
+      <div class="ticket reveal">
+        <div class="dash-divider"></div>
+        <div class="ticket-left">
+          <div class="kicker">— The guarantee</div>
+          <h2>If a compliance issue clearly in the file gets missed, <em>you do not pay.</em></h2>
+          <p>Expired share codes, late deposit registration, expired gas safety on a renewal. If we miss any, full refund. No forms.</p>
+        </div>
+        <div class="ticket-right">
+          <div class="big"><em><span class="big-count" data-count="100" data-suffix="%">100%</span></em></div>
+          <div class="small">Full refund · if we miss it</div>
+          <div class="refund">Most applications have something. Most lets have three.</div>
+        </div>
+      </div>
+      <div class="testi-head reveal reveal-delay-2">
+        <div class="sec-label">What agencies say</div>
+        <h2>What agencies are <em>actually</em> getting out of it.</h2>
+      </div>
+    </div>
+
+    <div class="testi-layout">
+      <div class="testi-feat reveal reveal-delay-1">
+        <span class="featured-tag">Featured</span>
+        <blockquote>References used to take a week and we'd lose applicants. Now they're chased the moment the offer's accepted, and we move tenants in inside 5 days.</blockquote>
+        <div class="stats">
+          <div class="s"><div class="n">+30%</div><div class="l">Faster move-in turnaround</div></div>
+          <div class="s"><div class="n">3 weeks</div><div class="l">Until weekends were our own again</div></div>
+        </div>
+        <div class="author">
+          <div class="av">JM</div>
+          <div class="who"><b>Jess Mercer</b><span>Lettings director, Northcote Property</span></div>
+        </div>
+      </div>
+
+      <div class="testi-video reveal reveal-delay-2">
+        <span class="vhead">Watch it in 42 seconds</span>
+        <h4>Jess tells the story in her own words</h4>
+        <div class="vframe">
+          <span class="dur">0:42</span>
+        </div>
+      </div>
+
+      <div class="testi-side">
+        <div class="testi-quote reveal reveal-delay-3">
+          <blockquote>The compliance flags caught a gas-safety expiry on a renewal that would have made a Section 21 invalid. That alone paid for the year.</blockquote>
+          <div class="author">
+            <div class="av">SP</div>
+            <div class="who"><b>Sarah Patel</b><span>Property manager, Linden Grove Lettings</span></div>
+          </div>
+        </div>
+
+        <div class="testi-quote reveal reveal-delay-4">
+          <blockquote>The maintenance triage drafts are the one I won't give up. Tenant WhatsApp comes in, the reply's drafted, I tweak and send. Saves my evenings.</blockquote>
+          <div class="author">
+            <div class="av">DO</div>
+            <div class="who"><b>David Okafor</b><span>Branch manager, Bridgewell Estates</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="faq bg-grid">
+  <div class="wrap">
+    <div class="faq-head reveal">
+      <div>
+        <div class="sec-label">Before the call</div>
+        <h2>Questions agencies ask <em>before booking</em></h2>
+      </div>
+    </div>
+
+    <div class="faq-grid">
+      <div class="qa reveal reveal-delay-1">
+        <div class="qa-head">
+          <span class="qn">Q1</span>
+          <h4>Does this replace my negotiator?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>No. The negotiator stays in charge. It handles the application admin, drafts the AST and chases the references. The negotiator decides what goes out.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-2">
+        <div class="qa-head">
+          <span class="qn">Q2</span>
+          <h4>Will it work with my CRM (Reapit, Jupix, AgentPro)?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Yes. Use it as a layer over your existing CRM. It fits around what you already use.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-3">
+        <div class="qa-head">
+          <span class="qn">Q3</span>
+          <h4>What about TPO &amp; Propertymark?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Setup includes your TPO / Propertymark / ARLA wording. Every draft uses your firm's compliant phrasing and your fee schedule.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-2">
+        <div class="qa-head">
+          <span class="qn">Q4</span>
+          <h4>What if a tenant doesn't reply?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>It drafts a 24-hour nudge, a 48-hour follow-up, and a 5-day re-engagement message. You review and approve each before sending.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-3">
+        <div class="qa-head">
+          <span class="qn">Q5</span>
+          <h4>Can it draft ASTs and prescribed information?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Yes. ASTs, deposit-scheme prescribed information, How-to-Rent guides, gas-safety covering letters and Section 21 / Section 8 covering letters — all drafted from the actual tenancy.</p></div>
+      </div>
+      <div class="qa reveal reveal-delay-4">
+        <div class="qa-head">
+          <span class="qn">Q6</span>
+          <h4>What happens on the demo call?</h4>
+          <span class="qa-tog">+</span>
+        </div>
+        <div class="qa-body"><p>Bring one live applicant. We run it through Ella in about 20 minutes. You see the AST draft, the reference chase and the compliance flags. Then you decide if it is worth continuing.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="limited">
+  <div class="wrap">
+    <div class="limited-inner">
+      <div class="kicker"><span class="dot"></span>Demo calls are limited</div>
+      <p>We run 3 lettings demo calls per week so each one runs through a real applicant properly. When the week is full, new agencies move to the next available slot.</p>
+    </div>
+  </div>
+</section>
+
+<section id="book" class="final">
+  <div class="wrap">
+    <div class="sec-label reveal">20-minute demo call</div>
+    <h2 class="reveal reveal-delay-1">Bring one live applicant. See what it would have chased <em>before move-in day.</em></h2>
+    <p class="lede reveal reveal-delay-2">Every slow reference costs an applicant. Every late deposit registration creates risk. In one demo call we'll show you what an application-to-move-in admin layer looks like on your actual file.</p>
+    <div class="final-actions reveal reveal-delay-3">
+      <a class="btn btn-xl btn-on-dark btn-magnet" href="#book">Book a call &amp; see it on your applicants <span class="arrow">→</span></a>
+      <a class="btn btn-on-dark-ghost" href="#book">Get the free move-in checklist</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-inner">
+      <div class="foot-brand"><img src="/images/executive-assistant.webp" alt="Ella" class="foot-brand-img">Ella Lettings Admin</div>
+      <div>© 2026 · Built for lettings agents &amp; property managers</div>
+      <div><a href="/terms" target="_blank" rel="noopener">Terms</a> · <a href="/privacy" target="_blank" rel="noopener">Privacy</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="/scripts/ai-lettings-admin-motion.js" is:inline defer></script>
+<script src="/scripts/ai-lettings-admin-hero-cases.js" is:inline defer></script>
+
+</Layout>

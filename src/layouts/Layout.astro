@@ -177,13 +177,23 @@ const {
       if (!navLinks) return;
       const here = location.pathname.replace(/\/$/, '') || '/';
       const pages = [
-        ['/',                       'Home',        ''],
-        ['/ai-mortgage-admin',      'Mortgage',    'Kai'],
-        ['/ai-real-estate-admin',   'Real Estate', 'Max'],
-        ['/ai-construction-admin',  'Construction','Mia'],
-        ['/ai-clinic-admin',        'Clinic',      'Mia'],
-        ['/ai-events-admin',        'Events',      'Eve'],
-        ['/ai-church-admin',        'Church',      'Zara'],
+        ['/',                         'Home',           ''],
+        ['/ai-mortgage-admin',        'Mortgage',       'Kai'],
+        ['/ai-real-estate-admin',     'Real Estate',    'Max'],
+        ['/ai-construction-admin',    'Construction',   'Mia'],
+        ['/ai-clinic-admin',          'Clinic',         'Mia'],
+        ['/ai-events-admin',          'Events',         'Eve'],
+        ['/ai-church-admin',          'Church',         'Zara'],
+        ['/ai-legal-admin',           'Legal',          'Marcus'],
+        ['/ai-trades-admin',          'Trades',         'Jack'],
+        ['/ai-medspa-admin',          'MedSpa',         'Sofia'],
+        ['/ai-accounting-admin',      'Accounting',     'Henry'],
+        ['/ai-dealership-admin',      'Dealership',     'Drew'],
+        ['/ai-lettings-admin',        'Lettings',       'Ella'],
+        ['/ai-recruitment-admin',     'Recruitment',    'Lily'],
+        ['/ai-vet-admin',             'Vet',            'Bella'],
+        ['/ai-insurance-admin',       'Insurance',      'Theo'],
+        ['/ai-driving-school-admin',  'Driving School', 'Charlie'],
       ];
       const dd = document.createElement('div');
       dd.className = 'nav-pages-dd';
